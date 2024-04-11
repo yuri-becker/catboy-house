@@ -1,0 +1,17 @@
+---
+- name: 📂 Creates directories
+  ansible.builtin.file:
+    path:
+      - "{{ tinfoil_store_service_path }}"
+      - "{{ tinfoil_store_volume_games }}"
+    state: directory
+    mode: "0644"
+- name: ⬆️ Pushes compose file
+  ansible.builtin.template:
+    src: docker-compose.yaml.j2
+    dest: "{{ tinfoil_store_service_path }}/docker-compose.yaml"
+    mode: "0644"
+- name: 🚀 Starts container stack
+  community.docker.docker_compose_v2:
+    project_src: "{{ tinfoil_store_service_path }}"
+    state: present

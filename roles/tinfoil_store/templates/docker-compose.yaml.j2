@@ -1,0 +1,15 @@
+services:
+  ownfoil:
+    container_name: ownfoil
+    image: a1ex4/ownfoil
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - SAVE_ENABLED=false
+    privileged: true
+    ports:
+      - "{{ tinfoil_store_service_port }}:80"
+    volumes:
+      - {{ tinfoil_store_service_path }}:/games
+
+

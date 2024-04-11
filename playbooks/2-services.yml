@@ -1,0 +1,10 @@
+---
+- name: Services
+  hosts: all
+  vars:
+    ansible_python_interpreter: "{{ play_venv }}/bin/pyenv"
+#  roles:
+#    - role: tinfoil_store
+#      vars:
+#        tinfoil_store_service_directory: tinfoil-store
+#        tinfoil_store_service_port: 29157

@@ -1,0 +1,5 @@
+---
+# vars file for roles/tinfoil_store
+tinfoil_store_service_path: "{{ services_path }}/{{ tinfoil_service_directory }}"
+tinfoil_store_volumes_path: "{{ service_path }}/volumes"
+tinfoil_store_volume_games: "{{ volumes_path }}/games"

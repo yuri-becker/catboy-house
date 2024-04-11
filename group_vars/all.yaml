@@ -1,0 +1,3 @@
+---
+play_venv: "{{ services_path }}/.ansible-venv"
+play_venv_interpreter: "{{ play_venv }}/bin/pyenv"

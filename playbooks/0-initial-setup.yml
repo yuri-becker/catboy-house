@@ -1,0 +1,5 @@
+---
+- name: Initial Setup
+  hosts: all
+  roles:
+    - set_up_play

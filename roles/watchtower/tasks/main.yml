@@ -1,0 +1,16 @@
+---
+- name: 🚀 Starts container
+  community.docker.docker_container:
+    name: watchtower
+    image: containrrr/watchtower
+    state: started
+    restart_policy: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    env:
+      WATCHTOWER_MONITOR_ONLY: "true"
+      WATCHTOWER_NO_STARTUP_MESSAGE: "false"
+      WATCHTOWER_NOTIFICATION_REPORT: "true"
+      WATCHTOWER_NOTIFICATION_TEMPLATE: "{{ watchtower_notification_template }}"
+      WATCHTOWER_NOTIFICATION_URL: "{{ watchtower_notification_url }}"
+      WATCHTOWER_POLL_INTERVAL: "86400"
