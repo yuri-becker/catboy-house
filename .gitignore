@@ -1,2 +1,2 @@
-ansible_collections/
 .vault_password
+.fact-cache

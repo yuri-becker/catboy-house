@@ -8,7 +8,7 @@
       vars:
         linkding_service_directory: linkding
         linkding_service_port: 8948
-#    - role: tinfoil_store
-#      vars:
-#        tinfoil_store_service_directory: tinfoil-store
-#        tinfoil_store_service_port: 29157
+    - role: tinfoil_store
+      vars:
+        tinfoil_store_service_directory: tinfoil-store
+        tinfoil_store_service_port: 29157

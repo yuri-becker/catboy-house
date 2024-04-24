@@ -1,18 +1,31 @@
 ---
-- name: 📂 Creates directories
+- name: 📂 Creates service path
   ansible.builtin.file:
-    path:
-      - "{{ linkding_service_path }}"
-      - "{{ linkding_volume_data }}"
-      - "{{ linkding_volume_db }}"
+    path: "{{ linkding_service_path }}"
     state: directory
     mode: "0644"
     owner: 1000
+
+- name: 📂 Creates data volume
+  ansible.builtin.file:
+    path: "{{ linkding_volume_data }}"
+    state: directory
+    mode: "0644"
+    owner: 1000
+
+- name: 📂 Creates db volume
+  ansible.builtin.file:
+    path: "{{ linkding_volume_db }}"
+    state: directory
+    mode: "0644"
+    owner: 1000
+
 - name: ⬆️ Pushes compose file
   ansible.builtin.template:
     src: docker-compose.yml.j2
     dest: "{{ linkding_service_path }}/docker-compose.yml"
     mode: "0644"
+
 - name: 🚀 Starts container stack
   community.docker.docker_compose_v2:
     project_src: "{{ linkding_service_path }}"

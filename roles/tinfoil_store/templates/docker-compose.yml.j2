@@ -1,0 +1,38 @@
+services:
+  ownfoil:
+    container_name: "{{ tinfoil_store_container_prefix }}-ownfoil"
+    image: a1ex4/ownfoil
+    depends_on:
+      - seadrive
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - SAVE_ENABLED=false
+    privileged: true
+    ports:
+      - "{{ docker_gateway }}:{{ tinfoil_store_service_port }}:80"
+    volumes:
+      - "{{ tinfoil_store_volume_ownfoil }}:/games"
+      - type: bind
+        bind:
+          propagation: rshared
+        source: "{{ tinfoil_store_volume_seafile }}"
+        target: /home/app/seafile
+  seadrive:
+    container_name: "{{ tinfoil_store_container_prefix }}-seadrive"
+    image: yuribecker/seafile-mount:latest
+    environment:
+      SEAFILE_MOUNT_SERVER: "{{ tinfoil_store_seafile_server }}"
+      SEAFILE_MOUNT_USERNAME: "{{ tinfoil_store_seafile_username }}"
+      SEAFILE_MOUNT_CLIENT_NAME: "{{ tinfoil_store_seafile_client_name }}"
+      SEAFILE_MOUNT_CACHE_SIZE_LIMIT: "{{ tinfoil_store_seafile_cache_size_limit }}"
+      SEAFILE_MOUNT_CLEAN_CACHE_INTERVAL: "{{ tinfoil_store_seafile_clean_cache_interval }}"
+      SEAFILE_MOUNT_TOKEN: "{{ tinfoil_store_seafile_token }}"
+      SEAFILE_MOUNT_ALLOW_OTHER: yes
+    privileged: true
+    volumes:
+      - type: bind
+        bind:
+          propagation: rshared
+        source: "{{ tinfoil_store_volume_seafile }}"
+        target: /seafile

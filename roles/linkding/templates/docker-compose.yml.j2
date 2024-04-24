@@ -15,17 +15,17 @@ services:
     container_name: "{{ linkding_container_prefix }}-linkding"
     image: sissbruecker/linkding:latest
     ports:
-      - "{{ linkding_service_port }}:9090"
+      - "{{ docker_gateway }}:{{ linkding_service_port }}:9090"
     volumes:
       - "{{ linkding_volume_data }}:/etc/linkding/data"
     environment:
-      - LD_CONTAINER_NAME=linkding
-      - LD_DISABLE_BACKGROUND_TASKS=False
-      - LD_DB_ENGINE=postgres
-      - LD_DB_HOST=linkding-postgres
-      - LD_DB_PORT=5432
-      - "LD_DB_USER={{ linkding_postgres_user }}"
-      - "LD_DB_PASSWORD={{ linkding_postgres_password }}"
+      LD_CONTAINER_NAME: linkding
+      LD_DISABLE_BACKGROUND_TASKS: False
+      LD_DB_ENGINE: postgres
+      LD_DB_HOST: "{{ linkding_container_prefix }}-postgres"
+      LD_DB_PORT: "5432"
+      LD_DB_USER: "{{ linkding_postgres_user }}"
+      LD_DB_PASSWORD: "{{ linkding_postgres_password }}"
     depends_on:
       - postgres
     restart: unless-stopped

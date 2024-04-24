@@ -1,0 +1,9 @@
+---
+- name: 🔎 Inspect Docker Bridge Network
+  community.docker.docker_network_info:
+    name: bridge
+  register: bridge_network_info
+
+- name: 💾 Set docker_gateway fact
+  ansible.builtin.set_fact:
+    docker_gateway: "{{ bridge_network_info.network.IPAM.Config[0].Gateway }}"
