@@ -1,6 +1,6 @@
 ---
 - name: 📦 Installs virtualenv
-  apt:
+  ansible.builtin.apt:
     name: virtualenv
     state: present
 

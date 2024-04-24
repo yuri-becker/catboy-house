@@ -3,7 +3,11 @@
   hosts: all
   vars:
     ansible_python_interpreter: "{{ play_venv }}/bin/pyenv"
-#  roles:
+  roles:
+    - role: linkding
+      vars:
+        linkding_service_directory: linkding
+        linkding_service_port: 8948
 #    - role: tinfoil_store
 #      vars:
 #        tinfoil_store_service_directory: tinfoil-store

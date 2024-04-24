@@ -12,4 +12,5 @@ Role Variables
 
 - `tinfoil_service_directory`<br/>
    directory under `services_path` where this service should store its files in
-
+- `tinfoil_store_service_port`<br/>
+   port on which this service should be exposed
