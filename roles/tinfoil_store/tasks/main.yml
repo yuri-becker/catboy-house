@@ -17,7 +17,7 @@
   ansible.builtin.file:
     path: "{{ tinfoil_store_volume_seafile }}"
     state: directory
-    mode: "0644"
+    mode: "0755"
     owner: 1000
     group: 1000
 
@@ -36,11 +36,12 @@
   community.docker.docker_compose_v2:
     project_src: "{{ tinfoil_store_service_path }}"
     state: present
+  notify: "unmount seadrive fuse"
 
 - name: 📂 Creates Target folder link
   ansible.builtin.file:
     dest: "{{ tinfoil_store_volume_ownfoil }}/Switch"
-    src: "../home/app/seafile/{{ tinfoil_store_games_target_folder }}"
+    src: ../home/app/seafile/{{ tinfoil_store_games_target_folder }}
     state: link
     owner: 1000
     group: 1000

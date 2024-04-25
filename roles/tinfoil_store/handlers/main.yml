@@ -1,0 +1,12 @@
+---
+- name: 🔨 Fix Fuse device still mounted
+  ansible.builtin.command: umount -f '{{ tinfoil_store_volume_seafile }}/files'
+  changed_when: true
+  failed_when: false
+  listen: "unmount seadrive fuse"
+- name: 🔄 Restart container
+  ansible.builtin.command:
+    chdir: '{{ tinfoil_store_service_path }}'
+    cmd: docker compose restart
+  changed_when: true
+  listen: "unmount seadrive fuse"

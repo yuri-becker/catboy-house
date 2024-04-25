@@ -25,10 +25,10 @@ services:
       SEAFILE_MOUNT_SERVER: "{{ tinfoil_store_seafile_server }}"
       SEAFILE_MOUNT_USERNAME: "{{ tinfoil_store_seafile_username }}"
       SEAFILE_MOUNT_CLIENT_NAME: "{{ tinfoil_store_seafile_client_name }}"
-      SEAFILE_MOUNT_CACHE_SIZE_LIMIT: "{{ tinfoil_store_seafile_cache_size_limit }}"
+      SEAFILE_MOUNT_CACHE_SIZE_LIMIT: e"{{ tinfoil_store_seafile_cache_size_limit }}"
       SEAFILE_MOUNT_CLEAN_CACHE_INTERVAL: "{{ tinfoil_store_seafile_clean_cache_interval }}"
       SEAFILE_MOUNT_TOKEN: "{{ tinfoil_store_seafile_token }}"
-      SEAFILE_MOUNT_ALLOW_OTHER: yes
+      SEAFILE_MOUNT_FUSE_OPTS: uid=1000,gid=1000,umask=033,allow_other,auto_unmount
     privileged: true
     volumes:
       - type: bind

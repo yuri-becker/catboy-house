@@ -2,8 +2,8 @@
 # vars file for roles/tinfoil_store
 tinfoil_store_service_path: "{{ services_path }}/{{ tinfoil_store_service_directory }}"
 tinfoil_store_volume_ownfoil: "{{ tinfoil_store_service_path }}/volumes/ownfoil"
-tinfoil_store_volume_seafile: "{{ tinfoil_store_service_path  }}/volumes/seafile"
-tinfoil_store_games_target_folder: "files/Shared with all/Media/Games/Switch"
+tinfoil_store_volume_seafile: "{{ tinfoil_store_service_path }}/volumes/seafile"
+tinfoil_store_games_target_folder: files/Shared with all/Media/Games/Switch
 tinfoil_store_seafile_server: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   65303332633962653364336161386332303432643766636164363664666533323338633039646236
