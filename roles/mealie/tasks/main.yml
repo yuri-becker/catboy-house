@@ -1,7 +1,7 @@
 ---
 - name: 📂 Creates service path
   ansible.builtin.file:
-    path: "{{ linkding_service_path }}"
+    path: "{{ mealie_service_path }}"
     state: directory
     mode: "0755"
 
@@ -12,16 +12,16 @@
     mode: "0755"
     owner: 1000
   loop:
-    - "{{ linkding_volume_data }}"
-    - "{{ linkding_volume_db }}"
+    - "{{ mealie_volume_data }}"
+    - "{{ mealie_volume_db }}"
 
 - name: ⬆️ Pushes compose file
   ansible.builtin.template:
     src: docker-compose.yml.j2
-    dest: "{{ linkding_service_path }}/docker-compose.yml"
+    dest: "{{ mealie_service_path }}/docker-compose.yml"
     mode: "0755"
 
 - name: 🚀 Starts container stack
   community.docker.docker_compose_v2:
-    project_src: "{{ linkding_service_path }}"
+    project_src: "{{ mealie_service_path }}"
     state: present

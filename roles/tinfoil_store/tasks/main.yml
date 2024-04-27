@@ -36,7 +36,7 @@
   community.docker.docker_compose_v2:
     project_src: "{{ tinfoil_store_service_path }}"
     state: present
-  notify: "unmount seadrive fuse"
+  notify: unmount seadrive fuse
 
 - name: 📂 Creates Target folder link
   ansible.builtin.file:

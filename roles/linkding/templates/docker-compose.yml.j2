@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: "{{ linkding_postgres_password }}"
       POSTGRES_USER: "{{ linkding_postgres_user }}"
     networks:
-      - linkding-net
+      - "{{ linkding_network }}"
 
   linkding:
     container_name: "{{ linkding_container_prefix }}-linkding"
@@ -30,7 +30,7 @@ services:
       - postgres
     restart: unless-stopped
     networks:
-      - linkding-net
+      - "{{ linkding_network }}"
 
 networks:
-  linkding-net:
+  "{{ linkding_network }}":
