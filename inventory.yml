@@ -4,3 +4,4 @@ ungrouped:
     catboy_house:
       ansible_host: catboy-house
       services_path: /root/services
+      downloads_path: /root/Downloads

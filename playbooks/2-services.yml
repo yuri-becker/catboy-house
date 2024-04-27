@@ -19,3 +19,8 @@
       vars:
         tinfoil_store_service_port: 29157
         tinfoil_store_service_directory: tinfoil-store
+
+    - role: pyload
+      vars:
+        pyload_service_port: 29158
+        pyload_service_directory: pyload

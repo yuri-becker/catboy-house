@@ -1,0 +1,35 @@
+---
+# tasks file for roles/pyload
+- name: 📂 Creates service path
+  ansible.builtin.file:
+    path: "{{ pyload_service_path }}"
+    state: directory
+    mode: "0755"
+
+- name: 📂 Creates volume
+  ansible.builtin.file:
+    path: "{{ pyload_volume_config }}"
+    state: directory
+    mode: "0755"
+    owner: 1000
+
+- name: 📂 Creates downloads directory
+  ansible.builtin.file:
+    path: "{{ downloads_path }}"
+    state: directory
+    mode: "0755"
+    owner: 1000
+
+- name: 🚀 Starts container
+  community.docker.docker_container:
+    name: pyload
+    image: linuxserver/pyload-ng
+    state: started
+    restart_policy: unless-stopped
+    ports:
+      - "{{ docker_gateway }}:{{ pyload_service_port }}:8000"
+    volumes:
+      - "{{ pyload_volume_config }}:/config"
+      - "{{ downloads_path }}:/downloads"
+    env:
+      PUID: "1000"
