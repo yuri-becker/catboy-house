@@ -1,25 +1,17 @@
 ---
-- name: 📦 Installs virtualenv
+- name: 📦 Installs virtualenv and pip
   ansible.builtin.apt:
-    name: virtualenv
+    name: "{{ item }}"
     state: present
+  loop:
+    - python3-pip
+    - virtualenv
 
 - name: 📂 Creates Services and venv directory
   ansible.builtin.file:
     path: "{{ play_venv }}"
     state: directory
     mode: "0644"
-
-- name: 📂 Creates virtualenv
-  ansible.builtin.command: virtualenv {{ play_venv }}
-  args:
-    creates: "{{ play_venv }}/bin/activate"
-
-- name: ⬆️ Pushes python wrapper
-  ansible.builtin.copy:
-    src: pyenv
-    dest: "{{ play_venv_interpreter }}"
-    mode: "0755"
 
 - name: 🏗️ Installs dependencies
   ansible.builtin.pip:
@@ -30,3 +22,9 @@
       - docker
       - docker-compose
     state: present
+
+- name: ⬆️ Pushes python wrapper
+  ansible.builtin.copy:
+    src: pyenv
+    dest: "{{ play_venv_interpreter }}"
+    mode: "0755"
