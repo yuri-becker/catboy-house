@@ -18,6 +18,9 @@ services:
           propagation: rshared
         source: "{{ tinfoil_store_volume_seafile }}"
         target: /home/app/seafile
+    labels:
+      com.centurylinklabs.watchtower.monitor-only: "true"
+
   seadrive:
     container_name: "{{ tinfoil_store_container_prefix }}-seadrive"
     image: yuribecker/seafile-mount:latest
@@ -36,3 +39,5 @@ services:
           propagation: rshared
         source: "{{ tinfoil_store_volume_seafile }}"
         target: /seafile
+    labels:
+      com.centurylinklabs.watchtower.monitor-only: "true"

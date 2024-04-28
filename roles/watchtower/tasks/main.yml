@@ -8,9 +8,10 @@
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     env:
-      WATCHTOWER_MONITOR_ONLY: "false"
       WATCHTOWER_NO_STARTUP_MESSAGE: "false"
       WATCHTOWER_NOTIFICATION_REPORT: "true"
       WATCHTOWER_NOTIFICATION_TEMPLATE: "{{ watchtower_notification_template }}"
       WATCHTOWER_NOTIFICATION_URL: "{{ watchtower_notification_url }}"
-      WATCHTOWER_POLL_INTERVAL: "86400"
+      WATCHTOWER_MONITOR_ONLY: "{{ watchtower_monitor_only }}"
+      WATCHTOWER_SCHEDULE: "{{ watchtower_schedule }}"
+      WATCHTOWER_CLEANUP: "{{ watchtower_cleanup }}"

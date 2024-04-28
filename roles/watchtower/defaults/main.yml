@@ -1,0 +1,5 @@
+---
+watchtower_schedule: "0 0 6 * * *"
+watchtower_monitor_only: "false"
+watchtower_cleanup: "true"
+
