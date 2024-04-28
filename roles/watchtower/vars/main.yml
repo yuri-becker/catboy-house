@@ -1,9 +1,12 @@
 ---
 # vars file for roles/watchtower
 watchtower_notification_template: >-
-  {%raw%}{{with .Report}}{{if .Stale}}{{range .Stale}}{{.Name}}
-  ({{.ImageName}}) has updates: {{.CurrentImageID.ShortID}} →
-  ✨{{.LatestImageID.ShortID}}{{"\n"}}{{end}}{{end}}{{end}}{%endraw%}
+  {%raw%}{{with .Report}}{{if .Stale}}{{range .Stale}}⚠️ {{.Name}}
+  ({{.ImageName}}) has updates: {{.CurrentImageID.ShortID}} → {{
+  .LatestImageID.ShortID}}{{"\n"}}{{end}}{{end}}{{if .Updated}}
+  {{range .Updated}}🎉 {{.Name}} ({{.ImageName}}) was updated: {{
+  .CurrentImageID.ShortID}} → {{.LatestImageID.ShortID}}{{"\n"}}{{end}}{{end}}
+  {{end}}{%endraw%}
 watchtower_notification_url: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   35323835316438613739343165396431643238643666366332396431353236643737333664353663

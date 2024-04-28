@@ -1,0 +1,31 @@
+---
+- name: 📂 Creates service path
+  ansible.builtin.file:
+    path: "{{ seafile_service_path }}"
+    state: directory
+    mode: "0755"
+
+- name: 📂 Creates data volume
+  ansible.builtin.file:
+    path: "{{ seafile_volume_data }}"
+    state: directory
+    mode: "0755"
+    owner: 0
+
+- name: 📂 Creates db volume
+  ansible.builtin.file:
+    path: "{{ seafile_volume_db }}"
+    state: directory
+    mode: "0755"
+    owner: 999
+
+- name: ⬆️ Pushes compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ seafile_service_path }}/docker-compose.yml"
+    mode: "0755"
+
+- name: 🚀 Starts container stack
+  community.docker.docker_compose_v2:
+    project_src: "{{ seafile_service_path }}"
+    state: present

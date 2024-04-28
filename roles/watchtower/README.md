@@ -1,6 +1,6 @@
 Watchtower
 =========
 
-[Watchtower](https://containrrr.dev/watchtower/) notifies me about container
+[Watchtower](https://containrrr.dev/watchtower/) notifies about container
 updates.
 

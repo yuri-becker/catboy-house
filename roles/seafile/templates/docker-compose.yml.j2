@@ -1,0 +1,41 @@
+services:
+  db:
+    image: mariadb:10
+    container_name: "{{ seafile_container_prefix }}-mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: "{{ seafile_mysql_password }}"
+      MYSQL_LOG_CONSOLE: true
+    volumes:
+      - "{{ seafile_volume_db }}:/var/lib/mysql"
+    networks:
+      - "{{ seafile_network }}"
+
+  memcached:
+    image: memcached:1
+    container_name: seafile-memcached
+    entrypoint: memcached -m 256
+    networks:
+      - "{{ seafile_network }}"
+
+  seafile:
+    image: seafileltd/seafile-mc:latest
+    container_name: "{{ seafile_container_prefix }}-seafile"
+    volumes:
+      - "{{ seafile_volume_data }}:/shared"
+    ports:
+      - "{{ docker_gateway }}:{{ seafile_service_port }}:80"
+    environment:
+      DB_HOST: db
+      DB_ROOT_PASSWD: "{{ seafile_mysql_password }}"
+      TIME_ZONE: Europe/Berlin
+      SEAFILE_SERVER_LETSENCRYPT: false
+      FORCE_HTTPS_IN_CONF: false
+      SEAFILE_SERVER_HOSTNAME: "{{ seafile_domain }}"
+    depends_on:
+      - db
+      - memcached
+    networks:
+      - "{{ seafile_network }}"
+
+networks:
+  "{{ seafile_network }}":

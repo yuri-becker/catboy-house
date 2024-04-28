@@ -3,8 +3,6 @@ Mealie
 
 Recipe manager [Mealie](https://mealie.io/).
 
-Access on request.
-
 Role Variables
 --------------
 

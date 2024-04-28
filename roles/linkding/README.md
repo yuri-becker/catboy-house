@@ -3,8 +3,6 @@ Linkding
 
 Bookmark manager [Linkding](https://github.com/sissbruecker/linkding).
 
-No public access, sorry. 😔
-
 Role Variables
 --------------
 

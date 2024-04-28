@@ -1,9 +1,5 @@
 ---
 # vars file for roles/mealie
-mealie_service_path: "{{ services_path }}/{{ mealie_service_directory }}"
-mealie_volume_data: "{{ mealie_service_path }}/volumes/data"
-mealie_volume_db: "{{ mealie_service_path }}/volumes/db"
-mealie_network: "{{ mealie_container_prefix }}-network"
 mealie_postgres_user: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   39316239383838313333636666613637663338626338326436393161346639666433663631376634

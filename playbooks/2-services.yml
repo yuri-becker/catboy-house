@@ -4,15 +4,29 @@
   vars:
     ansible_python_interpreter: "{{ play_venv }}/bin/pyenv"
   roles:
+    - role: seafile
+      vars:
+        seafile_service_port: 28947
+        seafile_service_directory: seafile
+        seafile_domain: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          62643266636463333666366132633363353364376564313031633533653337656534363064383035
+          6237643864326332613564326239373162386464623236610a336364376634323962653464373335
+          39353931616538646335613832626639326230616236303932303961313164323966626665666534
+          6435636430336335640a363564643836313938313832306137643264663736633035633232393066
+          31666264356239653063633338326434393065376333623864633163393265333532
+        seafile_volume_data: /root/home/seafile/data
+        seafile_volume_db: /root/home/seafile/db
+
     - role: linkding
       vars:
-        linkding_service_port: 8948
+        linkding_service_port: 28948
         linkding_service_directory: linkding
 
     - role: mealie
       vars:
         mealie_domain: mealie.catboy.house
-        mealie_service_port: 8949
+        mealie_service_port: 28949
         mealie_service_directory: mealie
 
     - role: tinfoil_store

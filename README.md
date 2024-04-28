@@ -1,4 +1,4 @@
-[![AGPL-3.0 License](https://img.shields.io/github/license/yuri-becker/catboy-house?style=for-the-badge&logo=gnu&logoColor=white&color=%23A42E2B )](https://github.com/yuri-becker/catboy-house/blob/latest/LICENSE.md)
+[![AGPL-3.0 License](https://img.shields.io/github/license/yuri-becker/catboy-house?style=for-the-badge&logo=gnu&logoColor=white&color=%23A42E2B )](https://github.com/yuri-becker/catboy-house/blob/main/LICENSE.md)
 
 <br />
 <div align="center">
@@ -9,6 +9,27 @@
     Infrastructure for catboy.house.
   </p>
 </div>
+<br/>
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-this-project">About this Project</a>
+    </li>
+    <li>
+    <a href="#setup">Setup</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#install-ansible-and-requirements">Install Ansible and requirements</a></li>
+        <li><a href="#make-the-host-accessible">Make the host accessible</a></li>
+        <li><a href="#vault-password">Vault password</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#copying">Copying</a></li>
+  </ol>
+</details>
+<br/>
 
 ## About this Project
 
@@ -18,7 +39,7 @@ I took over the server and am now in the process of migrating the existing servi
 
 Later on, I'm planning to add more public services for everyone to use.
 
-## Getting started
+## Setup
 Instructions for setting up playbook execution and contribution. Most likely, you won't need this.
 
 ### Prerequisites
@@ -55,3 +76,7 @@ ansible-lint
 ```sh
 ansible-vault encrypt_string <string> --name <var-name>
 ```
+
+## Copying
+You may re-use files and roles from this repository for you own projects as long as you comply to the terms of the [GNU Affero General Public License 
+version  3.0](https://github.com/yuri-becker/catboy-house/blob/main/LICENSE.md).
