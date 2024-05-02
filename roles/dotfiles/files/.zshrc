@@ -21,5 +21,11 @@ alias h='history'
 
 alias cat='batcat --plain --pager never'
 
-
 export EDITOR='vim'
+
+COLOR_DEFAULT=$'\e[0m'
+COLOR_TIME=$'\e[1m\e[34m'
+COLOR_USER_HOST=$'\e[38m'
+COLOR_DIR=$'\e[37m'
+setopt PROMPT_SUBST
+PS1='%{${COLOR_TIME}%}%* %{${COLOR_USER_HOST}%}%n@%m %{${COLOR_DIR}%}%~ %{${COLOR_DEFAULT}%}'

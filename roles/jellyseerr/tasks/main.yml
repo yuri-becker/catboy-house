@@ -1,0 +1,28 @@
+---
+- name: 📂 Creates services path
+  ansible.builtin.file:
+    path: "{{ jellyseerr_service_path }}"
+    state: directory
+    mode: "0755"
+
+- name: 📂 Creates volume
+  ansible.builtin.file:
+    path: "{{ jellyseerr_volume_config }}"
+    state: directory
+    mode: "0755"
+    owner: 1000
+
+- name: 🚀 Starts container
+  community.docker.docker_container:
+    name: "{{ jellyseerr_container_name }}"
+    image: fallenbagel/jellyseerr:latest
+    state: started
+    restart_policy: unless-stopped
+    ports:
+      - "{{ docker_gateway }}:{{ jellyseerr_service_port }}:5055"
+    volumes:
+      - "{{ jellyseerr_volume_config }}:/app/config"
+    env:
+      LOG_LEVEL: "info"
+      TZ: "Europe/Berlin"
+

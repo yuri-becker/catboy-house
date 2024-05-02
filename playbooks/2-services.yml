@@ -38,3 +38,8 @@
       vars:
         pyload_service_port: 29158
         pyload_service_directory: pyload
+
+    - role: jellyseerr
+      vars:
+        jellyseerr_service_port: 30213
+        jellyseerr_service_directory: jellyseerr

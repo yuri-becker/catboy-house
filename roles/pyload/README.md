@@ -18,3 +18,6 @@ Path where this service should store its files in. Alternative to `pyload_servic
 
 ### `pyload_volume_config` (optional)
 Path of the config volume.
+
+### `pyload_container_name` (optional)
+Container name
