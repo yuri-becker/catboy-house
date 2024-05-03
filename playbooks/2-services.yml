@@ -39,6 +39,11 @@
         pyload_service_port: 29158
         pyload_service_directory: pyload
 
+    - role: jellyfin
+      vars:
+        jellyfin_service_port: 30212
+        jellyfin_service_directory: jellyfin
+
     - role: jellyseerr
       vars:
         jellyseerr_service_port: 30213

@@ -5,3 +5,7 @@ ungrouped:
       ansible_host: catboy-house
       services_path: /root/services
       downloads_path: /root/Downloads
+      books_path: /home/Books
+      movies_path: /home/Movies
+      music_path: /home/Music
+      tv_path: /home/TV

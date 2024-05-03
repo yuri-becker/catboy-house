@@ -22,7 +22,7 @@
 
 - name: 🚀 Starts container
   community.docker.docker_container:
-    name: pyload
+    name: "{{ pyload_container_name }}"
     image: linuxserver/pyload-ng:latest
     state: started
     restart_policy: unless-stopped

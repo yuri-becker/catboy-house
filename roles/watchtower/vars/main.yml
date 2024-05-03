@@ -7,7 +7,7 @@ watchtower_notification_template: >-
   {{range .Updated}}🎉 {{.Name}} ({{.ImageName}}) was updated: {{
   .CurrentImageID.ShortID}} → {{.LatestImageID.ShortID}}{{"\n"}}{{end}}{{end}}
   {{end}}{%endraw%}
-watchtower_notification_url: !vault |
+watchtower_notification_url: !vault |-
   $ANSIBLE_VAULT;1.1;AES256
   35623461626334633566306231383733653432653739333863343866646265396265326533656364
   6161643865613134386232353637313834663131383562350a323465663665333339663331366539

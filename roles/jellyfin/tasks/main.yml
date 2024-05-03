@@ -1,0 +1,40 @@
+---
+- name: 📂 Creates service path
+  ansible.builtin.file:
+    path: "{{ jellyfin_service_path }}"
+    state: directory
+    mode: "0755"
+
+- name: 📂 Creates volumes
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+    owner: 1000
+    group: 100
+  loop:
+    - "{{ jellyfin_volume_web }}"
+    - "{{ jellyfin_volume_config }}"
+    - "{{ movies_path }}"
+    - "{{ tv_path }}"
+    - "{{ music_path }}"
+    - "{{ books_path }}"
+
+- name: 🚀 Starts container
+  community.docker.docker_container:
+    name: "{{ jellyfin_container_name }}"
+    image: linuxserver/jellyfin:latest
+    state: started
+    restart_policy: unless-stopped
+    ports:
+      - "{{ docker_gateway }}:{{ jellyfin_service_port }}:8096"
+    env:
+      PUID: "1000"
+      PGID: "100"
+    volumes:
+      - "{{ jellyfin_volume_web }}:/usr/share/jellyfin/web"
+      - "{{ jellyfin_volume_config }}:/config"
+      - "{{ books_path }}:/data/books"
+      - "{{ movies_path }}:/data/movies"
+      - "{{ music_path }}:/data/music"
+      - "{{ tv_path }}:/data/tvshows"
