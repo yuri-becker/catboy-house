@@ -18,7 +18,6 @@
     - "{{ movies_path }}"
     - "{{ tv_path }}"
     - "{{ music_path }}"
-    - "{{ books_path }}"
 
 - name: 🚀 Starts container
   community.docker.docker_container:
@@ -34,7 +33,6 @@
     volumes:
       - "{{ jellyfin_volume_web }}:/usr/share/jellyfin/web"
       - "{{ jellyfin_volume_config }}:/config"
-      - "{{ books_path }}:/data/books"
       - "{{ movies_path }}:/data/movies"
       - "{{ music_path }}:/data/music"
       - "{{ tv_path }}:/data/tvshows"
