@@ -1,6 +1,6 @@
 ---
 services_path: /root/services
-downloads_path: /root/Downloads
+downloads_path: /home/Downloads
 books_path: /home/Books
 movies_path: /home/Movies
 music_path: /home/Music

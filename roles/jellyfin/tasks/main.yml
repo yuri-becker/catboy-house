@@ -13,7 +13,6 @@
     owner: 1000
     group: 100
   loop:
-    - "{{ jellyfin_volume_web }}"
     - "{{ jellyfin_volume_config }}"
     - "{{ movies_path }}"
     - "{{ tv_path }}"
@@ -26,12 +25,11 @@
     state: started
     restart_policy: unless-stopped
     ports:
-      - "{{ docker_gateway }}:{{ jellyfin_service_port }}:8096"
+      - "{{ jellyfin_service_port }}:8096"
     env:
       PUID: "1000"
       PGID: "100"
     volumes:
-      - "{{ jellyfin_volume_web }}:/usr/share/jellyfin/web"
       - "{{ jellyfin_volume_config }}:/config"
       - "{{ movies_path }}:/data/movies"
       - "{{ music_path }}:/data/music"
