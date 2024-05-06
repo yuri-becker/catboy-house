@@ -1,0 +1,50 @@
+networks:
+   "{{ seedbox_network_name }}":
+    name: "{{ seedbox_network_name }}"
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.80.10.0/24
+        gateway: 172.80.10.1
+services:
+  gluetun:
+    image: qmcgaw/gluetun:latest
+    container_name: "{{ seedbox_container_prefix }}-gluetun"
+    restart: always
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    ports:
+      - "8888:8888/tcp"                    # Gluetun Local Network HTTP proxy
+      - "8388:8388/tcp"                    # Gluetun Local Network Shadowsocks
+      - "8388:8388/udp"                    # Gluetun Local Network Shadowsocks
+      - "{{ seedbox_webui_port }}:8112"    # WebUI Portal: bittorrent
+    networks:
+      - "{{ seedbox_network_name }}"
+    volumes:
+      - "{{ seedbox_volume_gluetun }}:/gluetun"
+    environment:
+      PUID: "100"
+      PGID: "1000"
+      TZ: "Europe/Berlin"
+      VPN_SERVICE_PROVIDER: "{{ seedbox_vpn_service_provider }}"
+      SERVER_COUNTRIES: "{{ seedbox_vpn_server_countries }}"
+      FIREWALL_VPN_INPUT_PORTS: "{{ seedbox_vpn_input_port }}"
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    depends_on:
+      - gluetun
+    container_name: "{{ seedbox_container_prefix }}-qbittorrent"
+    restart: unless-stopped
+    volumes:
+      - "{{ seedbox_volume_qbittorrent }}:/config"
+      - "{{ downloads_path }}:/downloads"
+    environment:
+      PUID: "1000"
+      PGID: "100"
+      TZ: "Europe/Berlin"
+      DELUGE_LOGLEVEL: "debug"
+      WEBUI_PORT: "8112"
+    network_mode: "service:gluetun"

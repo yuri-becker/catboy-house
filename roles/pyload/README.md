@@ -4,14 +4,14 @@ Download manager [pyLoad](https://pyload.net/).
 
 ## Role Variables
 
-### `pyload_service_directory`*
-Directory under `services_path` where this service should store its files in.
-
 ### `pyload_service_port`*
 Port on which pyload should run.
 
 ### `downloads_path`*
 Directory to put downloads in.
+
+### `pyload_service_directory` (optional)
+Directory under `services_path` where this service should store its files in.
 
 ### `pyload_service_path` (optional)
 Path where this service should store its files in. Alternative to `pyload_service_directory`.

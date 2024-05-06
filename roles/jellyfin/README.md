@@ -4,9 +4,6 @@ Media system, see [https://jellyfin.org/](https://jellyfin.org/).
 
 ## Role Variables
 
-### `jellyfin_service_directory`*
-Directory under `services_path` where this service should store its files in.
-
 ### `jellyfin_service_port`*
 Port on which this service should be exposed.
 
@@ -18,6 +15,9 @@ Path for music.
 
 ### `tv_path`*
 Path for shows.
+
+### `jellyfin_service_directory` (optional)
+Directory under `services_path` where this service should store its files in.
 
 ### `jellyfin_container_name` (optional)
 Container name.

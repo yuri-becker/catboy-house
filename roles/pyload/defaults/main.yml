@@ -1,5 +1,6 @@
 ---
 # defailts file for roles/pyload
+pyload_service_directory: pyload
 pyload_service_path: "{{ services_path }}/{{ pyload_service_directory }}"
 pyload_volume_config: "{{ pyload_service_path }}/config"
 pyload_container_name: pyload

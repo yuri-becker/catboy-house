@@ -4,11 +4,11 @@ Request management and media discover [Jellyseerr](https://github.com/Fallenbage
 
 ## Role Variables
 
-### `jellyseerr_service_directory`*
-Directory under `services_path` where this service should store its files in.
-
 ### `jellyseerr_service_port`*
 Port on which this service should be exposed.
+
+### `jellyseerr_service_directory` (optional)
+Directory under `services_path` where this service should store its files in.
 
 ### `jellyseerr_container_name` (optional)
 Container names.

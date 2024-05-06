@@ -1,0 +1,8 @@
+---
+# defaults file for roles/seedbox
+seedbox_service_directory: seedbox
+seedbox_service_path: "{{ services_path }}/{{ seedbox_service_directory }}"
+seedbox_volume_qbittorrent: "{{ seedbox_service_path }}/volumes/qbittorrent"
+seedbox_volume_gluetun: "{{ seedbox_service_path }}/volumes/gluetun"
+seedbox_container_prefix: seedbox
+seedbox_network_name: seedbox-network

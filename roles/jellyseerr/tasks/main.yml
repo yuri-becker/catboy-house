@@ -23,5 +23,5 @@
     volumes:
       - "{{ jellyseerr_volume_config }}:/app/config"
     env:
-      LOG_LEVEL: "info"
-      TZ: "Europe/Berlin"
+      LOG_LEVEL: info
+      TZ: Europe/Berlin
