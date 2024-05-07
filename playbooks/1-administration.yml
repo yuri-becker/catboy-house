@@ -6,3 +6,6 @@
   roles:
     - dotfiles
     - watchtower
+    - role: portainer
+      vars:
+        portainer_service_port: 27949
