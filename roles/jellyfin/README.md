@@ -10,9 +10,6 @@ Port on which this service should be exposed.
 ### `movies_path`*
 Path where Jellyfin should look for movies in.
 
-### `music_path`*
-Path for music.
-
 ### `tv_path`*
 Path for shows.
 
