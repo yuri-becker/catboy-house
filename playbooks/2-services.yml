@@ -38,3 +38,10 @@
     - role: seedbox
       vars:
         seedbox_webui_port: 30214
+
+    - role: arr
+      tags: arr
+      vars:
+        arr_sonarr_port: 30215
+        arr_radarr_port: 30216
+        arr_prowlarr_port: 30217

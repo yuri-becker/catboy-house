@@ -1,0 +1,33 @@
+---
+# tasks file for roles/arr
+- name: 📂 Creates service path
+  ansible.builtin.file:
+    path: "{{ arr_service_path }}"
+    state: directory
+    mode: "0755"
+
+- name: 📂 Creates volumes
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+    owner: 1000
+    group: 100
+  loop:
+    - "{{ arr_volume_sonarr }}"
+    - "{{ arr_volume_radarr }}"
+    - "{{ arr_volume_prowlarr }}"
+    - "{{ downloads_path }}"
+    - "{{ tv_path }}"
+    - "{{ movies_path }}"
+
+- name: ⬆️ Pushes compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ arr_service_path }}/docker-compose.yml"
+    mode: "0755"
+
+- name: 🚀 Starts container stack
+  community.docker.docker_compose_v2:
+    project_src: "{{ arr_service_path }}"
+    state: present

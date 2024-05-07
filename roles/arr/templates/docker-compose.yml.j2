@@ -1,0 +1,79 @@
+services:
+  sonarr:
+    image: linuxserver/sonarr:latest
+    container_name: "{{ arr_container_prefix }}-sonarr"
+    restart: unless-stopped
+    ports:
+      - "{{ docker_gateway }}:{{ arr_sonarr_port }}:8989"
+    volumes:
+      - "{{ arr_volume_sonarr }}:/config"
+      - "{{ downloads_path }}:/downloads"
+      - "{{ tv_path }}:/tv"
+      - "/dev/rtc:/dev/rtc"
+  radarr:
+    image: linuxserver/radarr:latest
+    container_name: "{{ arr_container_prefix }}-radarr"
+    restart: unless-stopped
+    ports:
+      - "{{ docker_gateway }}:{{ arr_radarr_port }}:7878"
+    volumes:
+      - "{{ arr_volume_radarr }}:/config"
+      - "{{ downloads_path }}:/downloads"
+      - "{{ movies_path }}:/movies"
+  prowlarr:
+    image: linuxserver/prowlarr:latest
+    container_name: "{{ arr_container_prefix }}-prowlarr"
+    depends_on:
+      - sonarr
+      - radarr
+    restart: unless-stopped
+    ports:
+      - "{{ docker_gateway }}:{{ arr_prowlarr_port }}:9696"
+    volumes:
+      - "{{ arr_volume_prowlarr }}:/config"
+
+# Sonarr
+# ENV
+# HOME 	/root
+# LSIO_FIRST_PARTY 	true
+# PATH 	/lsiopy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+# PGID 	100
+# PS1 	$(whoami)@$(hostname):$(pwd)\$
+# PUID 	1000
+# S6_CMD_WAIT_FOR_SERVICES_MAXTIME 	0
+# S6_STAGE2_HOOK 	/docker-mods
+# S6_VERBOSITY 	1
+# SONARR_BRANCH 	main
+# SONARR_CHANNEL 	v4-stable
+# TERM 	xterm
+# VIRTUAL_ENV 	/lsiopy
+# XDG_CONFIG_HOME 	/config/xdg
+
+# Radarr
+# HOME 	/root
+# LSIO_FIRST_PARTY 	true
+# PATH 	/lsiopy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+# PGID 	100
+# PS1 	$(whoami)@$(hostname):$(pwd)\$
+# PUID 	1000
+# S6_CMD_WAIT_FOR_SERVICES_MAXTIME 	0
+# S6_STAGE2_HOOK 	/docker-mods
+# S6_VERBOSITY 	1
+# TERM 	xterm
+# VIRTUAL_ENV 	/lsiopy
+# XDG_CONFIG_HOME 	/config/xdg
+
+# Prowlarr
+#HOME 	/root
+#LSIO_FIRST_PARTY 	true
+#PATH 	/lsiopy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+#PGID 	1000
+#PS1 	$(whoami)@$(hostname):$(pwd)\$
+#PUID 	1000
+#S6_CMD_WAIT_FOR_SERVICES_MAXTIME 	0
+#S6_STAGE2_HOOK 	/docker-mods
+#S6_VERBOSITY 	1
+#TERM 	xterm
+#TZ 	Etc/UTC
+#VIRTUAL_ENV 	/lsiopy
+#XDG_CONFIG_HOME 	/config/xdg
