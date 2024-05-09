@@ -1,0 +1,6 @@
+---
+# defaults file for roles/sabnzbd
+sabnzbd_service_directory: sabnzbd
+sabnzbd_service_path: "{{ services_path }}/{{ sabnzbd_service_directory }}"
+sabnzbd_volume_config: "{{ sabnzbd_service_path }}/volumes/config"
+sabnzbd_container_name: sabnzbd

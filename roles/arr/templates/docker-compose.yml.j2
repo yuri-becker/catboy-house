@@ -10,6 +10,9 @@ services:
       - "{{ downloads_path }}:/downloads"
       - "{{ tv_path }}:/tv"
       - "/dev/rtc:/dev/rtc"
+    environment:
+      PUID: "100"
+      PGID: "1000"
   radarr:
     image: linuxserver/radarr:latest
     container_name: "{{ arr_container_prefix }}-radarr"
@@ -20,6 +23,9 @@ services:
       - "{{ arr_volume_radarr }}:/config"
       - "{{ downloads_path }}:/downloads"
       - "{{ movies_path }}:/movies"
+    environment:
+      PUID: "1000"
+      PGID: "100"
   prowlarr:
     image: linuxserver/prowlarr:latest
     container_name: "{{ arr_container_prefix }}-prowlarr"
@@ -31,49 +37,6 @@ services:
       - "{{ docker_gateway }}:{{ arr_prowlarr_port }}:9696"
     volumes:
       - "{{ arr_volume_prowlarr }}:/config"
-
-# Sonarr
-# ENV
-# HOME 	/root
-# LSIO_FIRST_PARTY 	true
-# PATH 	/lsiopy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-# PGID 	100
-# PS1 	$(whoami)@$(hostname):$(pwd)\$
-# PUID 	1000
-# S6_CMD_WAIT_FOR_SERVICES_MAXTIME 	0
-# S6_STAGE2_HOOK 	/docker-mods
-# S6_VERBOSITY 	1
-# SONARR_BRANCH 	main
-# SONARR_CHANNEL 	v4-stable
-# TERM 	xterm
-# VIRTUAL_ENV 	/lsiopy
-# XDG_CONFIG_HOME 	/config/xdg
-
-# Radarr
-# HOME 	/root
-# LSIO_FIRST_PARTY 	true
-# PATH 	/lsiopy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-# PGID 	100
-# PS1 	$(whoami)@$(hostname):$(pwd)\$
-# PUID 	1000
-# S6_CMD_WAIT_FOR_SERVICES_MAXTIME 	0
-# S6_STAGE2_HOOK 	/docker-mods
-# S6_VERBOSITY 	1
-# TERM 	xterm
-# VIRTUAL_ENV 	/lsiopy
-# XDG_CONFIG_HOME 	/config/xdg
-
-# Prowlarr
-#HOME 	/root
-#LSIO_FIRST_PARTY 	true
-#PATH 	/lsiopy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-#PGID 	1000
-#PS1 	$(whoami)@$(hostname):$(pwd)\$
-#PUID 	1000
-#S6_CMD_WAIT_FOR_SERVICES_MAXTIME 	0
-#S6_STAGE2_HOOK 	/docker-mods
-#S6_VERBOSITY 	1
-#TERM 	xterm
-#TZ 	Etc/UTC
-#VIRTUAL_ENV 	/lsiopy
-#XDG_CONFIG_HOME 	/config/xdg
+    environment:
+      PUID: "1000"
+      PGID: "100"

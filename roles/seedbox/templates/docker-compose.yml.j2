@@ -20,7 +20,7 @@ services:
       - "8888:8888/tcp"                    # Gluetun Local Network HTTP proxy
       - "8388:8388/tcp"                    # Gluetun Local Network Shadowsocks
       - "8388:8388/udp"                    # Gluetun Local Network Shadowsocks
-      - "{{ seedbox_webui_port }}:8112"    # WebUI Portal: bittorrent
+      - "{{ seedbox_webui_port }}:8112"    # Bittorrent Web UI
     networks:
       - "{{ seedbox_network_name }}"
     volumes:
@@ -36,7 +36,7 @@ services:
     image: lscr.io/linuxserver/qbittorrent:latest
     depends_on:
       - gluetun
-    container_name: "{{ seedbox_container_prefix }}-qbittorrent"
+    container_name: "{{ seedbox_container_prefix }}-qbxittorrent"
     restart: unless-stopped
     volumes:
       - "{{ seedbox_volume_qbittorrent }}:/config"
