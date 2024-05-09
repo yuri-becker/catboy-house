@@ -40,3 +40,19 @@ services:
     environment:
       PUID: "1000"
       PGID: "100"
+  bazarr:
+    image: linuxserver/bazarr:latest
+    container_name: "{{ arr_container_prefix }}-bazarr"
+    depends_on:
+      - sonarr
+      - radarr
+    restart: unless-stopped
+    ports:
+      - "{{ docker_gateway }}:{{ arr_bazarr_port }}:6767"
+    volumes:
+      - "{{ arr_volume_bazarr }}:/config"
+      - "{{ movies_path }}:/movies"
+      - "{{ tv_path }}:/tv"
+    environment:
+      PUID: "1000"
+      PGID: "100"

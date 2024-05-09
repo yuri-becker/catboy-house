@@ -45,8 +45,9 @@
         arr_sonarr_port: 30215
         arr_radarr_port: 30216
         arr_prowlarr_port: 30217
+        arr_bazarr_port: 30218
 
     - role: sabnzbd
       tags: sabnzbd
       vars:
-        sabnzbd_service_port: 30218
+        sabnzbd_service_port: 30219
