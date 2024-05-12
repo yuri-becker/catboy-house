@@ -16,7 +16,7 @@
 
     - role: mealie
       vars:
-        mealie_domain: mealie.catboy.house
+        mealie_domain: mealie.{{ root_domain }}
         mealie_service_port: 28949
 
     - role: tinfoil_store
@@ -51,3 +51,6 @@
       tags: sabnzbd
       vars:
         sabnzbd_service_port: 30219
+
+    - role: vrising
+      tags: vrising

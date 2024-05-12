@@ -1,0 +1,49 @@
+---
+# tasks file for roles/vrising
+- name: 📂 Creates service path
+  ansible.builtin.file:
+    path: "{{ vrising_service_path }}"
+    state: directory
+    mode: "0755"
+
+- name: 📂 Creates volume
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+    owner: 1000
+  loop:
+    - "{{ vrising_volume_server }}"
+    - "{{ vrising_volume_persistentdata }}/Settings"
+
+- name: ⬆️ Push configuration files
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ vrising_volume_persistentdata }}/Settings/{{ item.dest }}"
+    owner: 1000
+    mode: "755"
+    backup: true
+  loop:
+    - src: ServerHostSettings.json.j2
+      dest: ServerHostSettings.json
+    - src: adminlist.txt.j2
+      dest: adminlist.txt
+
+- name: 🚀 Starts container
+  community.docker.docker_container:
+    name: "{{ vrising_container_name }}"
+    image: trueosiris/vrising:latest
+    state: started
+    restart_policy: unless-stopped
+    ports:
+      - "{{ vrising_game_port }}:{{ vrising_game_port }}/udp"
+      - "{{ vrising_game_port }}:{{ vrising_game_port }}/tcp"
+      - "{{ vrising_query_port }}:{{ vrising_query_port }}/udp"
+      - "{{ vrising_query_port }}:{{ vrising_query_port }}/tcp"
+      - "{{ docker_gateway }}:{{ vrising_rcon_port }}:{{ vrising_rcon_port }}/tcp"
+    volumes:
+      - "{{ vrising_volume_server }}:/mnt/vrising/server"
+      - "{{ vrising_volume_persistentdata }}:/mnt/vrising/persistentdata"
+    env:
+      TZ: "{{ ansible_date_time.tz }}"
+      SERVERNAME: "{{ vrising_server_name }}"

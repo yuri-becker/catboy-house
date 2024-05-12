@@ -1,0 +1,31 @@
+{
+  "Name": "{{ vrising_server_name }}",
+  "Description": "{{ vrising_server_description }}",
+  "Port": {{ vrising_game_port }},
+  "QueryPort": {{ vrising_query_port }},
+  "MaxConnectedUsers": {{ vrising_max_connected_users }},
+  "MaxConnectedAdmins": {{ vrising_max_connected_admins }},
+  "ServerFps": {{ vrising_fps }},
+  "SaveName": "{{ vrising_server_name }}",
+  "Password": "{{ vrising_password }}",
+  "Secure": {{ vrising_secure }},
+  "ListOnMasterServer": {{ vrising_list_on_master_server }},
+  "ListOnSteam": {{ vrising_list_on_steam }},
+  "ListOnEOS": {{ vrising_list_on_eos }},
+  "AutoSaveCount": {{ vrising_auto_save_count }},
+  "AutoSaveInterval": {{ vrising_auto_save_interval }},
+  "CompressSaveFiles": {{ vrising_compress_save_files }},
+  "GameSettingsPreset": "{{ vrising_game_settings_preset }}",
+  "GameDifficultyPreset": "",
+  "AdminOnlyDebugEvents": true,
+  "DisableDebugEvents": false,
+  "API": {
+    "Enabled": false
+  },
+  "Rcon": {
+    "Enabled": {{ vrising_rcon_enabled }},
+    "Password": "{{ vrising_rcon_password }}",
+    "Port": {{ vrising_rcon_port }}
+  },
+  "Address": ""
+}

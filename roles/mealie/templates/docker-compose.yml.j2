@@ -30,7 +30,7 @@ services:
     environment:
       PUID: 1000
       PGID: 1000
-      TZ: Europe/Berlin
+      TZ: "{{ ansible_date_time.tz }}"
       MAX_WORKERS: 1
       WEB_CONCURRENCY: 1
       BASE_URL: "https://{{ mealie_domain }}/"
@@ -43,7 +43,7 @@ services:
       SMTP_HOST: "{{ smtp_server }}"
       SMTP_PORT: "{{ smtp_port }}"
       SMTP_FROM_NAME: Mealie
-      SMTP_FROM_EMAIL: mealie@catboy.house
+      SMTP_FROM_EMAIL: "mealie@{{ smtp_sender_domain }}"
       SMTP_USER: "{{ mealie_smtp_user }}"
       SMTP_PASSWORD: "{{ mealie_smtp_password }}"
       ALLOW_SIGNUP: false

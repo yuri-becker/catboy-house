@@ -28,7 +28,7 @@ services:
     environment:
       PUID: "100"
       PGID: "1000"
-      TZ: "Europe/Berlin"
+      TZ: "{{ ansible_date_time.tz }}"
       VPN_SERVICE_PROVIDER: "{{ seedbox_vpn_service_provider }}"
       SERVER_COUNTRIES: "{{ seedbox_vpn_server_countries }}"
       FIREWALL_VPN_INPUT_PORTS: "{{ seedbox_vpn_input_port }}"
@@ -44,7 +44,7 @@ services:
     environment:
       PUID: "1000"
       PGID: "100"
-      TZ: "Europe/Berlin"
+      TZ: "{{ ansible_date_time.tz }}"
       DELUGE_LOGLEVEL: "debug"
       WEBUI_PORT: "8112"
     network_mode: "service:gluetun"

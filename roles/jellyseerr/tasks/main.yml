@@ -24,4 +24,4 @@
       - "{{ jellyseerr_volume_config }}:/app/config"
     env:
       LOG_LEVEL: info
-      TZ: Europe/Berlin
+      TZ: "{{ ansible_date_time.tz }}"
