@@ -11,8 +11,8 @@ services:
       - "{{ tv_path }}:/tv"
       - "/dev/rtc:/dev/rtc"
     environment:
-      PUID: "100"
-      PGID: "1000"
+      PUID: "{{ app_uid }}"
+      PGID: "{{ app_gid }}"
   radarr:
     image: linuxserver/radarr:latest
     container_name: "{{ arr_container_prefix }}-radarr"
@@ -24,8 +24,8 @@ services:
       - "{{ downloads_path }}:/downloads"
       - "{{ movies_path }}:/movies"
     environment:
-      PUID: "1000"
-      PGID: "100"
+      PUID: "{{ app_uid }}"
+      PGID: "{{ app_gid }}"
   prowlarr:
     image: linuxserver/prowlarr:latest
     container_name: "{{ arr_container_prefix }}-prowlarr"
@@ -38,8 +38,8 @@ services:
     volumes:
       - "{{ arr_volume_prowlarr }}:/config"
     environment:
-      PUID: "1000"
-      PGID: "100"
+      PUID: "{{ app_uid }}"
+      PGID: "{{ app_gid }}"
   bazarr:
     image: linuxserver/bazarr:latest
     container_name: "{{ arr_container_prefix }}-bazarr"
@@ -54,5 +54,5 @@ services:
       - "{{ movies_path }}:/movies"
       - "{{ tv_path }}:/tv"
     environment:
-      PUID: "1000"
-      PGID: "100"
+      PUID: "{{ app_uid }}"
+      PGID: "{{ app_gid }}"
