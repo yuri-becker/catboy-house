@@ -4,28 +4,40 @@
   ansible.builtin.file:
     path: "{{ arr_service_path }}"
     state: directory
-    mode: "0755"
+    owner: "{{ app_uid }}"
+    group: "{{ app_gid }}"
+    mode: "0770"
 
 - name: 📂 Creates volumes
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
-    mode: "0755"
-    owner: 1000
-    group: 100
+    mode: "0770"
+    owner: "{{ app_uid }}"
+    group: "{{ app_gid }}"
   loop:
     - "{{ arr_volume_sonarr }}"
     - "{{ arr_volume_radarr }}"
     - "{{ arr_volume_prowlarr }}"
+    - "{{ arr_volume_bazarr }}"
     - "{{ downloads_path }}"
     - "{{ tv_path }}"
     - "{{ movies_path }}"
+  become: true
 
 - name: ⬆️ Pushes compose file
   ansible.builtin.template:
     src: docker-compose.yml.j2
     dest: "{{ arr_service_path }}/docker-compose.yml"
-    mode: "0755"
+    mode: "0770"
+
+- name: ⬆️ Pushes Caddy config
+  ansible.builtin.template:
+    src: arr.caddy.j2
+    dest: "{{ caddy_sites }}/arr.caddy"
+    mode: "0770"
+    group: "{{ app_gid }}"
+  notify: reload caddy
 
 - name: 🚀 Starts container stack
   community.docker.docker_compose_v2:

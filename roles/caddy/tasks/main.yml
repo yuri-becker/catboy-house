@@ -1,0 +1,37 @@
+---
+# tasks file for roles/caddy
+- name: 👤 Creates user
+  ansible.builtin.user:
+    state: present
+    name: "{{ caddy_user }}"
+    home: "{{ caddy_path }}"
+    create_home: false
+    append: true
+    groups:
+      - app
+  become: true
+
+- name: 📂 Creates paths
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ caddy_user }}"
+    group: "{{ app_gid }}"
+    mode: "0770"
+  loop:
+    - "{{ caddy_path }}"
+    - "{{ caddy_sites }}"
+  become: true
+  become_user: "{{ caddy_user }}"
+
+- name: ⬆️ Pushes Caddyfile
+  ansible.builtin.template:
+    src: Caddyfile.j2
+    dest: "{{ caddy_caddyfile }}"
+    mode: "0770"
+    owner: "{{ caddy_user }}"
+    group: "{{ app_gid }}"
+  become: true
+  become_user: "{{ caddy_user }}"
+  notify: reload caddy
+

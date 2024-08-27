@@ -27,6 +27,3 @@ Path of the data volume.
 
 ### `seafile_volume_db` (optional)
 Path of the database's volume.  
-
-### `seafile_network` (optional)
-Network name

@@ -1,0 +1,9 @@
+---
+# handlers file for roles/auth
+- name: 🚀 Restarts authelia
+  community.docker.docker_compose_v2:
+    project_src: "{{ auth_service_path }}"
+    services:
+      - authelia
+    state: restarted
+  listen: restart authelia

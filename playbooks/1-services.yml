@@ -4,6 +4,25 @@
   vars:
     ansible_python_interpreter: "{{ play_venv }}/bin/pyenv"
   roles:
+    - role: watchtower
+
+    - role: caddy
+      tags: caddy
+
+    - role: auth
+      tags: auth
+      vars:
+        auth_lldap_port: 27950
+        auth_lldap_domain: account.{{ root_domain }}
+        auth_authelia_port: 27951
+        auth_authelia_domain: auth.{{ root_domain }}
+
+    - role: portainer
+      tags: portainer
+      vars:
+        portainer_service_port: 27949
+        portainer_domain: docker.{{ root_domain }}
+
     - role: seafile
       vars:
         seafile_service_port: 28947
@@ -13,6 +32,7 @@
     - role: linkding
       vars:
         linkding_service_port: 28948
+        linkding_domain: bookmarks.{{ root_domain }}
 
     - role: mealie
       vars:
@@ -26,31 +46,34 @@
     - role: pyload
       vars:
         pyload_service_port: 29158
+        pyload_domain: pyload.{{ root_domain }}
 
     - role: jellyfin
       vars:
         jellyfin_service_port: 30212
+        jellyfin_domain: jellyfin.{{ root_domain }}
 
     - role: jellyseerr
       vars:
         jellyseerr_service_port: 30213
+        jellyseerr_domain: jellyseerr.{{ root_domain }}
 
     - role: seedbox
       vars:
         seedbox_webui_port: 30214
+        seedbox_domain: bittorrent.{{ root_domain }}
 
     - role: arr
       tags: arr
       vars:
         arr_sonarr_port: 30215
+        arr_sonarr_domain: sonarr.{{ root_domain }}
         arr_radarr_port: 30216
+        arr_radarr_domain: radarr.{{ root_domain }}
         arr_prowlarr_port: 30217
+        arr_prowlarr_domain: prowlarr.{{ root_domain }}
         arr_bazarr_port: 30218
-
-    - role: sabnzbd
-      tags: sabnzbd
-      vars:
-        sabnzbd_service_port: 30219
+        arr_bazarr_domain: bazarr.{{ root_domain }}
 
     - role: vrising
       tags: vrising

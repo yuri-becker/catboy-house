@@ -1,7 +1,7 @@
 services:
   sonarr:
     image: linuxserver/sonarr:latest
-    container_name: "{{ arr_container_prefix }}-sonarr"
+    container_name: "{{ arr_sonarr_container_name }}"
     restart: unless-stopped
     ports:
       - "{{ docker_gateway }}:{{ arr_sonarr_port }}:8989"
@@ -13,9 +13,10 @@ services:
     environment:
       PUID: "{{ app_uid }}"
       PGID: "{{ app_gid }}"
+
   radarr:
     image: linuxserver/radarr:latest
-    container_name: "{{ arr_container_prefix }}-radarr"
+    container_name: "{{ arr_radarr_container_name }}"
     restart: unless-stopped
     ports:
       - "{{ docker_gateway }}:{{ arr_radarr_port }}:7878"
@@ -26,9 +27,10 @@ services:
     environment:
       PUID: "{{ app_uid }}"
       PGID: "{{ app_gid }}"
+
   prowlarr:
     image: linuxserver/prowlarr:latest
-    container_name: "{{ arr_container_prefix }}-prowlarr"
+    container_name: "{{ arr_prowlarr_container_name }}"
     depends_on:
       - sonarr
       - radarr
@@ -40,9 +42,10 @@ services:
     environment:
       PUID: "{{ app_uid }}"
       PGID: "{{ app_gid }}"
+
   bazarr:
     image: linuxserver/bazarr:latest
-    container_name: "{{ arr_container_prefix }}-bazarr"
+    container_name: "{{ arr_bazarr_container_name }}"
     depends_on:
       - sonarr
       - radarr

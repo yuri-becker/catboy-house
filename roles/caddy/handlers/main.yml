@@ -1,0 +1,18 @@
+---
+# handlers file for roles/caddy
+- name: ✅ Validates caddy config
+  listen: reload caddy
+  ansible.builtin.command: caddy validate --config {{ caddy_caddyfile }}
+  register: caddy_config_valid
+  changed_when: true
+
+- name: ⛔ Aborts playbook
+  listen: reload caddy
+  ansible.builtin.fail:
+    msg: Caddy configuration is not valid
+  when: caddy_config_valid is failed
+
+- name: 🚀 Reloads caddy
+  listen: reload caddy
+  ansible.builtin.command: "caddy reload --config {{ caddy_caddyfile }}"
+  changed_when: true

@@ -1,0 +1,4 @@
+{{ jellyseerr_domain }} {
+    import caddy-common
+    reverse_proxy {{ docker_gateway }}:{{ jellyseerr_service_port }}
+}

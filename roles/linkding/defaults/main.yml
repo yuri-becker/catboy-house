@@ -1,8 +1,8 @@
 ---
 # defaults file for roles/linkding
 linkding_container_prefix: linkding
+linkding_container_name: "{{ linkding_container_prefix }}-linkding"
 linkding_service_directory: linkding
 linkding_service_path: "{{ services_path }}/{{ linkding_service_directory }}"
 linkding_volume_data: "{{ linkding_service_path }}/volumes/data"
 linkding_volume_db: "{{ linkding_service_path }}/volumes/db"
-linkding_network: "{{ linkding_container_prefix }}-network"

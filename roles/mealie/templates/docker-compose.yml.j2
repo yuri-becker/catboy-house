@@ -3,8 +3,6 @@ services:
     container_name: "{{ mealie_container_prefix }}-db"
     image: postgres:15
     restart: unless-stopped
-    networks:
-      - "{{ mealie_network }}"
     volumes:
       - "{{ mealie_volume_db }}:/var/lib/postgresql/data"
     environment:
@@ -13,12 +11,10 @@ services:
 
   mealie:
     image: ghcr.io/mealie-recipes/mealie:latest
-    container_name: "{{ mealie_container_prefix }}-mealie"
+    container_name: "{{ mealie_container_name }}"
     restart: unless-stopped
     ports:
       - "{{ docker_gateway }}:{{ mealie_service_port }}:9000"
-    networks:
-      - "{{ mealie_network }}"
     deploy:
       resources:
         limits:
@@ -28,8 +24,8 @@ services:
     volumes:
       - "{{ mealie_volume_data }}:/app/data/"
     environment:
-      PUID: 1000
-      PGID: 1000
+      PUID: "{{ app_uid }}"
+      PGID: "{{ app_gid }}"
       TZ: "{{ ansible_date_time.tz }}"
       MAX_WORKERS: 1
       WEB_CONCURRENCY: 1
@@ -47,6 +43,3 @@ services:
       SMTP_USER: "{{ mealie_smtp_user }}"
       SMTP_PASSWORD: "{{ mealie_smtp_password }}"
       ALLOW_SIGNUP: false
-
-networks:
-  "{{ mealie_network }}":

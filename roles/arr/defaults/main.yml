@@ -1,6 +1,10 @@
 ---
 # defaults file for roles/arr
 arr_container_prefix: arr
+arr_sonarr_container_name: "{{ arr_container_prefix }}-sonarr"
+arr_radarr_container_name: "{{ arr_container_prefix }}-radarr"
+arr_prowlarr_container_name: "{{ arr_container_prefix }}-prowlarr"
+arr_bazarr_container_name: "{{ arr_container_prefix }}-bazarr"
 arr_service_directory: arr
 arr_service_path: "{{ services_path }}/{{ arr_service_directory }}"
 arr_volume_sonarr: "{{ arr_service_path }}/volumes/sonarr"

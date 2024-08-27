@@ -28,6 +28,3 @@ Path of the data volume.
 ### `linkding_volume_db` (optional)
 Path of the database's volume.
 
-### `linkding_network` (optional)
-Network name.
-

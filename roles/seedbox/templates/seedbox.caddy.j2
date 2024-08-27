@@ -1,0 +1,4 @@
+{{ seedbox_domain }} {
+    import caddy-common
+    reverse_proxy {{ docker_gateway }}:{{ seedbox_webui_port }}
+}

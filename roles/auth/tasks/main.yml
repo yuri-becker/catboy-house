@@ -1,0 +1,48 @@
+---
+# tasks file for roles/auth
+- name: 📂 Creates service path
+  ansible.builtin.file:
+    path: "{{ auth_service_path }}"
+    state: directory
+    owner: "{{ app_uid }}"
+    group: "{{ app_gid }}"
+    mode: "0770"
+  become: true
+
+- name: 📂 Creates volumes
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0770"
+    owner: "{{ app_uid }}"
+    group: "{{ app_gid }}"
+  loop:
+    - "{{ auth_volume_lldap }}"
+    - "{{ auth_volume_lldap_postgres }}"
+    - "{{ auth_volume_authelia }}"
+    - "{{ auth_volume_authelia_postgres }}"
+  become: true
+
+- name: ⬆️ Pushes compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ auth_service_path }}/docker-compose.yml"
+    mode: "0770"
+    owner: "{{ app_uid }}"
+    group: "{{ app_gid }}"
+  become: true
+
+- name: ⬆️ Pushes authelia configuration
+  ansible.builtin.template:
+    src: volumes/authelia/configuration.yml.j2
+    dest: "{{ auth_volume_authelia }}/configuration.yml"
+    owner: "{{ app_uid }}"
+    group: "{{ app_gid }}"
+    mode: "0600"
+  notify: restart authelia
+  become: true
+
+- name: 🚀 Starts container stack
+  community.docker.docker_compose_v2:
+    project_src: "{{ auth_service_path }}"
+    state: present

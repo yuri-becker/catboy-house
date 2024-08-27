@@ -42,6 +42,3 @@ Path of the data volume
 
 ### `mealie_volume_db` (optional)
 Path of the database's volume
-
-### `mealie_network` (optional)
-Network name

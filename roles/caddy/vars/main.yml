@@ -1,0 +1,3 @@
+---
+# vars file for roles/caddy
+caddy_caddyfile: "{{ caddy_path }}/Caddyfile"

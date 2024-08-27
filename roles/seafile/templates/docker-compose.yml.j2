@@ -7,19 +7,15 @@ services:
       MYSQL_LOG_CONSOLE: true
     volumes:
       - "{{ seafile_volume_db }}:/var/lib/mysql"
-    networks:
-      - "{{ seafile_network }}"
 
   memcached:
     image: memcached:1
     container_name: seafile-memcached
     entrypoint: memcached -m 256
-    networks:
-      - "{{ seafile_network }}"
 
   seafile:
     image: seafileltd/seafile-mc:latest
-    container_name: "{{ seafile_container_prefix }}-seafile"
+    container_name: "{{ seafile_container_name }}"
     volumes:
       - "{{ seafile_volume_data }}:/shared"
     ports:
@@ -34,8 +30,3 @@ services:
     depends_on:
       - db
       - memcached
-    networks:
-      - "{{ seafile_network }}"
-
-networks:
-  "{{ seafile_network }}":

@@ -10,7 +10,7 @@ networks:
 services:
   gluetun:
     image: qmcgaw/gluetun:latest
-    container_name: "{{ seedbox_container_prefix }}-gluetun"
+    container_name: "{{ seedbox_gluetun_container_name }}"
     restart: always
     cap_add:
       - NET_ADMIN
@@ -36,14 +36,14 @@ services:
     image: lscr.io/linuxserver/qbittorrent:latest
     depends_on:
       - gluetun
-    container_name: "{{ seedbox_container_prefix }}-qbxittorrent"
+    container_name: "{{ seedbox_qbittorrent_container_name }}"
     restart: unless-stopped
     volumes:
       - "{{ seedbox_volume_qbittorrent }}:/config"
       - "{{ downloads_path }}:/downloads"
     environment:
-      PUID: "1000"
-      PGID: "100"
+      PUID: "{{ app_uid }}"
+      PGID: "{{ app_gid }}"
       TZ: "{{ ansible_date_time.tz }}"
       DELUGE_LOGLEVEL: "debug"
       WEBUI_PORT: "8112"

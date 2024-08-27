@@ -1,0 +1,57 @@
+# Doc: https://www.authelia.com/configuration/prologue/introduction/
+
+authentication_backend:
+  # see https://github.com/lldap/lldap/blob/main/example_configs/authelia_config.yml
+  password_reset:
+    disable: false
+  refresh_interval:  1m
+  ldap:
+    address: ldap://lldap:3890
+    implementation: custom
+    timeout: 5s
+    start_tls: false
+    base_dn: "{{ auth_base_dn }}"
+    username_attribute: uid
+    additional_users_dn: ou=people
+    users_filter: (&(|({username_attribute}={input})({mail_attribute}={input}))(objectClass=person))
+    additional_groups_dn: ou=groups
+    groups_filter: "(member={dn})"
+    user: uid=bind_user,ou=people,{{ auth_base_dn }}
+    password: "{{ auth_bind_user_password }}"
+    attributes:
+      display_name: displayName
+      group_name: cn
+      mail: mail
+
+storage:
+  encryption_key: "{{ auth_authelia_storage_encryption_key }}"
+  postgres:
+    address: "tcp://{{ auth_authelia_postgres_container_name }}"
+    database: authelia
+    username: "{{ auth_authelia_postgres_user }}"
+    password: "{{ auth_authelia_postgres_password }}"
+
+session:
+  secret: "{{ auth_authelia_session_secret }}"
+  cookies:
+    - domain: "{{ auth_authelia_domain }}"
+      authelia_url: "https://{{ auth_authelia_domain }}"
+
+notifier:
+  disable_startup_check: false
+  smtp:
+    address: "smtp://{{ smtp_server }}:{{ smtp_port }}"
+    username: "{{ auth_smtp_user }}"
+    sender: "{{ auth_smtp_user }}"
+    password: "{{ auth_smtp_password }}"
+
+identity_validation:
+  reset_password:
+     jwt_secret: "{{ auth_lldap_jwt_secret }}"
+     jwt_algorithm: HS512
+     jwt_lifespan: 1 hour
+
+access_control:
+  rules:
+    - domain: "*.{{ root_domain }}"
+      policy: deny

@@ -1,0 +1,72 @@
+---
+# tasks file for roles/create_admins
+- name: 📦 Installs helper packages
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - bat
+    - btop
+    - fzf
+    - kitty-terminfo
+    - ranger
+    - lsd
+    - vim
+
+- name: 👤 Creates app group
+  ansible.builtin.group:
+    state: present
+    name: app
+    gid: "{{ app_gid }}"
+  become: true
+
+- name: 👤 Creates admin group
+  ansible.builtin.group:
+    state: present
+    name: admin
+    gid: "{{ create_admins_group_id }}"
+  become: true
+
+- name: 👤 Creates admin users
+  ansible.builtin.user:
+    state: present
+    name: "{{ item.name }}"
+    uid: "{{ item.uid }}"
+    home: /home/{{ item.name }}
+    create_home: true
+    append: true
+    groups:
+      - admin
+      - app
+      - docker
+  loop: "{{ admins }}"
+  become: true
+
+- name: 📂 Creates ssh dir
+  ansible.builtin.file:
+    state: directory
+    path: /home/{{ item.name }}/.ssh
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+    mode: "0755"
+  loop: "{{ admins }}"
+  become: true
+
+- name: 📂 Creates authorized_keys.j2
+  ansible.builtin.template:
+    src: authorized_keys.j2
+    dest: /home/{{ item.name }}/.ssh/authorized_keys
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+    mode: "0644"
+  loop: "{{ admins }}"
+  become: true
+
+- name: 📂 Creates services path
+  ansible.builtin.file:
+    state: directory
+    path: "{{ services_path }}"
+    owner: root
+    group: admin
+    mode: "0771"
+  become: true

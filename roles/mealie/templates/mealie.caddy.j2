@@ -1,0 +1,4 @@
+{{ mealie_domain }} {
+    import caddy-common
+    reverse_proxy {{ docker_gateway }}:{{ mealie_service_port }}
+}

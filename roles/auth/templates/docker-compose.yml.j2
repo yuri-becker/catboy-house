@@ -1,0 +1,66 @@
+services:
+  lldap_postgres:
+    container_name: "{{ auth_lldap_postgres_container_name }}"
+    image: postgres:16
+    restart: unless-stopped
+    user: "{{ app_uid }}:{{ app_gid }}"
+    volumes:
+      - "{{ auth_volume_lldap_postgres }}:/var/lib/postgresql/data"
+    environment:
+      POSTGRES_PASSWORD: "{{ auth_lldap_postgres_password }}"
+      POSTGRES_USER: "{{ auth_lldap_postgres_user }}"
+      POSTGRES_DB: lldap
+
+  lldap:
+    container_name: "{{ auth_lldap_container_name }}"
+    image: lldap/lldap:stable
+    restart: unless-stopped
+    depends_on:
+      - lldap_postgres
+    volumes:
+      - "{{ auth_volume_lldap }}:/data"
+    ports:
+      - "{{ docker_gateway }}:{{ auth_lldap_port }}:17170"
+    environment:
+      UID: "{{ app_uid }}"
+      GID: "{{ app_gid }}"
+      TZ: "{{ ansible_date_time.tz }}"
+      LLDAP_LDAP_BASE_DN: "{{ auth_base_dn }}"
+      LLDAP_JWT_SECRET: "{{ auth_lldap_jwt_secret }}"
+      LLDAP_KEY_SEED: "{{ auth_lldap_key_seed }}"
+      LLDAP_DATABASE_URL: "postgres://{{ auth_lldap_postgres_user }}:{{ auth_lldap_postgres_password }}@{{ auth_lldap_postgres_container_name }}/lldap"
+      LLDAP_HTTP_URL: "https://{{ auth_lldap_domain }}"
+      LLDAP_SMTP_OPTIONS__ENABLE_PASSWORD_RESET: true
+      LLDAP_SMTP_OPTIONS__SERVER: "{{ smtp_server }}"
+      LLDAP_SMTP_OPTIONS__PORT: "{{ smtp_port }}"
+      LLDAP_SMTP_OPTIONS__USER: "{{ auth_smtp_user }}"
+      LLDAP_SMTP_OPTIONS__FROM: "{{ auth_smtp_user }}"
+      LLDAP_SMTP_OPTIONS__PASSWORD: "{{ auth_smtp_password }}"
+      LLDAP_SMTP_OPTIONS__SMTP_ENCRYPTION: STARTTLS
+
+  authelia_postgres:
+    container_name: "{{ auth_authelia_postgres_container_name }}"
+    image: postgres:16
+    restart: unless-stopped
+    user: "{{ app_uid }}:{{ app_gid }}"
+    volumes:
+      - "{{ auth_volume_authelia_postgres }}:/var/lib/postgresql/data"
+    environment:
+      POSTGRES_PASSWORD: "{{ auth_authelia_postgres_password }}"
+      POSTGRES_USER: "{{ auth_authelia_postgres_user }}"
+      POSTGRES_DB: authelia
+
+  authelia:
+    container_name: "{{ auth_authelia_container_name }}"
+    image: authelia/authelia:latest
+    restart: unless-stopped
+    depends_on:
+      - authelia_postgres
+      - lldap
+    volumes:
+      - "{{ auth_volume_authelia }}:/config"
+    ports:
+      - "{{ docker_gateway }}:{{ auth_authelia_port }}:9091"
+    environment:
+      PUID: "{{ app_uid }}"
+      PGID: "{{ app_gid }}"

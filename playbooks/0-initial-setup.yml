@@ -3,3 +3,5 @@
   hosts: all
   roles:
     - set_up_play
+    - role: create_admins
+      tags: create_admins

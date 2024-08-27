@@ -1,8 +1,8 @@
 ---
 # defaults file for roles/seafile
 seafile_container_prefix: seafile
+seafile_container_name: "{{ seafile_container_prefix }}-seafile"
 seafile_service_directory: seafile
 seafile_service_path: "{{ services_path }}/{{ seafile_service_directory }}"
 seafile_volume_data: "{{ seafile_service_path }}/volumes/data"
 seafile_volume_db: "{{ seafile_service_path }}/volumes/db"
-seafile_network: "{{ seafile_container_prefix }}-network"

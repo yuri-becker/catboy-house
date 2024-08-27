@@ -23,9 +23,17 @@
         <li><a href="#install-ansible-and-requirements">Install Ansible and requirements</a></li>
         <li><a href="#make-the-host-accessible">Make the host accessible</a></li>
         <li><a href="#vault-password">Vault password</a></li>
+        <li><a href="#become-password">Become password</a></li>
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
+    <li>
+        <a href="#code-conventions">Code conventions</a>
+        <ul>
+            <li><a href="#verbs">Verbs</a></li>
+            <li><a href="#task-prefixes">Task prefixes</a></li>
+        </ul>
+    </li>
     <li><a href="#copying">Copying</a></li>
   </ol>
 </details>
@@ -58,11 +66,22 @@ ansible-galaxy install -r requirements.yml
 ### Vault password
 Get the `.vault_password` file from someone and put it in the project root.
 
+### Become password
+<sup>(become is Ansible's sudo)</sup><br/>
+Encrypt your server linux account's password and store it in `host_vars/catboy_house/become.yml` like this:
+```shell
+ansible-vault encrypt_string '<password>' --name ansible_become_pass > host_vars/catboy_house/become.yml
+```
+
 ## Usage
 
 **Running all Playbooks**
 ```sh
 ./run.sh
+```
+**Running tasks with specific tags**
+```sh
+./run.sh --tags <tags> 
 ```
 **Running single Playbooks**
 ```sh
@@ -76,6 +95,21 @@ ansible-lint
 ```sh
 ansible-vault encrypt_string <string> --name <var-name>
 ```
+
+## Code conventions
+
+### Verbs
+Tasks are be named with what they do, in third-person singular, e.g. "🫖 Makes a tea".
+
+### Task prefixes
+Task names are prefixed with specific emojis to make the output and nature of the task more scannable.
+* 🚀 are application/container launches.
+* 📂 are folder creations.
+* ⬆️ for file/template copying.
+* 📦 are package installations.
+* 👤 are user and group creations.
+* ✅ are checks.
+* ⛔ are fail states.
 
 ## Copying
 You may re-use files and roles from this repository for you own projects as long as you comply to the terms of the [GNU Affero General Public License 

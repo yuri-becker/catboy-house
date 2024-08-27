@@ -1,0 +1,13 @@
+---
+# defaults file for roles/auth
+auth_container_prefix: auth
+auth_lldap_postgres_container_name: "{{ auth_container_prefix }}-lldap-postgres"
+auth_authelia_postgres_container_name: "{{ auth_container_prefix }}-authelia-postgres"
+auth_service_directory: auth
+auth_service_path: "{{ services_path }}/{{ auth_service_directory }}"
+auth_volume_lldap_postgres: "{{ auth_service_path }}/volumes/lldap-postgres"
+auth_volume_lldap: "{{ auth_service_path }}/volumes/lldap"
+auth_volume_authelia_postgres: "{{ auth_service_path }}/volumes/authelia-postgres"
+auth_volume_authelia: "{{ auth_service_path }}/volumes/authelia"
+auth_lldap_container_name: "{{ auth_container_prefix }}-lldap"
+auth_authelia_container_name: "{{ auth_container_prefix }}-authelia"

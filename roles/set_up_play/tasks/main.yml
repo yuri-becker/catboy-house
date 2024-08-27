@@ -3,15 +3,35 @@
   ansible.builtin.apt:
     name: "{{ item }}"
     state: present
+  become: true
   loop:
     - python3-pip
     - virtualenv
 
-- name: 📂 Creates Services and venv directory
+- name: 📂 Creates root directory
+  ansible.builtin.file:
+    path: /root
+    state: directory
+    mode: "0755"
+    owner: root
+    group: root
+  become: true
+
+- name: 📂 Creates services directory
+  ansible.builtin.file:
+    path: /root/services
+    state: directory
+    mode: "0775"
+    owner: root
+    group: admin
+  become: true
+
+- name: 📂 Creates venv
   ansible.builtin.file:
     path: "{{ play_venv }}"
     state: directory
-    mode: "0644"
+    mode: "0755"
+  become: true
 
 - name: 🏗️ Installs dependencies
   ansible.builtin.pip:
@@ -22,9 +42,11 @@
       - docker
       - docker-compose
     state: present
+  become: true
 
 - name: ⬆️ Pushes python wrapper
   ansible.builtin.copy:
     src: pyenv
     dest: "{{ play_venv_interpreter }}"
     mode: "0755"
+  become: true

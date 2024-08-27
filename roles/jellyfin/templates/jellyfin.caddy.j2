@@ -1,0 +1,4 @@
+{{ jellyfin_domain }} {
+    import caddy-common
+	reverse_proxy {{ docker_gateway }}:{{ jellyfin_service_port }}
+}

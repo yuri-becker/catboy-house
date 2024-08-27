@@ -1,0 +1,4 @@
+{{ linkding_domain }} {
+    import caddy-common
+    reverse_proxy {{ docker_gateway }}:{{ linkding_service_port }}
+}

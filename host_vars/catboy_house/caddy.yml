@@ -1,0 +1,3 @@
+---
+caddy_path: "{{ services_path }}/caddy"
+caddy_sites: "{{ caddy_path }}/sites"
