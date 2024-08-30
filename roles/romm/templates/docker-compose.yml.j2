@@ -1,0 +1,40 @@
+services:
+  mariadb:
+    container_name: "{{ romm_mariadb_container_name }}"
+    image: mariadb:latest
+    restart: unless-stopped
+    user: "{{ romm_uid }}:{{ app_gid }}"
+    environment:
+      MYSQL_ROOT_PASSWORD: "{{ romm_database_root_password }}"
+      MYSQL_DATABASE: "{{ romm_database_name }}"
+      MYSQL_USER: "{{ romm_database_user }}"
+      MYSQL_PASSWORD: "{{ romm_database_password }}"
+    volumes:
+      - "{{ romm_volume_mariadb }}:/var/lib/mysql"
+
+  romm:
+    container_name: "{{ romm_contaier_name }}"
+    image: rommapp/romm:latest
+    restart: unless-stopped
+    user: "{{ romm_uid }}:{{ app_gid }}"
+    environment:
+      DB_HOST: "{{ romm_mariadb_container_name }}"
+      DB_NAME: "{{ romm_database_name }}"
+      DB_USER: "{{ romm_database_user }}"
+      DB_PASSWD: "{{ romm_database_password }}"
+      ROMM_AUTH_SECRET_KEY: "{{ romm_auth_secret_key }}"
+      IGDB_CLIENT_ID: "{{ romm_igdb_client_id }}"
+      IGDB_CLIENT_SECRET: "{{ romm_igdb_client_secret }}"
+      MOBYGAMES_API_KEY: "{{ romm_mobygames_api_key }}"
+      STEAMGRIDDB_API_KEY: "{{ romm_steamgriddb_api_key }}"
+      ROMM_HOST: "{{ romm_domain }}"
+    volumes:
+      - "{{ romm_volume_resources }}:/romm/resources"
+      - "{{ romm_volume_redis }}:/redis-data"
+      - "{{ romm_volume_library }}:/romm/library"
+      - "{{ romm_volume_assets }}:/romm/assets"
+      - "{{ romm_volume_config }}:/romm/config"
+    ports:
+      - "{{ docker_gateway }}:{{ romm_port }}:8080"
+    depends_on:
+      - mariadb

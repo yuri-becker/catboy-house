@@ -1,0 +1,15 @@
+---
+# defaults file for roles/romm
+romm_container_prefix: romm
+romm_user_name: romm
+romm_contaier_name: "{{ romm_container_prefix }}-romm"
+romm_mariadb_container_name: "{{ romm_container_prefix }}-mariadb"
+romm_database_name: "romm"
+romm_service_directory: "romm"
+romm_service_path: "{{ services_path }}/{{ romm_service_directory }}"
+romm_volume_resources: "{{ romm_service_path }}/volumes/resources"
+romm_volume_redis: "{{ romm_service_path }}/volumes/redis"
+romm_volume_library: "{{ romm_service_path }}/volumes/library"
+romm_volume_assets: "{{ romm_service_path }}/volumes/assets"
+romm_volume_config: "{{ romm_service_path }}/volumes/config"
+romm_volume_mariadb: "{{ romm_service_path }}/volumes/mariadb"

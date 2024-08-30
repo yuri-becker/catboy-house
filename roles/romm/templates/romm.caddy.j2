@@ -1,0 +1,4 @@
+{{ romm_domain }} {
+    import caddy-common
+    reverse_proxy {{ docker_gateway }}:{{ romm_port }}
+}

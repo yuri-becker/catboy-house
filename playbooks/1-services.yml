@@ -39,6 +39,12 @@
         mealie_domain: mealie.{{ root_domain }}
         mealie_service_port: 28949
 
+    - role: romm
+      tags: romm
+      vars:
+        romm_port: 29156
+        romm_uid: 1156
+
     - role: tinfoil_store
       vars:
         tinfoil_store_service_port: 29157
