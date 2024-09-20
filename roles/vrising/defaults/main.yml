@@ -1,7 +1,7 @@
 ---
 # defaults file for roles/vrising
 vrising_service_directory: vrising
-vrising_service_path: "{{ services_path }}/{{ vrising_service_directory }}"
+vrising_service_path: "{{ services_path_2 }}/{{ vrising_service_directory }}"
 vrising_volume_persistentdata: "{{ vrising_service_path }}/volumes/persistentdata"
 vrising_volume_server: "{{ vrising_service_path }}/volumes/server"
 vrising_container_name: vrising

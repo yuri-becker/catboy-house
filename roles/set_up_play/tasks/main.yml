@@ -19,12 +19,22 @@
 
 - name: 📂 Creates services directory
   ansible.builtin.file:
-    path: /root/services
+    path: "{{ services_path }}"
     state: directory
     mode: "0775"
     owner: root
     group: admin
   become: true
+
+- name: 📂 Create new services directory
+  ansible.builtin.file:
+    path: "{{ services_path_2 }}"
+    state: directory
+    mode: "0775"
+    owner: root
+    group: admin
+  become: true
+
 
 - name: 📂 Creates venv
   ansible.builtin.file:

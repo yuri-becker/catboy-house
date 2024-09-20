@@ -23,6 +23,13 @@
         portainer_service_port: 27949
         portainer_domain: docker.{{ root_domain }}
 
+    - role: owncloud
+      tags: owncloud
+      vars:
+        owncloud_service_port: 28946
+        owncloud_domain: cloud.{{ root_domain }}
+        owncloud_uid: 1946
+
     - role: seafile
       vars:
         seafile_service_port: 28947
