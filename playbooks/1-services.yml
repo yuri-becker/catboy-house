@@ -23,6 +23,13 @@
         portainer_service_port: 27949
         portainer_domain: docker.{{ root_domain }}
 
+    - role: paperless
+      tags: paperless
+      vars:
+        paperless_service_port: 28945
+        paperless_domain: paperless.{{ root_domain }}
+        paperless_uid: 1945
+
     - role: owncloud
       tags: owncloud
       vars:

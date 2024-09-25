@@ -1,0 +1,4 @@
+{{ paperless_domain }} {
+    import caddy-common
+    reverse_proxy {{ docker_gateway }}:{{ paperless_service_port }}
+}

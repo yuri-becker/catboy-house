@@ -32,7 +32,7 @@
 - name: 🚀 Starts container
   community.docker.docker_container:
     name: "{{ owncloud_container_name }}"
-    image: owncloud/ocis
+    image: owncloud/ocis-rolling:latest
     state: started
     restart_policy: unless-stopped
     ports:
@@ -45,7 +45,7 @@
       OCIS_URL: "https://{{ owncloud_domain }}"
       PROXY_HTTP_ADDR: "0.0.0.0:9200"
       PROXY_TLS: "false"
-      OCIS_LOG_LEVEL: "warn"
+      OCIS_LOG_LEVEL: "debug"
       OCIS_ADD_RUN_SERVICES: "notifications"
       NOTIFICATIONS_SMTP_HOST: "{{ smtp_server }}"
       NOTIFICATIONS_SMTP_PORT: "{{ smtp_port }}"

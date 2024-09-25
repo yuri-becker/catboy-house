@@ -1,20 +1,20 @@
 ---
-# tasks file for roles/romm
+# tasks file for roles/paperless
 - name: 👤 Creates user
   ansible.builtin.user:
     state: present
-    name: "{{ romm_user_name }}"
-    uid: "{{ romm_uid }}"
+    name: "{{ paperless_user_name }}"
+    uid: "{{ paperless_uid }}"
     create_home: false
     group: "{{ app_gid }}"
   become: true
 
 - name: 📂 Creates service path
   ansible.builtin.file:
-    path: "{{ romm_service_path }}"
+    path: "{{ paperless_service_path }}"
     state: directory
     mode: "0750"
-    owner: "{{ romm_uid }}"
+    owner: "{{ paperless_uid }}"
     group: "{{ app_gid }}"
   become: true
 
@@ -22,35 +22,36 @@
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
-    mode: "0750"
-    owner: "{{ romm_uid }}"
+    mode: "0700"
+    owner: "{{ paperless_uid }}"
     group: "{{ app_gid }}"
   loop:
-    - "{{ romm_volume_resources }}"
-    - "{{ romm_volume_redis }}"
-    - "{{ romm_volume_library }}"
-    - "{{ romm_volume_assets }}"
-    - "{{ romm_volume_config }}"
+    - "{{ paperless_volume_redis }}"
+    - "{{ paperless_volume_postgres }}"
+    - "{{ paperless_volume_paperless_data }}"
+    - "{{ paperless_volume_paperless_media }}"
+    - "{{ paperless_volume_paperless_export }}"
+    - "{{ paperless_volume_paperless_consume }}"
   become: true
 
 - name: ⬆️ Pushes compose file
   ansible.builtin.template:
     src: docker-compose.yml.j2
-    dest: "{{ romm_service_path }}/docker-compose.yml"
-    owner: "{{ romm_uid }}"
+    dest: "{{ paperless_service_path }}/docker-compose.yml"
+    owner: "{{ paperless_uid }}"
     group: "{{ app_gid }}"
-    mode: "0755"
+    mode: "0750"
   become: true
 
 - name: ⬆️ Pushes Caddy config
   ansible.builtin.template:
-    src: romm.caddy.j2
-    dest: "{{ caddy_sites }}/romm.caddy"
+    src: paperless.caddy.j2
+    dest: "{{ caddy_sites }}/paperless.caddy"
     mode: "0770"
     group: "{{ app_gid }}"
   notify: reload caddy
 
 - name: 🚀 Starts container stack
   community.docker.docker_compose_v2:
-    project_src: "{{ romm_service_path }}"
+    project_src: "{{ paperless_service_path }}"
     state: present

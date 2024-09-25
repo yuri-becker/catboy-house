@@ -1,0 +1,76 @@
+services:
+  redis:
+    container_name: "{{ paperless_redis_container_name }}"
+    image: redis:7
+    user: "{{ paperless_uid }}:{{ app_gid }}"
+    restart: unless-stopped
+    volumes:
+      - "{{ paperless_volume_redis }}:/data"
+
+  postgres:
+    container_name: "{{ paperless_postgres_container_name }}"
+    image: postgres:16
+    restart: unless-stopped
+    user: "{{ paperless_uid }}:{{ app_gid }}"
+    volumes:
+      - "{{ paperless_volume_postgres }}:/var/lib/postgresql/data"
+    environment:
+      POSTGRES_DB: paperless
+      POSTGRES_USER: "{{ paperless_postgres_user }}"
+      POSTGRES_PASSWORD: "{{ paperless_postgres_password }}"
+
+  gotenberg:
+    container_name: "{{ paperless_gotenberg_container_name }}"
+    image: gotenberg/gotenberg:8.7
+    restart: unless-stopped
+    user: "{{ paperless_uid }}:{{ app_gid }}"
+    command:
+      - "gotenberg"
+      - "--chromium-disable-javascript=true"
+      - "--chromium-allow-list=file:///tmp/.*"
+
+  tika:
+    container_name: "{{ paperless_tika_container_name }}"
+    image: apache/tika:latest
+    restart: unless-stopped
+    user: "{{ paperless_uid }}:{{ app_gid }}"
+
+  paperless:
+    container_name: "{{ paperless_paperless_container_name }}"
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    restart: unless-stopped
+    depends_on:
+      - redis
+      - postgres
+      - gotenberg
+      - tika
+    ports:
+      - "{{ docker_gateway }}:{{ paperless_service_port }}:8000"
+    volumes:
+      - "{{ paperless_volume_paperless_data }}:/usr/src/paperless/data"
+      - "{{ paperless_volume_paperless_media }}:/usr/src/paperless/media"
+      - "{{ paperless_volume_paperless_export }}:/usr/src/paperless/export"
+      - "{{ paperless_volume_paperless_consume }}:/usr/src/paperless/consume"
+    environment:
+      USERMAP_GID: "{{ app_gid }}"
+      USERMAP_UID: "{{ paperless_uid }}"
+      PAPERLESS_OCR_LANGUAGES: "{{ paperless_ocr_languages }}"
+      PAPERLESS_OCR_LANGUAGE: "{{ paperless_ocr_language }}"
+      PAPERLESS_TASK_WORKERS: "{{ paperless_task_workers }}"
+      PAPERLESS_URL: "https://{{ paperless_domain }}"
+      PAPERLESS_SECRET_KEY: "{{ paperless_secret }}"
+      PAPERLESS_TIME_ZONE: "{{ timezone }}"
+      PAPERLESS_REDIS: redis://redis:6379
+      PAPERLESS_DBHOST: postgres
+      PAPERLESS_DBNAME: paperless
+      PAPERLESS_DBUSER: "{{ paperless_postgres_user }}"
+      PAPERLESS_DBPASS: "{{ paperless_postgres_password }}"
+      PAPERLESS_TIKA_ENABLED: 1
+      PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg:3000
+      PAPERLESS_TIKA_ENDPOINT: http://tika:9998
+      PAPERLESS_EMAIL_HOST: "{{ smtp_server }}"
+      PAPERLESS_EMAIL_PORT: "{{ smtp_port }}"
+      PAPERLESS_EMAIL_HOST_USER: "{{ paperless_smtp_user }}"
+      PAPERLESS_EMAIL_HOST_PASSWORD: "{{ paperless_smtp_password }}"
+      PAPERLESS_EMAIL_FROM: "{{ paperless_smtp_sender }}"
+      PAPERLESS_EMAIL_USE_TLS: "{{ paperless_smtp_use_tls }}"
