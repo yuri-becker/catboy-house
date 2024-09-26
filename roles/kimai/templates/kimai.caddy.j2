@@ -1,0 +1,5 @@
+{{ kimai_domain }} {
+    reverse_proxy {{ docker_gateway }}:{{ kimai_port }} {
+        flush_interval -1
+    }
+}

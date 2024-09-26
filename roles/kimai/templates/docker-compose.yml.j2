@@ -1,0 +1,44 @@
+services:
+  mysql:
+    container_name: "{{ kimai_mysql_container_name }}"
+    image: mysql:8
+    restart: unless-stopped
+    user: "{{ kimai_uid }}:{{ app_gid }}"
+    volumes:
+      - "{{ kimai_volume_mysql }}:/var/lib/mysql"
+    environment:
+      MYSQL_DATABASE: kimai
+      MYSQL_USER: "{{ kimai_mysql_user }}"
+      MYSQL_PASSWORD: "{{ kimai_mysql_password }}"
+      MYSQL_ROOT_PASSWORD: "{{ kimai_mysql_root_password }}"
+    command: --default-storage-engine innodb
+    healthcheck:
+      test: "mysqladmin -p{{ kimai_mysql_root_password }} ping -h localhost"
+      interval: 60s
+      start_period: 10s
+      timeout: 10s
+      retries: 3
+
+  kimai:
+    container_name: "{{ kimai_kimai_container_name }}"
+    image: kimai/kimai2:apache
+    depends_on:
+      - mysql
+    restart: unless-stopped
+    volumes:
+      - "{{ kimai_volume_data }}:/opt/kimai/var/data"
+      - "{{ kimai_volume_plugins }}:/opt/kimai/var/plugins"
+      - "{{ kimai_config_path }}:/opt/kimai/config/packages/local.yaml"
+    ports:
+      - "{{ docker_gateway }}:{{ kimai_port }}:8001"
+    environment:
+      ADMINMAIL: "{{ kimai_admin_mail }}"
+      ADMINPASS: "{{ kimai_admin_password }}"
+      DATABASE_URL: "mysql://{{ kimai_mysql_user }}:{{ kimai_mysql_password }}@mysql/kimai?charset=utf8mb4&serverVersion=8.3.0"
+      TRUSTED_HOSTS: "localhost,127.0.0.1,{{ kimai_domain }}"
+      TZ: "{{ timezone }}"
+      MAILER_URL: "smtp://{{ kimai_smtp_user }}:{{ kimai_smtp_password }}@{{ smtp_server }}:{{ smtp_port }}?encryption=tls"
+      MAILER_FROM: "{{ kimai_smtp_sender }}"
+      USER_ID: "{{ kimai_uid }}"
+      GROUP_ID: "{{ app_gid }}"
+      memory_limit: 1G

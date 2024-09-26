@@ -23,6 +23,13 @@
         portainer_service_port: 27949
         portainer_domain: docker.{{ root_domain }}
 
+    - role: kimai
+      tags: kimai
+      vars:
+        kimai_port: 28944
+        kimai_domain: kimai.{{ root_domain }}
+        kimai_uid: 1944
+
     - role: paperless
       tags: paperless
       vars:

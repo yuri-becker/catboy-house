@@ -74,3 +74,4 @@ services:
       PAPERLESS_EMAIL_HOST_PASSWORD: "{{ paperless_smtp_password }}"
       PAPERLESS_EMAIL_FROM: "{{ paperless_smtp_sender }}"
       PAPERLESS_EMAIL_USE_TLS: "{{ paperless_smtp_use_tls }}"
+      PAPERLESS_OCR_USER_ARGS: '{"continue_on_soft_render_error": true}'

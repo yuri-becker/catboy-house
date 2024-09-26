@@ -1,0 +1,63 @@
+---
+# tasks file for roles/kimai
+- name: 👤 Creates user
+  ansible.builtin.user:
+    state: present
+    name: "{{ kimai_user_name }}"
+    uid: "{{ kimai_uid }}"
+    create_home: false
+    group: "{{ app_gid }}"
+  become: true
+
+- name: 📂 Creates service path
+  ansible.builtin.file:
+    path: "{{ kimai_service_path }}"
+    state: directory
+    mode: "0750"
+    owner: "{{ kimai_uid }}"
+    group: "{{ app_gid }}"
+  become: true
+
+- name: 📂 Creates volumes
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0700"
+    owner: "{{ kimai_uid }}"
+    group: "{{ app_gid }}"
+  loop:
+    - "{{ kimai_volume_mysql }}"
+    - "{{ kimai_volume_data }}"
+    - "{{ kimai_volume_plugins }}"
+  become: true
+
+- name: ⬆️ Pushes compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ kimai_service_path }}/docker-compose.yml"
+    owner: "{{ kimai_uid }}"
+    group: "{{ app_gid }}"
+    mode: "0750"
+  become: true
+
+- name: ⬆️ Pushes kimai config
+  ansible.builtin.template:
+    src: "local.yml.j2"
+    dest: "{{ kimai_config_path }}"
+    owner: "{{ kimai_uid }}"
+    group: "{{ app_gid }}"
+    mode: "0750"
+  become: true
+
+- name: ⬆️ Pushes Caddy config
+  ansible.builtin.template:
+    src: kimai.caddy.j2
+    dest: "{{ caddy_sites }}/kimai.caddy"
+    mode: "0770"
+    group: "{{ app_gid }}"
+  notify: reload caddy
+
+- name: 🚀 Starts container stack
+  community.docker.docker_compose_v2:
+    project_src: "{{ kimai_service_path }}"
+    state: present
