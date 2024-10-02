@@ -1,5 +1,4 @@
 {{ owncloud_domain }} {
-    import caddy-common
     reverse_proxy {{ docker_gateway }}:{{ owncloud_service_port }}
     log {
         output file /var/log/caddy/{{ owncloud_domain }}-access.log
