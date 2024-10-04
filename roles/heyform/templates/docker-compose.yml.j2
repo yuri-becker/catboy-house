@@ -1,0 +1,49 @@
+services:
+  mongo:
+    image: percona/percona-server-mongodb:4.4
+    container_name: "{{ heyform_mongo_container_name }}"
+    restart: unless-stopped
+    user: "{{ heyform_uid }}:{{ app_gid }}"
+    volumes:
+      - "{{ heyform_volume_mongo }}:/data/db"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "{{ heyform_mongo_username }}"
+      MONGO_INITDB_ROOT_PASSWORD: "{{ heyform_mongo_password }}"
+
+  keydb:
+    image: eqalpha/keydb:latest
+    container_name: "{{ heyform_keydb_container_name }}"
+    restart: unless-stopped
+    user: "{{ heyform_uid }}:{{ app_gid }}"
+    command: keydb-server --appendonly yes
+    volumes:
+      - "{{ heyform_volume_keydb }}:/data"
+
+  heyform:
+    image: heyform/community-edition:latest
+    container_name: "{{ heyform_heyform_container_name }}"
+    restart: unless-stopped
+    user: "{{ heyform_uid }}:{{ app_gid }}"
+    depends_on:
+      - mongo
+      - keydb
+    ports:
+      - "{{ docker_gateway }}:{{ heyform_port }}:8000"
+    volumes:
+      - "{{ heyform_volume_heyform_assets }}:/app/static/upload"
+    environment:
+      APP_HOMEPAGE_URL: "https://{{ heyform_domain }}"
+      SESSION_KEY: "{{ heyform_session_key }}"
+      FORM_ENCRYPTION_KEY: "{{ heyform_form_key }}"
+      MONGO_URI: "mongodb://mongo:27017/heyform?authSource=admin"
+      MONGO_USER: "{{ heyform_mongo_username }}"
+      MONGO_PASSWORD: "{{ heyform_mongo_password }}"
+      REDIS_HOST: keydb
+      REDIS_PORT: 6379
+      VERIFY_USER_EMAIL: "{{ heyform_verify_user_email }}"
+      SMTP_FROM: "{{ heyform_smtp_form }}"
+      SMTP_HOST: "{{ smtp_server }}"
+      SMTP_PORT: "{{ smtp_port }}"
+      SMTP_USER: "{{ heyform_smtp_user }}"
+      SMTP_PASSWORD: "{{ heyform_smtp_password }}"
+      UNSPLASH_CLIENT_ID: "{{ heyform_unsplash_client_id }}"

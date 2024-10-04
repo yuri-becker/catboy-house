@@ -104,3 +104,10 @@
 
     - role: vrising
       tags: vrising
+
+    - role: heyform
+      tags: heyform
+      vars:
+        heyform_port: 30300
+        heyform_domain: forms.{{ root_domain }}
+        heyform_uid: 1990
