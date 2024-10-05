@@ -75,3 +75,25 @@ services:
       PAPERLESS_EMAIL_FROM: "{{ paperless_smtp_sender }}"
       PAPERLESS_EMAIL_USE_TLS: "{{ paperless_smtp_use_tls }}"
       PAPERLESS_OCR_USER_ARGS: '{"continue_on_soft_render_error": true}'
+      PAPERLESS_APPS: allauth.socialaccount.providers.openid_connect
+      PAPERLESS_DISABLE_REGULAR_LOGIN: true
+      PAPERLESS_SOCIALACCOUNT_ALLOW_SIGNUPS: false
+      PAPERLESS_SOCIALACCOUNT_PROVIDERS: |
+       {
+        "openid_connect": {
+          "SCOPE": ["openid", "profile", "email"],
+          "OAUTH_PKCE_ENABLED": true,
+          "APPS": [
+            {
+              "provider_id": "authelia",
+              "name": "Authelia",
+              "client_id": "{{ paperless_authelia_client_id }}",
+              "secret": "{{ paperless_authelia_client_secret_password }}",
+              "settings": {
+                "server_url": "https://{{ auth_authelia_domain }}",
+                "token_auth_method": "client_secret_basic"
+              }
+            }
+          ]
+        }
+        }

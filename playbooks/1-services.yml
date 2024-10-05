@@ -39,7 +39,6 @@
       tags: paperless
       vars:
         paperless_service_port: 28945
-        paperless_domain: paperless.{{ root_domain }}
         paperless_uid: 1945
 
     - role: owncloud
