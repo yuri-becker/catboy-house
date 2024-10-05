@@ -4,8 +4,6 @@
   vars:
     ansible_python_interpreter: "{{ play_venv }}/bin/pyenv"
   roles:
-    - role: watchtower
-
     - role: caddy
       tags: caddy
 
@@ -13,9 +11,15 @@
       tags: auth
       vars:
         auth_lldap_port: 27950
-        auth_lldap_domain: account.{{ root_domain }}
         auth_authelia_port: 27951
-        auth_authelia_domain: auth.{{ root_domain }}
+
+    - role: watchtower
+
+    - role: grafana
+      tags: grafana
+      vars:
+        grafana_port: 27948
+        grafana_uid: 1943
 
     - role: portainer
       tags: portainer
@@ -88,7 +92,7 @@
     - role: seedbox
       vars:
         seedbox_webui_port: 30214
-        seedbox_domain: bittorrent.{{ root_domain }}
+        seedbox_domain: bittorrent.{{ root_domain }}6
 
     - role: arr
       tags: arr
