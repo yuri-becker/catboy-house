@@ -1,0 +1,18 @@
+---
+# handlers file for roles/grafana
+- name: 🚀 Restarts Loki
+  community.docker.docker_compose_v2:
+    project_src: "{{ grafana_service_path }}"
+    services:
+      - loki
+    state: restarted
+  listen: restart loki
+
+- name: 🚀 Restarts Promtail
+  community.docker.docker_compose_v2:
+    project_src: "{{ grafana_service_path }}"
+    services:
+      - promtail
+    state: restarted
+  listen: restart promtail
+

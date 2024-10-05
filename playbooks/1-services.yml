@@ -10,8 +10,8 @@
     - role: auth
       tags: auth
       vars:
-        auth_lldap_port: 27950
-        auth_authelia_port: 27951
+        auth_lldap_port: 27900
+        auth_authelia_port: 27901
 
     - role: watchtower
 
@@ -19,12 +19,13 @@
       tags: grafana
       vars:
         grafana_port: 27948
+        grafana_loki_port: 27949
         grafana_uid: 1943
 
     - role: portainer
       tags: portainer
       vars:
-        portainer_service_port: 27949
+        portainer_service_port: 27950
         portainer_domain: docker.{{ root_domain }}
 
     - role: kimai

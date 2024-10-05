@@ -1,0 +1,56 @@
+services:
+  loki:
+    image: grafana/loki:latest
+    container_name: "{{ grafana_loki_container_name }}"
+    user: "{{ grafana_uid }}"
+    ports:
+      - "{{ docker_gateway }}:{{ grafana_loki_port }}:3100"
+    volumes:
+      - "{{ grafana_volume_loki_config }}:/etc/loki"
+    command: -config.file=/etc/loki/loki-config.yml
+
+  promtail:
+    image: grafana/promtail:latest
+    container_name: "{{ grafana_promtail_container_name }}"
+    volumes:
+      - "{{ grafana_volume_promtail_config }}:/etc/promtail"
+      - "/var/log:/var/log"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    command: -config.file=/etc/promtail/promtail-config.yml
+
+  grafana:
+    image: grafana/grafana-enterprise:latest
+    container_name: "{{ grafana_grafana_container_name }}"
+    restart: unless-stopped
+    user: "{{ grafana_uid }}"
+    ports:
+      - "{{ docker_gateway }}:{{ grafana_port }}:3000"
+    volumes:
+      - "{{ grafana_volume_data }}:/var/lib/grafana"
+    environment:
+      GF_SERVER_ROOT_URL: "https://{{ grafana_domain }}"
+      GF_AUTH_ANONYMOUS_ENABLED: "false"
+      GF_AUTH_ANONYMOUS_HIDE_VERSION: "true"
+      GF_AUTH_DISABLE_LOGIN_FORM: "true"
+      GF_AUTH_GENERIC_OAUTH_ENABLED: "true"
+      GF_AUTH_GENERIC_OAUTH_NAME: "Authelia"
+      GF_AUTH_GENERIC_OAUTH_ICON: "signin"
+      GF_AUTH_GENERIC_OAUTH_CLIENT_ID: "{{ grafana_authelia_client_id }}"
+      GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: "{{ grafana_authelia_client_secret_password }}"
+      GF_AUTH_GENERIC_OAUTH_SCOPES: "openid profile email groups"
+      GF_AUTH_GENERIC_OAUTH_EMPTY_SCOPES: "false"
+      GF_AUTH_GENERIC_OAUTH_AUTH_URL: "https://{{ auth_authelia_domain }}/api/oidc/authorization"
+      GF_AUTH_GENERIC_OAUTH_TOKEN_URL: "https://{{ auth_authelia_domain }}/api/oidc/token"
+      GF_AUTH_GENERIC_OAUTH_API_URL: "https://{{ auth_authelia_domain }}/api/oidc/userinfo"
+      GF_AUTH_GENERIC_OAUTH_LOGIN_ATTRIBUTE_PATH: "preferred_username"
+      GF_AUTH_GENERIC_OAUTH_GROUPS_ATTRIBUTE_PATH: "groups"
+      GF_AUTH_GENERIC_OAUTH_NAME_ATTRIBUTE_PATH: "name"
+      GF_AUTH_GENERIC_OAUTH_USE_PKCE: "true"
+      GF_AUTH_GENERIC_OAUTH_ROLE_ATTRIBUTE_PATH: "contains(groups, '{{ auth_group_manager }}') && 'GrafanaAdmin' || 'None'"
+      GF_AUTH_GENERIC_OAUTH_ALLOW_ASSIGN_GRAFANA_ADMIN: "true"
+      GF_SMTP_ENABLED: "true"
+      GF_SMTP_HOST: "{{ smtp_server }}:{{ smtp_port }}"
+      GF_SMTP_USER: "{{ grafana_smtp_user }}"
+      GF_SMTP_PASSWORD: "{{ grafana_smtp_password }}"
+      GF_SMTP_FROM_ADDRESS: "{{ grafana_smtp_user }}"
+      GF_SMTP_FROM_NAME: "{{ grafana_smtp_from_name }}"
