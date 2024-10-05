@@ -1,7 +1,0 @@
----
-# defaults file for roles/portainer
-portainer_service_directory: portainer
-portainer_service_path: "{{ services_path }}/{{ portainer_service_directory }}"
-portainer_volume_data: "{{ portainer_service_path }}/volumes/data"
-portainer_docker_sock: /var/run/docker.sock
-portainer_container_name: portainer

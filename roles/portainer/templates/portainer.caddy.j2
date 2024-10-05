@@ -1,4 +1,0 @@
-{{ portainer_domain }} {
-    import caddy-common
-    reverse_proxy {{ docker_gateway }}:{{ portainer_service_port }}
-}
