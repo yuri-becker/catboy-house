@@ -1,4 +1,5 @@
 {{ jellyseerr_domain }} {
-    import caddy-common
+	import common-headers
+    import logging {{ jellyseerr_domain }}
     reverse_proxy {{ docker_gateway }}:{{ jellyseerr_service_port }}
 }

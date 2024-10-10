@@ -16,3 +16,18 @@
     state: restarted
   listen: restart promtail
 
+- name: 🚀 Restarts Prometheus
+  community.docker.docker_compose_v2:
+    project_src: "{{ grafana_service_path }}"
+    services:
+      - prometheus
+    state: restarted
+  listen: restart prometheus
+
+- name: 🚀 Restarts Grafana
+  community.docker.docker_compose_v2:
+    project_src: "{{ grafana_service_path }}"
+    services:
+      - grafana
+    state: restarted
+  listen: restart grafana

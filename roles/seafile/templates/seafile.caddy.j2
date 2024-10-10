@@ -1,4 +1,5 @@
 {{ seafile_domain }} {
-    import caddy-common
+	import common-headers
+    import logging {{ seafile_domain }}
     reverse_proxy {{ docker_gateway }}:{{ seafile_service_port }}
 }

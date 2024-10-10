@@ -1,32 +1,62 @@
+networks:
+  "{{ grafana_network }}":
+    name: "{{ grafana_network }}"
+  "{{ grafana_prom_network }}":
+    name: "{{ grafana_prom_network }}"
+    external: true
+
+
 services:
   loki:
     image: grafana/loki:latest
     container_name: "{{ grafana_loki_container_name }}"
     user: "{{ grafana_uid }}"
+    networks:
+      - "{{ grafana_network }}"
     ports:
       - "{{ docker_gateway }}:{{ grafana_loki_port }}:3100"
     volumes:
       - "{{ grafana_volume_loki_config }}:/etc/loki"
-    command: -config.file=/etc/loki/loki-config.yml
+    command: -config.file=/etc/loki/loki.yml
 
   promtail:
     image: grafana/promtail:latest
     container_name: "{{ grafana_promtail_container_name }}"
+    networks:
+      - "{{ grafana_network }}"
     volumes:
       - "{{ grafana_volume_promtail_config }}:/etc/promtail"
       - "/var/log:/var/log"
       - "/var/run/docker.sock:/var/run/docker.sock"
-    command: -config.file=/etc/promtail/promtail-config.yml
+    command: -config.file=/etc/promtail/promtail.yml
+
+  prometheus:
+    image: prom/prometheus
+    container_name: "{{ grafana_prometheus_container_name }}"
+    restart: unless-stopped
+    user: "{{ grafana_uid }}"
+    networks:
+      - "{{ grafana_network }}"
+      - "{{ grafana_prom_network }}"
+    volumes:
+      - "{{ grafana_volume_prometheus_config }}:/etc/prometheus"
+      - "{{ grafana_volume_prometheus_data }}:/prometheus"
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--log.level=debug"
 
   grafana:
     image: grafana/grafana-enterprise:latest
     container_name: "{{ grafana_grafana_container_name }}"
     restart: unless-stopped
     user: "{{ grafana_uid }}"
+    networks:
+      - "{{ grafana_network }}"
     ports:
       - "{{ docker_gateway }}:{{ grafana_port }}:3000"
     volumes:
       - "{{ grafana_volume_data }}:/var/lib/grafana"
+      - "{{ grafana_volume_provisioning }}:/etc/grafana/provisioning"
     environment:
       GF_SERVER_ROOT_URL: "https://{{ grafana_domain }}"
       GF_AUTH_ANONYMOUS_ENABLED: "false"
@@ -54,3 +84,4 @@ services:
       GF_SMTP_PASSWORD: "{{ grafana_smtp_password }}"
       GF_SMTP_FROM_ADDRESS: "{{ grafana_smtp_user }}"
       GF_SMTP_FROM_NAME: "{{ grafana_smtp_from_name }}"
+      GF_DATABASE_WAL: true

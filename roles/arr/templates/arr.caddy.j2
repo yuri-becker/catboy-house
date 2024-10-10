@@ -1,19 +1,19 @@
 {{ arr_sonarr_domain }} {
-	import caddy-common
+	import common-headers
 	reverse_proxy {{ docker_gateway }}:{{ arr_sonarr_port }}
 }
 
 {{ arr_radarr_domain }} {
-	import caddy-common
+	import common-headers
 	reverse_proxy {{ docker_gateway }}:{{ arr_radarr_port }}
 }
 
 {{ arr_prowlarr_domain }} {
-	import caddy-common
+	import common-headers
 	reverse_proxy {{ docker_gateway }}:{{ arr_prowlarr_port }}
 }
 
 {{ arr_bazarr_domain }} {
-	import caddy-common
+	import common-headers
 	reverse_proxy {{ docker_gateway }}:{{ arr_bazarr_port }}
 }

@@ -1,4 +1,15 @@
 {{ seedbox_domain }} {
-    import caddy-common
-    reverse_proxy {{ docker_gateway }}:{{ seedbox_webui_port }}
+    import logging {{ seedbox_domain }}
+
+    forward_auth {{ docker_gateway }}:{{ auth_authelia_port }} {
+        header_up Host {upstream_hostport}
+        uri /api/authz/forward-auth
+        copy_headers Remote-User Remote-Groups Remote-Email Remote-Name
+    }
+
+    reverse_proxy {{ docker_gateway }}:{{ seedbox_webui_port }} {
+        header_up X-Forwarded-Host {host}:443
+        header_up -Origin
+        header_up -Referer
+    }
 }

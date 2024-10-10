@@ -1,14 +1,21 @@
-(caddy-common) {
-	encode gzip
-	header {
+(common-headers) {
+	header * {
 		-Server
+        -X-Powered-By
+
 		Strict-Transport-Security "max-age=31536000; include-subdomains;"
 		X-XSS-Protection "1; mode=block"
-		X-Frame-Options "DENY"
+		X-Frame-Options "SAMEORIGIN"`
+		X-Robots-Tag "none"`
 		X-Content-Type-Options nosniff
 		Referrer-Policy no-referrer-when-downgrade
-		X-Robots-Tag "none"
 	}
+}
+
+(logging) {
+    log {
+        output file /var/log/caddy/{args[0]}-access.log
+    }
 }
 
 import {{ caddy_sites }}/*

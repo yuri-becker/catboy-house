@@ -1,9 +1,11 @@
 {{ auth_lldap_domain }} {
-	import caddy-common
+	import common-headers
+    import logging {{ auth_lldap_domain }}
 	reverse_proxy {{ docker_gateway }}:{{ auth_lldap_port }}
 }
 
 {{ auth_authelia_domain }} {
-	import caddy-common
+	import common-headers
+    import logging {{ auth_authelia_domain }}
 	reverse_proxy {{ docker_gateway }}:{{ auth_authelia_port }}
 }

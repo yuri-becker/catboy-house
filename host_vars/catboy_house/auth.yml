@@ -1,6 +1,7 @@
 ---
 auth_lldap_domain: account.{{ root_domain }}
 auth_authelia_domain: auth.{{ root_domain }}
+auth_authelia_port: 27901
 auth_lldap_postgres_password: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   65343330316530303237363766343237633765306235383631616662386238373164653165666334

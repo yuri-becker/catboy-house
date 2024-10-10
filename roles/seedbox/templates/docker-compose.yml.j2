@@ -1,5 +1,5 @@
 networks:
-   "{{ seedbox_network_name }}":
+  "{{ seedbox_network_name }}":
     name: "{{ seedbox_network_name }}"
     driver: bridge
     ipam:
@@ -7,6 +7,9 @@ networks:
       config:
       - subnet: 172.80.10.0/24
         gateway: 172.80.10.1
+  "{{ grafana_prom_network }}":
+    name: "{{ grafana_prom_network }}"
+    external: true
 services:
   gluetun:
     image: qmcgaw/gluetun:latest
@@ -17,12 +20,13 @@ services:
     devices:
       - /dev/net/tun:/dev/net/tun
     ports:
-      - "8888:8888/tcp"                    # Gluetun Local Network HTTP proxy
-      - "8388:8388/tcp"                    # Gluetun Local Network Shadowsocks
-      - "8388:8388/udp"                    # Gluetun Local Network Shadowsocks
-      - "{{ seedbox_webui_port }}:8112"    # Bittorrent Web UI
+      - "{{ docker_gateway }}:8888:8888/tcp" # Gluetun Local Network HTTP proxy
+      - "{{ docker_gateway }}:8388:8388/tcp" # Gluetun Local Network Shadowsocks
+      - "{{ docker_gateway }}:8388:8388/udp" # Gluetun Local Network Shadowsocks
+      - "{{ docker_gateway }}:{{ seedbox_webui_port }}:{{ seedbox_webui_port }}"
     networks:
       - "{{ seedbox_network_name }}"
+      - "{{ grafana_prom_network }}"
     volumes:
       - "{{ seedbox_volume_gluetun }}:/gluetun"
     environment:
@@ -32,6 +36,7 @@ services:
       VPN_SERVICE_PROVIDER: "{{ seedbox_vpn_service_provider }}"
       SERVER_COUNTRIES: "{{ seedbox_vpn_server_countries }}"
       FIREWALL_VPN_INPUT_PORTS: "{{ seedbox_vpn_input_port }}"
+
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
     depends_on:
@@ -46,5 +51,17 @@ services:
       PGID: "{{ app_gid }}"
       TZ: "{{ ansible_date_time.tz }}"
       DELUGE_LOGLEVEL: "debug"
-      WEBUI_PORT: "8112"
+      WEBUI_PORT: "{{ seedbox_webui_port }}"
+    network_mode: "service:gluetun"
+
+  prom_exporter:
+    image: ghcr.io/esanchezm/prometheus-qbittorrent-exporter
+    container_name: "{{ seedbox_gluetun_prom_exporter_name }}"
+    depends_on:
+      - qbittorrent
+    environment:
+      QBITTORRENT_HOST: "localhost"
+      QBITTORRENT_PORT: "{{ seedbox_webui_port }}"
+      QBITTORRENT_SSL: false
+      EXPORTER_PORT: "{{ seedbox_promex_port }}"
     network_mode: "service:gluetun"

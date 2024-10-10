@@ -1,4 +1,7 @@
 grafana_domain: "grafana.{{ root_domain }}"
+grafana_port: 27948
+grafana_loki_port: 27949
+grafana_uid: 1943
 grafana_smtp_password: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   32393332656436326431376231363733346338396563313865376134666533323538346436323035

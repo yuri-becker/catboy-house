@@ -1,6 +1,5 @@
 {{ owncloud_domain }} {
+    import common-headers
+    import logging {{ owncloud_domain }}
     reverse_proxy {{ docker_gateway }}:{{ owncloud_service_port }}
-    log {
-        output file /var/log/caddy/{{ owncloud_domain }}-access.log
-    }
 }

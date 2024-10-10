@@ -24,6 +24,11 @@
     state: present
   become: true
 
+- name: 👤 Creates prom network
+  community.docker.docker_network:
+    name: "{{ grafana_prom_network }}"
+    state: present
+
 - name: 📂 Creates service path
   ansible.builtin.file:
     path: "{{ grafana_service_path }}"
@@ -42,22 +47,18 @@
     group: "{{ app_gid }}"
   loop:
     - "{{ grafana_volume_data }}"
+    - "{{ grafana_volume_provisioning }}"
+    - "{{ grafana_volume_provisioning }}/dashboards"
+    - "{{ grafana_volume_provisioning }}/datasources"
     - "{{ grafana_volume_loki_config }}"
     - "{{ grafana_volume_promtail_config }}"
+    - "{{ grafana_volume_prometheus_config }}"
+    - "{{ grafana_volume_prometheus_data }}"
   become: true
-
-- name: ⬆️ Pushes Caddy config
-  ansible.builtin.template:
-    src: grafana.caddy.j2
-    dest: "{{ caddy_sites }}/grafana.caddy"
-    mode: "0770"
-    group: "{{ app_gid }}"
-  notify: reload caddy
-
 - name: ⬆️ Pushes Loki config
   ansible.builtin.template:
-    src: loki-config.yml.j2
-    dest: "{{ grafana_volume_loki_config}}/loki-config.yml"
+    src: loki.yml.j2
+    dest: "{{ grafana_volume_loki_config}}/loki.yml"
     mode: "0770"
     owner: "{{ grafana_uid }}"
     group: "{{ app_gid }}"
@@ -66,13 +67,35 @@
 
 - name: ⬆️ Pushes Promtail config
   ansible.builtin.template:
-    src: promtail-config.yml.j2
-    dest: "{{ grafana_volume_promtail_config }}/promtail-config.yml"
+    src: promtail.yml.j2
+    dest: "{{ grafana_volume_promtail_config }}/promtail.yml"
     mode: "0770"
     owner: "{{ grafana_uid }}"
     group: "{{ app_gid }}"
   become: true
   notify: restart promtail
+
+- name: ⬆️ Pushes Prometheus config
+  ansible.builtin.template:
+    src: prometheus.yml.j2
+    dest: "{{ grafana_volume_prometheus_config }}/prometheus.yml"
+    mode: "0770"
+    owner: "{{ grafana_uid }}"
+    group: "{{ app_gid }}"
+  become: true
+  notify: restart prometheus
+
+- name: ⬆️ Pushes Datasources
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: "{{ grafana_volume_provisioning }}/datasources/{{ item | basename | regex_replace('\\.j2$', '') }}"
+    mode: "0770"
+    owner: "{{ grafana_uid }}"
+    group: "{{ app_gid }}"
+  become: true
+  with_fileglob:
+    - ../templates/provisioning/datasources/*.j2
+  notify: restart grafana
 
 - name: ⬆️ Pushes compose file
   ansible.builtin.template:
@@ -86,3 +109,11 @@
   community.docker.docker_compose_v2:
     project_src: "{{ grafana_service_path }}"
     state: present
+
+- name: ⬆️ Pushes Caddy config
+  ansible.builtin.template:
+    src: grafana.caddy.j2
+    dest: "{{ caddy_sites }}/grafana.caddy"
+    mode: "0770"
+    group: "{{ app_gid }}"
+  notify: reload caddy

@@ -1,5 +1,4 @@
 # Doc: https://www.authelia.com/configuration/prologue/introduction/
-
 authentication_backend:
   password_reset:
     disable: false
@@ -33,7 +32,7 @@ storage:
 session:
   secret: "{{ auth_authelia_session_secret }}"
   cookies:
-    - domain: "{{ auth_authelia_domain }}"
+    - domain: "{{ root_domain }}"
       authelia_url: "https://{{ auth_authelia_domain }}"
 
 notifier:
@@ -44,6 +43,12 @@ notifier:
     sender: "{{ root_domain }} <{{ auth_smtp_user }}>"
     password: "{{ auth_smtp_password }}"
 
+server:
+  endpoints:
+    authz:
+      forward-auth:
+        implementation: 'ForwardAuth'
+
 identity_validation:
   reset_password:
      jwt_secret: "{{ auth_lldap_jwt_secret }}"
@@ -52,6 +57,9 @@ identity_validation:
 
 access_control:
   rules:
+    - domain: '{{ seedbox_domain }}'
+      policy: 'two_factor'
+      subject: 'group:{{ auth_group_manager }}'
     - domain: "*.{{ root_domain }}"
       policy: deny
 

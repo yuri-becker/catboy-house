@@ -1,4 +1,5 @@
 {{ paperless_domain }} {
-    import caddy-common
+	import common-headers
+    import logging {{ paperless_domain }}
     reverse_proxy {{ docker_gateway }}:{{ paperless_service_port }}
 }

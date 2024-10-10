@@ -11,16 +11,11 @@
       tags: auth
       vars:
         auth_lldap_port: 27900
-        auth_authelia_port: 27901
 
     - role: watchtower
 
     - role: grafana
       tags: grafana
-      vars:
-        grafana_port: 27948
-        grafana_loki_port: 27949
-        grafana_uid: 1943
 
     - role: kimai
       tags: kimai
@@ -84,9 +79,9 @@
         jellyseerr_domain: jellyseerr.{{ root_domain }}
 
     - role: seedbox
+      tags: seedbox
       vars:
         seedbox_webui_port: 30214
-        seedbox_domain: bittorrent.{{ root_domain }}6
 
     - role: arr
       tags: arr

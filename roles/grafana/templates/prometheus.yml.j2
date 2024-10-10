@@ -1,0 +1,7 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'qbittorrent'
+    static_configs:
+      - targets: ['gluetun:{{ seedbox_promex_port }}']

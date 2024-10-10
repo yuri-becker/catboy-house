@@ -16,12 +16,14 @@
     - "{{ seedbox_volume_qbittorrent }}"
     - "{{ seedbox_volume_gluetun }}"
     - "{{ downloads_path }}"
+  become: true
 
 - name: ⬆️ Pushes compose file
   ansible.builtin.template:
     src: docker-compose.yml.j2
     dest: "{{ seedbox_service_path }}/docker-compose.yml"
     mode: "0755"
+  become: true
 
 - name: ⬆️ Pushes Caddy config
   ansible.builtin.template:
