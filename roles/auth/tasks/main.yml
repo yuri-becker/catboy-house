@@ -9,6 +9,11 @@
     mode: "0770"
   become: true
 
+- name: 👤 Creates prom network
+  community.docker.docker_network:
+    name: "{{ auth_ldap_network }}"
+    state: present
+
 - name: 📂 Creates volumes
   ansible.builtin.file:
     path: "{{ item }}"

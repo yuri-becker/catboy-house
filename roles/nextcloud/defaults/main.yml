@@ -1,0 +1,16 @@
+---
+# defaults file for roles/nextcloud
+nextcloud_container_prefix: nextcloud
+nextcloud_network_name: "{{ nextcloud_container_prefix }}"
+nextcloud_mariadb_container_name: "{{ nextcloud_container_prefix }}-mariadb"
+nextcloud_keydb_container_name: "{{ nextcloud_container_prefix }}-keydb"
+nextcloud_onlyoffice_container_name: "{{ nextcloud_container_prefix }}-onlyoffice"
+nextcloud_nextcloud_container_name: "{{ nextcloud_container_prefix }}-nextcloud"
+nextcloud_service_directory: nextcloud
+nextcloud_service_path: "{{ services_path_2 }}/{{ nextcloud_service_directory }}"
+nextcloud_volume_mariadb: "{{ nextcloud_service_path }}/volumes/mariadb"
+nextcloud_volume_keydb: "{{ nextcloud_service_path }}/volumes/keydb"
+nextcloud_volume_onlyoffice: "{{ nextcloud_service_path }}/volumes/onlyoffice"
+nextcloud_volume_nextcloud: "{{ nextcloud_service_path }}/volumes/nextcloud"
+nextcloud_smtp_sender: "Nextcloud <{{ nextcloud_smtp_user }}>"
+nextcloud_user_name: nextcloud

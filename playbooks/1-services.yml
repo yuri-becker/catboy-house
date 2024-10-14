@@ -9,8 +9,6 @@
 
     - role: auth
       tags: auth
-      vars:
-        auth_lldap_port: 27900
 
     - role: watchtower
 
@@ -34,24 +32,34 @@
       tags: owncloud
       vars:
         owncloud_service_port: 28946
-        owncloud_domain: cloud.{{ root_domain }}
+        owncloud_domain: owncloud.{{ root_domain }}
         owncloud_uid: 1946
 
     - role: seafile
+      tags: seafile
       vars:
         seafile_service_port: 28947
         seafile_volume_data: /home/seafile/data
         seafile_volume_db: /home/seafile/db
 
     - role: linkding
+      tags: linkding
       vars:
         linkding_service_port: 28948
         linkding_domain: bookmarks.{{ root_domain }}
 
     - role: mealie
+      tags: mealie
       vars:
         mealie_domain: mealie.{{ root_domain }}
         mealie_service_port: 28949
+
+    - role: nextcloud
+      tags: nextcloud
+      vars:
+        nextcloud_port: 28950
+        nextoffice_onlyoffice_port: 28951
+        nextcloud_uid: 1155
 
     - role: romm
       tags: romm

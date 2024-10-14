@@ -1,5 +1,6 @@
 ---
 auth_lldap_domain: account.{{ root_domain }}
+auth_lldap_port: 27900
 auth_authelia_domain: auth.{{ root_domain }}
 auth_authelia_port: 27901
 auth_lldap_postgres_password: !vault |
