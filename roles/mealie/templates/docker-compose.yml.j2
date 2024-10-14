@@ -42,4 +42,14 @@ services:
       SMTP_FROM_EMAIL: "mealie@{{ smtp_sender_domain }}"
       SMTP_USER: "{{ mealie_smtp_user }}"
       SMTP_PASSWORD: "{{ mealie_smtp_password }}"
-      ALLOW_SIGNUP: false
+      ALLOW_SIGNUP: False
+      OIDC_AUTH_ENABLED: true
+      OIDC_SIGNUP_ENABLED: true
+      OIDC_CONFIGURATION_URL: "https://{{ auth_authelia_domain }}/.well-known/openid-configuration"
+      OIDC_CLIENT_ID: "{{ mealie_authelia_client_id }}"
+      OIDC_USER_GROUP: "{{ auth_group_privileged }}"
+      OIDC_ADMIN_GROUP: "{{ auth_group_manager }}"
+      OIDC_PROVIDER_NAME: "Authelia"
+      OIDC_REMEMBER_ME: True
+      OIDC_USER_CLAIM: email
+      OIDC_AUTO_REDIRECT: True

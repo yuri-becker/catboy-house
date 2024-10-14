@@ -51,7 +51,6 @@
     - role: mealie
       tags: mealie
       vars:
-        mealie_domain: mealie.{{ root_domain }}
         mealie_service_port: 28949
 
     - role: nextcloud

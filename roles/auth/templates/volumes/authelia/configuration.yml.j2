@@ -2,7 +2,7 @@
 authentication_backend:
   password_reset:
     disable: false
-  refresh_interval:  1m
+  refresh_interval: 1m
   ldap:
     address: ldap://lldap:3890
     implementation: custom
@@ -51,9 +51,9 @@ server:
 
 identity_validation:
   reset_password:
-     jwt_secret: "{{ auth_lldap_jwt_secret }}"
-     jwt_algorithm: HS512
-     jwt_lifespan: 1 hour
+    jwt_secret: "{{ auth_lldap_jwt_secret }}"
+    jwt_algorithm: HS512
+    jwt_lifespan: 1 hour
 
 access_control:
   rules:
@@ -83,6 +83,16 @@ identity_providers:
     jwks:
       - key: |
           {{ auth_authelia_jwks_key | indent(width=10, first=False) }}
+    cors:
+      endpoints:
+        - userinfo
+        - authorization
+        - token
+        - revocation
+        - introspection
+      allowed_origins:
+        - "https://{{ mealie_domain }}"
+      allowed_origins_from_client_redirect_uris: true
     clients:
       - client_id: "{{ grafana_authelia_client_id }}"
         client_name: "Grafana"
@@ -134,3 +144,21 @@ identity_providers:
           - 'groups'
         userinfo_signed_response_alg: 'none'
         token_endpoint_auth_method: 'client_secret_basic'
+
+      - client_id: "{{ mealie_authelia_client_id }}"
+        client_name: "Mealie"
+        public: true
+        authorization_policy: 'two_factor'
+        require_pkce: true
+        grant_types:
+          - authorization_code
+        pkce_challenge_method: 'S256'
+        redirect_uris:
+          - 'https://{{ mealie_domain }}/login'
+        scopes:
+          - 'openid'
+          - 'profile'
+          - 'email'
+          - 'groups'
+        userinfo_signed_response_alg: 'none'
+        token_endpoint_auth_method: 'none'
