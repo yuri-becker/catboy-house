@@ -57,6 +57,15 @@
     group: "{{ app_gid }}"
   notify: reload caddy
 
+- name: 🚀 Sets up cron job
+  ansible.builtin.cron:
+    name: "Nextcloud cron"
+    minute: "*/5"
+    job: "docker exec -u 33 {{ nextcloud_nextcloud_container_name }} php occ background:cron"
+    user: root
+    state: present
+  become: true
+
 - name: 🚀 Starts container stack
   community.docker.docker_compose_v2:
     project_src: "{{ nextcloud_service_path }}"
