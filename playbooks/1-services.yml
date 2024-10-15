@@ -35,13 +35,6 @@
         owncloud_domain: owncloud.{{ root_domain }}
         owncloud_uid: 1946
 
-    - role: seafile
-      tags: seafile
-      vars:
-        seafile_service_port: 28947
-        seafile_volume_data: /home/seafile/data
-        seafile_volume_db: /home/seafile/db
-
     - role: linkding
       tags: linkding
       vars:
@@ -71,6 +64,7 @@
         pyload_domain: pyload.{{ root_domain }}
 
     - role: jellyfin
+      tags: jellyfin
       vars:
         jellyfin_service_port: 30212
 

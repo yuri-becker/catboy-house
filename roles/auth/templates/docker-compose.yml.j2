@@ -42,7 +42,7 @@ services:
       LLDAP_KEY_SEED: "{{ auth_lldap_key_seed }}"
       LLDAP_DATABASE_URL: "postgres://{{ auth_lldap_postgres_user }}:{{ auth_lldap_postgres_password }}@{{ auth_lldap_postgres_container_name }}/lldap"
       LLDAP_HTTP_URL: "https://{{ auth_lldap_domain }}"
-      LLDAP_SMTP_OPTIONS__ENABLE_PASSWORD_RESET: true
+      LLDAP_SMTP_OPTIONS__ENABLE_PASSWORD_RESET: false
       LLDAP_SMTP_OPTIONS__SERVER: "{{ smtp_server }}"
       LLDAP_SMTP_OPTIONS__PORT: "{{ smtp_port }}"
       LLDAP_SMTP_OPTIONS__USER: "{{ auth_smtp_user }}"

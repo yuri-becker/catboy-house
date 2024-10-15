@@ -33,6 +33,8 @@
     image: linuxserver/jellyfin:latest
     state: started
     restart_policy: unless-stopped
+    networks:
+      - name: "{{ auth_ldap_network }}"
     ports:
       - "{{ jellyfin_service_port }}:8096"
     env:
