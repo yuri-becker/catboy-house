@@ -1,8 +1,0 @@
-{{ tinfoil_store_domain }} {
-	import common-headers
-    import logging {{ tinfoil_store_domain }}
-	basicauth {
-        {{ tinfoil_store_user }} {{ tinfoil_store_password }}
-	}
-	reverse_proxy {{ docker_gateway }}:{{ tinfoil_store_service_port }}
-}

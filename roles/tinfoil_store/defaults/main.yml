@@ -1,8 +1,0 @@
----
-# defaults file for roles/tinfoil_store
-tinfoil_store_container_prefix: tinfoil-store
-tinfoil_store_container_name_ownfoil: "{{ tinfoil_store_container_prefix }}-ownfoil"
-tinfoil_store_service_directory: tinfoil-store
-tinfoil_store_seafile_client_name: catboy-store
-tinfoil_store_seafile_cache_size_limit: 10GB
-tinfoil_store_seafile_clean_cache_interval: 120
