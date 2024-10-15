@@ -167,3 +167,20 @@ identity_providers:
           - 'groups'
         userinfo_signed_response_alg: 'none'
         token_endpoint_auth_method: 'none'
+
+      - client_id: "{{ linkding_authelia_client_id }}"
+        client_name: "Linkding"
+        client_secret: "{{ linkding_authelia_client_secret_digest }}"
+        public: false
+        authorization_policy: "two_factor"
+        require_pkce: true
+        pkce_challenge_method: 'S256'
+        redirect_uris:
+          - 'https://{{ linkding_domain }}/oidc/callback/'
+        scopes:
+          - 'openid'
+          - 'profile'
+          - 'email'
+          - 'groups'
+        userinfo_signed_response_alg: 'none'
+        token_endpoint_auth_method: 'client_secret_post'

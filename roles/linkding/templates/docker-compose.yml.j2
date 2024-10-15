@@ -24,6 +24,13 @@ services:
       LD_DB_PORT: "5432"
       LD_DB_USER: "{{ linkding_postgres_user }}"
       LD_DB_PASSWORD: "{{ linkding_postgres_password }}"
+      LD_ENABLE_OIDC: "1"
+      OIDC_OP_AUTHORIZATION_ENDPOINT: "https://{{ auth_authelia_domain }}/api/oidc/authorization"
+      OIDC_OP_TOKEN_ENDPOINT: "https://{{ auth_authelia_domain }}/api/oidc/token"
+      OIDC_OP_USER_ENDPOINT: "https://{{ auth_authelia_domain }}/api/oidc/userinfo"
+      OIDC_OP_JWKS_ENDPOINT: "https://{{ auth_authelia_domain }}/jwks.json"
+      OIDC_RP_CLIENT_ID: "{{ linkding_authelia_client_id }}"
+      OIDC_RP_CLIENT_SECRET: "{{ linkding_authelia_client_secret_password }}"
     depends_on:
       - postgres
     restart: unless-stopped

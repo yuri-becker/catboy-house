@@ -46,7 +46,6 @@
       tags: linkding
       vars:
         linkding_service_port: 28948
-        linkding_domain: bookmarks.{{ root_domain }}
 
     - role: mealie
       tags: mealie
