@@ -59,3 +59,15 @@ services:
     environment:
       PUID: "{{ app_uid }}"
       PGID: "{{ app_gid }}"
+
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: "{{ arr_jellyseerr_container_name }}"
+    restart: unless-stopped
+    ports:
+      - "{{ docker_gateway }}:{{ arr_jellyseerr_port }}:5055"
+    volumes:
+      - "{{ arr_volume_jellyseerr }}:/app/config"
+    environment:
+      LOG_LEVEL: info
+      TZ: "{{ ansible_date_time.tz }}"

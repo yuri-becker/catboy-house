@@ -5,9 +5,12 @@ arr_sonarr_container_name: "{{ arr_container_prefix }}-sonarr"
 arr_radarr_container_name: "{{ arr_container_prefix }}-radarr"
 arr_prowlarr_container_name: "{{ arr_container_prefix }}-prowlarr"
 arr_bazarr_container_name: "{{ arr_container_prefix }}-bazarr"
+arr_jellyseerr_container_name: "{{ arr_container_prefix }}-jellyseerr"
 arr_service_directory: arr
 arr_service_path: "{{ services_path }}/{{ arr_service_directory }}"
 arr_volume_sonarr: "{{ arr_service_path }}/volumes/sonarr"
 arr_volume_radarr: "{{ arr_service_path }}/volumes/radarr"
 arr_volume_prowlarr: "{{ arr_service_path }}/volumes/prowlarr"
 arr_volume_bazarr: "{{ arr_service_path }}/volumes/bazarr"
+arr_volume_jellyseerr: "{{ arr_service_path }}/volumes/jellyseerr"
+

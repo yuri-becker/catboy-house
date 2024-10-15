@@ -80,11 +80,6 @@
         jellyfin_service_port: 30212
         jellyfin_domain: jellyfin.{{ root_domain }}
 
-    - role: jellyseerr
-      vars:
-        jellyseerr_service_port: 30213
-        jellyseerr_domain: jellyseerr.{{ root_domain }}
-
     - role: seedbox
       tags: seedbox
       vars:
@@ -94,13 +89,10 @@
       tags: arr
       vars:
         arr_sonarr_port: 30215
-        arr_sonarr_domain: sonarr.{{ root_domain }}
         arr_radarr_port: 30216
-        arr_radarr_domain: radarr.{{ root_domain }}
         arr_prowlarr_port: 30217
-        arr_prowlarr_domain: prowlarr.{{ root_domain }}
         arr_bazarr_port: 30218
-        arr_bazarr_domain: bazarr.{{ root_domain }}
+        arr_jellyseerr_port: 30219
 
     - role: vrising
       tags: vrising

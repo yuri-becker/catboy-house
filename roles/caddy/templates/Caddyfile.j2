@@ -18,4 +18,12 @@
     }
 }
 
+(forward-auth) {
+    forward_auth {args[0]} {
+        header_up Host {upstream_hostport}
+        uri /api/authz/forward-auth
+        copy_headers Remote-User Remote-Groups Remote-Email Remote-Name
+    }
+}
+
 import {{ caddy_sites }}/*

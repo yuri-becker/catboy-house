@@ -1,6 +1,0 @@
----
-# defaults file for roles/jellyseerr
-jellyseerr_container_name: jellyseerr
-jellyseerr_service_directory: jellyseerr
-jellyseerr_service_path: "{{ services_path }}/{{ jellyseerr_service_directory }}"
-jellyseerr_volume_config: "{{ jellyseerr_service_path }}/volumes/config"

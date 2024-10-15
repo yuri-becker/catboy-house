@@ -57,7 +57,12 @@ identity_validation:
 
 access_control:
   rules:
-    - domain: '{{ seedbox_domain }}'
+    - domain:
+      - '{{ seedbox_domain }}'
+      - '{{ arr_sonarr_domain }}'
+      - '{{ arr_radarr_domain }}'
+      - '{{ arr_prowlarr_domain }}'
+      - '{{ arr_bazarr_domain }}'
       policy: 'two_factor'
       subject: 'group:{{ auth_group_manager }}'
     - domain: "*.{{ root_domain }}"

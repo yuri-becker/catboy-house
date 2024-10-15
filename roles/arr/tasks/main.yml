@@ -20,6 +20,7 @@
     - "{{ arr_volume_radarr }}"
     - "{{ arr_volume_prowlarr }}"
     - "{{ arr_volume_bazarr }}"
+    - "{{ arr_volume_jellyseerr }}"
     - "{{ downloads_path }}"
     - "{{ tv_path }}"
     - "{{ movies_path }}"
