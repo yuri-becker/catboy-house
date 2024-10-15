@@ -77,7 +77,6 @@
     - role: jellyfin
       vars:
         jellyfin_service_port: 30212
-        jellyfin_domain: jellyfin.{{ root_domain }}
 
     - role: seedbox
       tags: seedbox
