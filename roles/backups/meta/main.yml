@@ -1,0 +1,9 @@
+---
+# meta file for roles/backups
+dependencies:
+  - role: auth
+  - role: heyform
+  - role: kimai
+  - role: linkding
+  - role: mealie
+  - role: paperless

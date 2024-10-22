@@ -1,3 +1,7 @@
+---
+owncloud_service_port: 28946
+owncloud_domain: owncloud.{{ root_domain }}
+owncloud_uid: 1946
 owncloud_smtp_password: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   30663839643530346133306530393536363830303561323064643332313134333264363138323564

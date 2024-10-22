@@ -1,3 +1,7 @@
+---
+kimai_port: 28944
+kimai_domain: kimai.{{ root_domain }}
+kimai_uid: 1944
 kimai_mysql_password: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   35386335666139653632363637393331303065366438383963666161666163316361306336393062

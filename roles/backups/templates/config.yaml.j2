@@ -1,0 +1,31 @@
+# See https://torsion.org/borgmatic/docs/reference/configuration/
+location:
+    source_directories:
+        - "{{ auth_service_path }}"
+        - "{{ heyform_service_path }}"
+        - "{{ kimai_service_path }}"
+        - "{{ linkding_service_path }}"
+        - "{{ mealie_service_path }}"
+        - "{{ paperless_service_path }}"
+    repositories:
+        - "ssh://backup-server/./repo"
+
+    numeric_ids: true
+    atime: false
+    ctime: true
+    birthtime: false
+    flags: true
+    exclude_caches: true
+    exclude_if_present:
+        - .nobackup
+
+storage:
+    encryption_passphrase: "{{ backups_encryption_passphrase }}"
+    compression: lzma
+    upload_rate_limit: 13000
+    retries: 3
+    retry_wait: 60
+
+retention:
+    keep_daily: 7
+    keep_weekly: 2

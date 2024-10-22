@@ -1,3 +1,7 @@
+---
+heyform_port: 30300
+heyform_domain: forms.{{ root_domain }}
+heyform_uid: 1990
 heyform_mongo_username: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   37653233356139393065333366376333303263303061366339636336336430626134356364323930

@@ -1,4 +1,5 @@
 ---
+jellyfin_service_port: 30212
 jellyfin_domain: jellyfin.{{ root_domain }}
 jellyfin_authelia_client_id: !vault |
   $ANSIBLE_VAULT;1.1;AES256

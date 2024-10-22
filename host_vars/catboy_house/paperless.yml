@@ -1,5 +1,7 @@
 ---
 paperless_domain: paperless.{{ root_domain }}
+paperless_service_port: 28945
+paperless_uid: 1945
 paperless_ocr_languages: eng deu dan
 paperless_ocr_language: deu
 paperless_task_workers: 2

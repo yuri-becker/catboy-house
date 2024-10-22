@@ -11,83 +11,50 @@
       tags: auth
 
     - role: watchtower
+      tags: watchtower
 
     - role: grafana
       tags: grafana
 
     - role: kimai
       tags: kimai
-      vars:
-        kimai_port: 28944
-        kimai_domain: kimai.{{ root_domain }}
-        kimai_uid: 1944
 
     - role: paperless
       tags: paperless
-      vars:
-        paperless_service_port: 28945
-        paperless_uid: 1945
 
+      # kept around for helping with debugging the issue
     - role: owncloud
       tags: owncloud
-      vars:
-        owncloud_service_port: 28946
-        owncloud_domain: owncloud.{{ root_domain }}
-        owncloud_uid: 1946
 
     - role: linkding
       tags: linkding
-      vars:
-        linkding_service_port: 28948
 
     - role: mealie
       tags: mealie
-      vars:
-        mealie_service_port: 28949
 
     - role: nextcloud
       tags: nextcloud
-      vars:
-        nextcloud_port: 28950
-        nextoffice_onlyoffice_port: 28951
-        nextcloud_uid: 1155
 
     - role: romm
       tags: romm
-      vars:
-        romm_port: 29156
-        romm_uid: 1156
 
     - role: pyload
-      vars:
-        pyload_service_port: 29158
-        pyload_domain: pyload.{{ root_domain }}
+      tags: pyload
 
     - role: jellyfin
       tags: jellyfin
-      vars:
-        jellyfin_service_port: 30212
 
     - role: seedbox
       tags: seedbox
-      vars:
-        seedbox_webui_port: 30214
 
     - role: arr
       tags: arr
-      vars:
-        arr_sonarr_port: 30215
-        arr_radarr_port: 30216
-        arr_prowlarr_port: 30217
-        arr_bazarr_port: 30218
-        arr_jellyseerr_port: 30219
 
     - role: vrising
       tags: vrising
 
     - role: heyform
       tags: heyform
-      vars:
-        heyform_port: 30300
-        heyform_domain: forms.{{ root_domain }}
-        heyform_uid: 1990
+
+    - role: backups
+      tags: backups

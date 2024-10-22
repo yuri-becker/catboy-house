@@ -1,4 +1,5 @@
 ---
+seedbox_webui_port: 30214
 seedbox_domain: bittorrent.{{ root_domain }}
 seedbox_vpn_input_port: !vault |
   $ANSIBLE_VAULT;1.1;AES256

@@ -1,0 +1,33 @@
+---
+# tasks file for roles/backups
+- name: 📦 Installs borgmatic
+  ansible.builtin.apt:
+    name: borgmatic
+    state: present
+  become: true
+
+- name: ⬆️ Pushes config
+  ansible.builtin.template:
+    src: config.yaml.j2
+    dest: /etc/borgmatic/config.yaml
+    owner: root
+    group: root
+    mode: "0600"
+  become: true
+
+- name: ⬆️ Pushes ssh config
+  community.general.ssh_config:
+    user: root
+    host: backup-server
+    hostname: "{{ backups_server_hostname }}"
+    remote_user: "{{ backups_server_user }}"
+    identity_file: "~/.ssh/{{ backups_identity_filename }}"
+    state: present
+  become: true
+
+- name: 🚀 Enables systemd timer
+  ansible.builtin.systemd_service:
+    name: borgmatic.timer
+    enabled: true
+    state: started
+  become: true
