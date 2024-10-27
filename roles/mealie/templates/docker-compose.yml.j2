@@ -47,6 +47,7 @@ services:
       OIDC_SIGNUP_ENABLED: true
       OIDC_CONFIGURATION_URL: "https://{{ auth_authelia_domain }}/.well-known/openid-configuration"
       OIDC_CLIENT_ID: "{{ mealie_authelia_client_id }}"
+      OIDC_CLIENT_SECRET: "{{ mealie_authelia_client_secret_password }}"
       OIDC_USER_GROUP: "{{ auth_group_privileged }}"
       OIDC_ADMIN_GROUP: "{{ auth_group_manager }}"
       OIDC_PROVIDER_NAME: "Authelia"

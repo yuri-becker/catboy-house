@@ -58,11 +58,11 @@ identity_validation:
 access_control:
   rules:
     - domain:
-      - '{{ seedbox_domain }}'
-      - '{{ arr_sonarr_domain }}'
-      - '{{ arr_radarr_domain }}'
-      - '{{ arr_prowlarr_domain }}'
-      - '{{ arr_bazarr_domain }}'
+        - '{{ seedbox_domain }}'
+        - '{{ arr_sonarr_domain }}'
+        - '{{ arr_radarr_domain }}'
+        - '{{ arr_prowlarr_domain }}'
+        - '{{ arr_bazarr_domain }}'
       policy: 'two_factor'
       subject: 'group:{{ auth_group_manager }}'
     - domain: "*.{{ root_domain }}"
@@ -152,7 +152,8 @@ identity_providers:
 
       - client_id: "{{ mealie_authelia_client_id }}"
         client_name: "Mealie"
-        public: true
+        client_secret: "{{ mealie_authelia_client_secret_digest }}"
+        public: false
         authorization_policy: 'two_factor'
         require_pkce: true
         grant_types:
@@ -166,7 +167,7 @@ identity_providers:
           - 'email'
           - 'groups'
         userinfo_signed_response_alg: 'none'
-        token_endpoint_auth_method: 'none'
+        token_endpoint_auth_method: 'client_secret_basic'
 
       - client_id: "{{ linkding_authelia_client_id }}"
         client_name: "Linkding"
@@ -200,3 +201,19 @@ identity_providers:
           - "groups"
         userinfo_signed_response_alg: 'none'
         token_endpoint_auth_method: 'client_secret_post'
+
+      - client_id: "{{ landing_authelia_client_id }}"
+        client_name: "catboy.house"
+        client_secret: "{{ landing_authelia_client_secret_digest }}"
+        public: false
+        authorization_policy: "two_factor"
+        grant_types:
+          - authorization_code
+        redirect_uris:
+          - "http://127.0.0.1:8000/oidc/callback"
+        scopes:
+          - "openid"
+          - "groups"
+          - "profile"
+        userinfo_signed_response_alg: "none"
+        token_endpoint_auth_method: "client_secret_basic"
