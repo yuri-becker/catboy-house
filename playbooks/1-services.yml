@@ -35,6 +35,9 @@
     - role: watchtower
       tags: watchtower
 
+    - role: unattended_upgrades
+      tags: unattended_upgrades
+
     - role: grafana
       tags: grafana
 

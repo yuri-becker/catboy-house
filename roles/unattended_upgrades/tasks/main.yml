@@ -1,0 +1,10 @@
+---
+# tasks file for roles/unattended_upgrades
+- name: 📦 Installs unattended-upgrades
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - unattended-upgrades
+    - apt-listchanges
+  become: true

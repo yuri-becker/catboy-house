@@ -9,4 +9,3 @@ arr_radarr_domain: radarr.{{ root_domain }}
 arr_prowlarr_domain: prowlarr.{{ root_domain }}
 arr_bazarr_domain: bazarr.{{ root_domain }}
 arr_jellyseerr_domain: jellyseerr.{{ root_domain }}
-
