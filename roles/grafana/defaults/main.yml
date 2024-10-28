@@ -16,4 +16,4 @@ grafana_volume_promtail_config: "{{ grafana_service_path }}/volumes/promtail-con
 grafana_volume_prometheus_config: "{{ grafana_service_path }}/volumes/prometheus-config"
 grafana_volume_prometheus_data: "{{ grafana_service_path }}/volumes/prometheus-data"
 grafana_user_name: grafana
-grafana_smtp_from_name: "Grafana"
+grafana_smtp_from_name: Grafana

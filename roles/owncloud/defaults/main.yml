@@ -7,4 +7,4 @@ owncloud_service_directory: owncloud
 owncloud_service_path: "{{ services_path_2 }}/{{ owncloud_service_directory }}"
 owncloud_volume_config: "{{ owncloud_service_path }}/volumes/config"
 owncloud_volume_data: "{{ owncloud_service_path }}/volumes/files"
-owncloud_smtp_sender: "ownCloud <{{ owncloud_smtp_user }}>"
+owncloud_smtp_sender: ownCloud <{{ owncloud_smtp_user }}>

@@ -2,10 +2,6 @@
 	import common-headers
     import logging {{ nextcloud_domain }}
 
-    header * {
-        X-Robots-Tag "noindex,nofollow"
-    }
-
     redir /.well-known/carddav /remote.php/dav 301
     redir /.well-known/caldav /remote.php/dav 301
     handle_path /ds-vpath/* {

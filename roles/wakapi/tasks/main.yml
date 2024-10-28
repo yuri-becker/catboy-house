@@ -1,0 +1,67 @@
+---
+# tasks file for wakapi/tasks
+- name: 👤 Creates database
+  community.postgresql.postgresql_db:
+    name: "{{ wakapi_db_name }}"
+    state: present
+
+- name: 👤 Creates database user
+  community.postgresql.postgresql_user:
+    db: "{{ wakapi_db_name }}"
+    name: "{{ wakapi_db_user }}"
+    password: "{{ wakapi_db_password }}"
+    conn_limit: "{{ wakapi_db_max_connections }}"
+    state: present
+
+- name: 👤 Grants privileges to user
+  community.postgresql.postgresql_privs:
+    db: "{{ wakapi_db_name }}"
+    roles: "{{ wakapi_db_user }}"
+    grant_option: false
+    type: "schema"
+    obj: "public"
+    privs: ALL
+
+- name: 🚀 Starts container
+  community.docker.docker_container:
+    name: "{{ wakapi_container_name }}"
+    image: ghcr.io/muety/wakapi:latest
+    state: started
+    restart_policy: unless-stopped
+    networks:
+      - name: "{{ postgres_network }}"
+    ports:
+      - "{{ docker_gateway }}:{{ wakapi_port }}:3000"
+    env:
+      ENV: production
+      WAKAPI_PASSWORD_SALT: "{{ wakapi_password_salt }}"
+      WAKAPI_LEADERBOARD_SCOPE: "{{ wakapi_leaderboard_scope }}"
+      WAKAPI_SUPPORT_CONTACT: "{{ webmaster_email }}"
+      WAKAPI_MAX_INACTIVE_MONTHS: "{{ wakapi_max_inactive_months }}"
+      WAKAPI_PUBLIC_URL: https://{{ wakapi_domain }}
+      WAKAPI_INSECURE_COOKIES: "false"
+      WAKAPI_DISABLE_FRONTPAGE: "{{ wakapi_disable_frontpage }}"
+      WAKAPI_DB_TYPE: postgres
+      WAKAPI_DB_HOST: "{{ postgres_hostname }}"
+      WAKAPI_DB_PORT: "5432"
+      WAKAPI_DB_NAME: "{{ wakapi_db_name }}"
+      WAKAPI_DB_USER: "{{ wakapi_db_user }}"
+      WAKAPI_DB_PASSWORD: "{{ wakapi_db_password }}"
+      WAKAPI_DB_MAX_CONNECTIONS: "{{ wakapi_db_max_connections }}"
+      WAKAPI_TRUST_REVERSE_PROXY_IPS: "192.168.80.1"
+      WAKAPI_LISTEN_IPV4: 0.0.0.0
+      WAKAPI_INVITE_CODES: "{{ wakapi_invite_codes }}"
+      WAKAPI_MAIL_SENDER: "{{ wakapi_mail_sender }}"
+      WAKAPI_MAIL_SMTP_HOST: "{{ smtp_server }}"
+      WAKAPI_MAIL_SMTP_PORT: "{{ smtp_port }}"
+      WAKAPI_MAIL_SMTP_USER: "{{ wakapi_smtp_user }}"
+      WAKAPI_MAIL_SMTP_PASS: "{{ wakapi_smtp_password }}"
+
+
+- name: ⬆️ Pushes Caddy config
+  ansible.builtin.template:
+    src: wakapi.caddy.j2
+    dest: "{{ caddy_sites }}/wakapi.caddy"
+    mode: "0770"
+    group: "{{ app_gid }}"
+  notify: reload caddy

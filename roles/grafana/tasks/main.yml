@@ -20,7 +20,7 @@
     permissions: rX
     recursive: true
     entity: "{{ grafana_uid }}"
-    etype: "user"
+    etype: user
     state: present
   become: true
 
@@ -58,7 +58,7 @@
 - name: ⬆️ Pushes Loki config
   ansible.builtin.template:
     src: loki.yml.j2
-    dest: "{{ grafana_volume_loki_config}}/loki.yml"
+    dest: "{{ grafana_volume_loki_config }}/loki.yml"
     mode: "0770"
     owner: "{{ grafana_uid }}"
     group: "{{ app_gid }}"

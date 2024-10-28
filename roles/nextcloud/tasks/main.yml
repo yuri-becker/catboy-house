@@ -59,9 +59,9 @@
 
 - name: 🚀 Sets up cron job
   ansible.builtin.cron:
-    name: "Nextcloud cron"
+    name: Nextcloud cron
     minute: "*/5"
-    job: "docker exec -u 33 {{ nextcloud_nextcloud_container_name }} php occ background:cron"
+    job: docker exec -u 33 {{ nextcloud_nextcloud_container_name }} php -f /var/www/html/cron.php
     user: root
     state: present
   become: true

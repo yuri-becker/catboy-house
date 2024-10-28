@@ -34,4 +34,3 @@
   become: true
   become_user: "{{ caddy_user }}"
   notify: reload caddy
-

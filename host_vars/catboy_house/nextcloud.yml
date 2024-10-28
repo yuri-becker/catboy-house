@@ -2,7 +2,7 @@
 nextcloud_port: 28950
 nextoffice_onlyoffice_port: 28951
 nextcloud_uid: 1155
-nextcloud_domain: "cloud.{{ root_domain }}"
+nextcloud_domain: cloud.{{ root_domain }}
 nextcloud_smtp_password: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   30663839643530346133306530393536363830303561323064643332313134333264363138323564

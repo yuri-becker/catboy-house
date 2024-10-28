@@ -13,4 +13,3 @@ arr_volume_radarr: "{{ arr_service_path }}/volumes/radarr"
 arr_volume_prowlarr: "{{ arr_service_path }}/volumes/prowlarr"
 arr_volume_bazarr: "{{ arr_service_path }}/volumes/bazarr"
 arr_volume_jellyseerr: "{{ arr_service_path }}/volumes/jellyseerr"
-

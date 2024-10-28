@@ -42,7 +42,7 @@
 
 - name: ⬆️ Pushes kimai config
   ansible.builtin.template:
-    src: "local.yml.j2"
+    src: local.yml.j2
     dest: "{{ kimai_config_path }}"
     owner: "{{ kimai_uid }}"
     group: "{{ app_gid }}"

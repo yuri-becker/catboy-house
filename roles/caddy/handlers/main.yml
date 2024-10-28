@@ -14,5 +14,5 @@
 
 - name: 🚀 Reloads caddy
   listen: reload caddy
-  ansible.builtin.command: "caddy reload --config {{ caddy_caddyfile }}"
+  ansible.builtin.command: caddy reload --config {{ caddy_caddyfile }}
   changed_when: true

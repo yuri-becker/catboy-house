@@ -1,6 +1,7 @@
 ---
 # meta file for roles/backups
 dependencies:
+  - role: postgres
   - role: auth
   - role: heyform
   - role: kimai

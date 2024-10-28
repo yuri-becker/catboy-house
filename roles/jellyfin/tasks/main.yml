@@ -18,7 +18,6 @@
     - "{{ tv_path }}"
   become: true
 
-
 - name: ⬆️ Pushes Caddy config
   ansible.builtin.template:
     src: jellyfin.caddy.j2

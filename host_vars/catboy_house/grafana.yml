@@ -1,4 +1,5 @@
-grafana_domain: "grafana.{{ root_domain }}"
+---
+grafana_domain: grafana.{{ root_domain }}
 grafana_port: 27948
 grafana_loki_port: 27949
 grafana_uid: 1943

@@ -6,9 +6,9 @@ heyform_keydb_container_name: "{{ heyform_container_prefix }}-keydb"
 heyform_heyform_container_name: "{{ heyform_container_prefix }}-heyform"
 heyform_service_directory: heyform
 heyform_service_path: "{{ services_path_2 }}/{{ heyform_service_directory }}"
-heyform_volume_mongo:  "{{ heyform_service_path }}/volumes/mongo"
+heyform_volume_mongo: "{{ heyform_service_path }}/volumes/mongo"
 heyform_volume_keydb: "{{ heyform_service_path }}/volumes/keydb"
 heyform_volume_heyform_assets: "{{ heyform_service_path }}/volumes/heyform-assets"
 heyform_user_name: heyform
 heyform_verify_user_email: true
-heyform_smtp_form: "HeyForm <{{ heyform_smtp_user }}>"
+heyform_smtp_form: HeyForm <{{ heyform_smtp_user }}>

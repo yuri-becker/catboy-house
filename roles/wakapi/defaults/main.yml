@@ -1,0 +1,13 @@
+---
+# defaults file for roles/wakapi
+wakapi_container_name: wakapi
+wakapi_service_directory: wakapi
+wakapi_service_path: "{{ services_path_2 }}/{{ wakapi_service_directory }}"
+wakapi_volume_data: "{{ wakapi_service_path }}/volumes/data"
+wakapi_leaderboard_scope: 30_days
+wakapi_max_inactive_months: "-1"
+wakapi_disable_frontpage: "true"
+wakapi_db_name: wakapi
+wakapi_db_max_connections: "2"
+wakapi_invite_codes: "false"
+wakapi_mail_sender: "Wakapi <{{ wakapi_smtp_user }}>"

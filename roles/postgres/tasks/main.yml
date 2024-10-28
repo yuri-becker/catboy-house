@@ -1,0 +1,49 @@
+---
+# tasks file for roles/postgres
+- name: 👤 Creates user
+  ansible.builtin.user:
+    state: present
+    name: "{{ postgres_user_name }}"
+    uid: "{{ postgres_uid }}"
+    create_home: false
+    home: "{{ postgres_service_path }}"
+    groups:
+      - "{{ app_gid }}"
+  become: true
+
+- name: 👤 Creates postgres network
+  community.docker.docker_network:
+    name: "{{ postgres_network }}"
+    state: present
+
+- name: 📂 Creates volume
+  ansible.builtin.file:
+    path: "{{ postgres_volume_data }}"
+    state: directory
+    mode: "0700"
+    owner: "{{ postgres_uid }}"
+  become: true
+
+- name: 🚀 Starts container
+  community.docker.docker_container:
+    name: "{{ postgres_container_name }}"
+    hostname: "{{ postgres_hostname }}"
+    image: postgres:16
+    state: started
+    restart_policy: unless-stopped
+    user: "{{ postgres_uid }}"
+    ports:
+      - "{{ docker_gateway }}:{{ postgres_port }}:5432"
+    networks:
+      - name: "{{ postgres_network }}"
+    volumes:
+      - "{{ postgres_volume_data }}:/var/lib/postgresql/data"
+    env:
+      POSTGRES_USER: "{{ postgres_user }}"
+      POSTGRES_PASSWORD: "{{ postgres_password }}"
+
+- name: ⏱️ Waits until Postgres is started
+  ansible.builtin.wait_for:
+    host: "{{ docker_gateway }}"
+    port: "{{ postgres_port }}"
+    timeout: 120

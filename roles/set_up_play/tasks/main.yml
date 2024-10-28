@@ -1,12 +1,13 @@
 ---
-- name: 📦 Installs virtualenv and pip
+- name: 📦 Installs system dependencies
   ansible.builtin.apt:
     name: "{{ item }}"
     state: present
-  become: true
   loop:
     - python3-pip
     - virtualenv
+    - libpq-dev
+  become: true
 
 - name: 📂 Creates root directory
   ansible.builtin.file:
@@ -35,7 +36,6 @@
     group: admin
   become: true
 
-
 - name: 📂 Creates venv
   ansible.builtin.file:
     path: "{{ play_venv }}"
@@ -49,6 +49,7 @@
     name:
       - requests
       - pyyaml==5.3.1
+      - psycopg2-binary
       - docker
       - docker-compose
     state: present

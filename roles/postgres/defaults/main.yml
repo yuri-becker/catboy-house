@@ -1,0 +1,9 @@
+---
+# defaults file for roles/postgres
+postgres_container_name: postgres
+postgres_network: "{{ postgres_container_name }}"
+postgres_hostname: "{{ postgres_container_name }}"
+postgres_user_name: "{{ postgres_container_name }}"
+postgres_service_directory: postgres
+postgres_service_path: "{{ services_path_2 }}/postgres"
+postgres_volume_data: "{{ postgres_service_path }}/volumes/data"

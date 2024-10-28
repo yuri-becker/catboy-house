@@ -19,8 +19,15 @@ location:
     exclude_if_present:
         - .nobackup
 
+hooks:
+  postgresql_databases:
+    - name: all
+      pg_dump_command: "docker exec {{ postgres_container_name }} pg_dumpall --user {{ postgres_user }}"
+      pg_restore_command: "docker exec {{ postgres_container_name }} pg_restore --user {{ postgres_user }}"
+
 storage:
     encryption_passphrase: "{{ backups_encryption_passphrase }}"
+    archive_name_format: "{{ inventory_hostname }}-{now}"
     compression: lzma
     upload_rate_limit: 13000
     retries: 3
@@ -29,3 +36,4 @@ storage:
 retention:
     keep_daily: 7
     keep_weekly: 2
+    prefix: "{{ inventory_hostname }}-"

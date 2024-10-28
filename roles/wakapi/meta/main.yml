@@ -1,0 +1,6 @@
+---
+# meta file for roles/wakapi
+dependencies:
+  - role: set_docker_gateway
+  - role: postgres
+  - role: auth

@@ -9,7 +9,7 @@
     mode: "0770"
   become: true
 
-- name: 👤 Creates prom network
+- name: 👤 Creates ldap network
   community.docker.docker_network:
     name: "{{ auth_ldap_network }}"
     state: present
