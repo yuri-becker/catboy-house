@@ -20,7 +20,7 @@ services:
     command: -config.file=/etc/loki/loki.yml
 
   promtail:
-    image: grafana/promtail:latest
+    image: grafana/promtail:3.0.1
     container_name: "{{ grafana_promtail_container_name }}"
     networks:
       - "{{ grafana_network }}"
