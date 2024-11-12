@@ -1,5 +1,5 @@
 ---
-mealie_service_port: 28949
+mealie_port: 28949
 mealie_domain: mealie.{{ root_domain }}
 mealie_postgres_user: !vault |
   $ANSIBLE_VAULT;1.1;AES256

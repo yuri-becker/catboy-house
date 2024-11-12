@@ -14,7 +14,7 @@ services:
     container_name: "{{ mealie_container_name }}"
     restart: unless-stopped
     ports:
-      - "{{ docker_gateway }}:{{ mealie_service_port }}:9000"
+      - "{{ docker_gateway }}:{{ mealie_port }}:9000"
     deploy:
       resources:
         limits:

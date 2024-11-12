@@ -4,7 +4,7 @@ Media system, see [https://jellyfin.org/](https://jellyfin.org/).
 
 ## Role Variables
 
-### `jellyfin_service_port`*
+### `jellyfin_port`*
 Port on which this service should be exposed.
 
 ### `movies_path`*

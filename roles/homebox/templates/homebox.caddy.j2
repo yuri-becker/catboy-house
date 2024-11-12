@@ -1,0 +1,5 @@
+{{ homebox_domain }} {
+	import common-headers
+    import logging {{ homebox_domain }}
+	reverse_proxy {{ docker_gateway }}:{{ homebox_port }}
+}

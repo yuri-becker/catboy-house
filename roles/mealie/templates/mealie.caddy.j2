@@ -1,4 +1,4 @@
 {{ mealie_domain }} {
     import common-headers
-    reverse_proxy {{ docker_gateway }}:{{ mealie_service_port }}
+    reverse_proxy {{ docker_gateway }}:{{ mealie_port }}
 }

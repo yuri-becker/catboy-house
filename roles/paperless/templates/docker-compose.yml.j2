@@ -45,7 +45,7 @@ services:
       - gotenberg
       - tika
     ports:
-      - "{{ docker_gateway }}:{{ paperless_service_port }}:8000"
+      - "{{ docker_gateway }}:{{ paperless_port }}:8000"
     volumes:
       - "{{ paperless_volume_paperless_data }}:/usr/src/paperless/data"
       - "{{ paperless_volume_paperless_media }}:/usr/src/paperless/media"

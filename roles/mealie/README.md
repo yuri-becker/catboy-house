@@ -4,7 +4,7 @@ Recipe manager [Mealie](https://mealie.io/).
 
 ## Role Variables
 
-### `mealie_service_port`*
+### `mealie_port`*
 Port on which this service should be exposed.
 
 ### `mealie-domain`*

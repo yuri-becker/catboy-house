@@ -13,7 +13,7 @@ services:
     container_name: "{{ linkding_container_name }}"
     image: sissbruecker/linkding:latest
     ports:
-      - "{{ docker_gateway }}:{{ linkding_service_port }}:9090"
+      - "{{ docker_gateway }}:{{ linkding_port }}:9090"
     volumes:
       - "{{ linkding_volume_data }}:/etc/linkding/data"
     environment:

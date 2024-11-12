@@ -7,7 +7,7 @@ Runs [paperless-ngx](https://docs.paperless-ngx.com) on Postgres+Redis+Gotenberg
 ### `paperless_domain`*
 Domain on which paperless should be accessible.
 
-### `paperless_service_port`*
+### `paperless_port`*
 Port on which paperless should run.
 
 ### `paperless_secret`*

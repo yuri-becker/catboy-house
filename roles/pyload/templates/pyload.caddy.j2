@@ -1,5 +1,5 @@
 {{ pyload_domain }} {
 	import common-headers
     import logging {{ pyload_domain }}
-    reverse_proxy {{ docker_gateway }}:{{ pyload_service_port }}
+    reverse_proxy {{ docker_gateway }}:{{ pyload_port }}
 }

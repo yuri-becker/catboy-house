@@ -35,7 +35,7 @@
     networks:
       - name: "{{ auth_ldap_network }}"
     ports:
-      - "{{ jellyfin_service_port }}:8096"
+      - "{{ jellyfin_port }}:8096"
     env:
       PUID: "1000"
       PGID: "100"

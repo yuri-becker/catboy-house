@@ -47,10 +47,6 @@
     - role: paperless
       tags: paperless
 
-    # kept around for helping with debugging the issue
-    - role: owncloud
-      tags: owncloud
-
     - role: linkding
       tags: linkding
 
@@ -86,3 +82,6 @@
 
     - role: wakapi
       tags: wakapi
+
+    - role: homebox
+      tags: homebox

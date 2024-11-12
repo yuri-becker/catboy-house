@@ -4,7 +4,7 @@ Bookmark manager [Linkding](https://github.com/sissbruecker/linkding).
 
 ## Role Variables
 
-### `linkding_service_port`*
+### `linkding_port`*
 Port on which this service should be exposed.
 
 ### `linkding_postgres_user`*

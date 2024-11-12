@@ -37,7 +37,7 @@
     state: started
     restart_policy: unless-stopped
     ports:
-      - "{{ docker_gateway }}:{{ pyload_service_port }}:8000"
+      - "{{ docker_gateway }}:{{ pyload_port }}:8000"
     volumes:
       - "{{ pyload_volume_config }}:/config"
       - "{{ downloads_path }}:/downloads"

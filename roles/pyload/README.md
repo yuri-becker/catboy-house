@@ -4,7 +4,7 @@ Download manager [pyLoad](https://pyload.net/).
 
 ## Role Variables
 
-### `pyload_service_port`*
+### `pyload_port`*
 Port on which pyload should run.
 
 ### `downloads_path`*
