@@ -85,3 +85,6 @@
 
     - role: homebox
       tags: homebox
+
+    - role: minecraft
+      tags: minecraft
