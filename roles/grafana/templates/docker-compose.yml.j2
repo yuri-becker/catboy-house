@@ -45,6 +45,23 @@ services:
       - "--config.file=/etc/prometheus/prometheus.yml"
       - "--log.level=debug"
 
+  node_exporter:
+    image: prom/node-exporter:latest
+    container_name: "{{ grafana_node_exporter_container_name }}"
+    restart: unless-stopped
+    networks:
+      - "{{ grafana_prom_network }}"
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    pid: host
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+
   grafana:
     image: grafana/grafana-enterprise:latest
     container_name: "{{ grafana_grafana_container_name }}"

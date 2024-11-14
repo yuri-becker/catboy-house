@@ -6,6 +6,7 @@ grafana_grafana_container_name: "{{ grafana_container_prefix }}-grafana"
 grafana_loki_container_name: "{{ grafana_container_prefix }}-loki"
 grafana_promtail_container_name: "{{ grafana_container_prefix }}-promtail"
 grafana_prometheus_container_name: "{{ grafana_container_prefix }}-prometheus"
+grafana_node_exporter_container_name: "{{ grafana_container_prefix }}-node-exporter"
 grafana_prom_network: "{{ grafana_container_prefix }}-prom-network"
 grafana_service_directory: grafana
 grafana_service_path: "{{ services_path_2 }}/{{ grafana_service_directory }}"
