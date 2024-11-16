@@ -18,6 +18,16 @@
     group: "{{ app_gid }}"
   become: true
 
+- name: 🚀 Sets up cron job
+  ansible.builtin.cron:
+    name: "{{ minecraft_container_name }} reboot"
+    minute: "0"
+    hour: "6"
+    job: "docker restart {{ minecraft_container_name }}"
+    user: root
+    state: present
+  become: true
+
 - name: 🚀 Starts container
   community.docker.docker_container:
     name: "{{ minecraft_container_name }}"
