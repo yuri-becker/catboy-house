@@ -71,9 +71,6 @@
     - role: arr
       tags: arr
 
-    - role: vrising
-      tags: vrising
-
     - role: heyform
       tags: heyform
 
@@ -86,5 +83,3 @@
     - role: homebox
       tags: homebox
 
-    - role: minecraft
-      tags: minecraft
