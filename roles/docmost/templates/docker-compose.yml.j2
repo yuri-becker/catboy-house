@@ -1,0 +1,43 @@
+networks:
+  "{{ docmost_network }}":
+    name: "{{ docmost_network }}"
+  "{{ postgres_network }}":
+    name: "{{ postgres_network }}"
+    external: true
+
+services:
+  keydb:
+    image: eqalpha/keydb:latest
+    container_name: "{{ docmost_keydb_container_name }}"
+    restart: unless-stopped
+    user: "{{ docmost_uid }}:{{ app_gid }}"
+    networks:
+      - "{{ docmost_network }}"
+    volumes:
+      - "{{ docmost_volume_keydb }}:/data"
+
+  docmost:
+    image: docmost/docmost:latest
+    container_name: "{{ docmost_docmost_container_name }}"
+    restart: unless-stopped
+    depends_on:
+      - keydb
+    networks:
+      - "{{ docmost_network }}"
+      - "{{ postgres_network }}"
+    ports:
+      - "{{ docker_gateway }}:{{ docmost_port }}:3000"
+    volumes:
+      - "{{ docmost_volume_docmost }}:/app/data/storage"
+    environment:
+      APP_URL: "https://{{ docmost_domain }}"
+      APP_SECRET: "{{ docmost_secret }}"
+      DATABASE_URL: "postgresql://{{ docmost_db_user }}:{{ docmost_db_password }}@{{ postgres_hostname }}:5432/{{ docmost_db_name }}?schema=public"
+      REDIS_URL: "redis://keydb:6379"
+      MAIL_DRIVER: "smtp"
+      SMTP_HOST: "{{ smtp_server }}"
+      SMTP_PORT: "{{ smtp_port }}"
+      SMTP_USERNAME: "{{ docmost_smtp_user }}"
+      SMTP_PASSWORD: "{{ docmost_smtp_password }}"
+      MAIL_FROM_ADDRESS: "{{ docmost_smtp_from_address }}"
+      MAIL_FROM_NAME: "{{ docmost_smtp_from_name }}"

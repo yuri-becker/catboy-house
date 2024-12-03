@@ -217,3 +217,16 @@ identity_providers:
           - "profile"
         userinfo_signed_response_alg: "none"
         token_endpoint_auth_method: "client_secret_basic"
+
+      - client_id: "{{ docmost_authelia_client_id }}"
+        client_name: "Docmost"
+        client_secret: "{{ docmost_authelia_client_secret_digest }}"
+        public: false
+        authorization_policy: "two_factor"
+        scopes:
+          - 'openid'
+          - 'profile'
+          - 'email'
+          - 'groups'
+        userinfo_signed_response_alg: 'none'
+        token_endpoint_auth_method: 'client_secret_basic'

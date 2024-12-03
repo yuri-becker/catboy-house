@@ -83,3 +83,5 @@
     - role: homebox
       tags: homebox
 
+    - role: docmost
+      tags: docmost

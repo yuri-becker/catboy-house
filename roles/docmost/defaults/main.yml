@@ -1,0 +1,14 @@
+---
+# defaults file for roles/docmost
+docmost_user_name: docmost
+docmost_db_name: docmost
+docmost_container_prefix: docmost
+docmost_network: "{{ docmost_container_prefix }}"
+docmost_keydb_container_name: "{{ docmost_container_prefix }}-keydb"
+docmost_docmost_container_name: "{{ docmost_container_prefix }}-docmost"
+docmost_directory: docmost
+docmost_path: "{{ services_path_2 }}/{{ docmost_directory }}"
+docmost_volume_docmost: "{{ docmost_path }}/volumes/docmost"
+docmost_volume_keydb: "{{ docmost_path }}/volumes/keydb"
+docmost_smtp_from_address: "{{ docmost_smtp_user }}"
+docmost_smtp_from_name: Docmost

@@ -1,0 +1,84 @@
+---
+# tasks file for roles/docmost
+- name: 👤 Creates user
+  ansible.builtin.user:
+    state: present
+    name: "{{ docmost_user_name }}"
+    uid: "{{ docmost_uid }}"
+    create_home: false
+    home: "{{ docmost_path }}"
+    group: "{{ app_gid }}"
+  become: true
+
+- name: 👤 Creates database
+  community.postgresql.postgresql_db:
+    name: "{{ docmost_db_name }}"
+    state: present
+
+- name: 👤 Creates database user
+  community.postgresql.postgresql_user:
+    db: "{{ docmost_db_name }}"
+    name: "{{ docmost_db_user }}"
+    password: "{{ docmost_db_password }}"
+    state: present
+
+- name: 👤 Grants privileges to user
+  community.postgresql.postgresql_privs:
+    db: "{{ docmost_db_name }}"
+    roles: "{{ docmost_db_user }}"
+    grant_option: false
+    type: schema
+    obj: public
+    privs: ALL
+
+- name: 📂 Creates service path
+  ansible.builtin.file:
+    path: "{{ docmost_path }}"
+    state: directory
+    mode: "750"
+    owner: "{{ docmost_uid }}"
+    group: "{{ app_gid }}"
+  become: true
+
+- name: 📂 Creates keydb volume
+  ansible.builtin.file:
+    path: "{{ docmost_volume_keydb }}"
+    state: directory
+    mode: "700"
+    owner: "{{ docmost_uid }}"
+    group: "{{ app_gid }}"
+  become: true
+
+- name: 📂 Creates docmost volume
+  # The docmost image is created with a folder that belongs to 1000:1000,
+  # that docmost writes in when it starts. So we can't use the created user
+  # here, but have to use 1000:1000.
+  ansible.builtin.file:
+    path: "{{ docmost_volume_docmost }}"
+    state: directory
+    mode: "700"
+    owner: "1000"
+    group: "{{ app_gid }}"
+  become: true
+
+- name: ⬆️ Pushes compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ docmost_path }}/docker-compose.yml"
+    owner: "{{ docmost_uid }}"
+    group: "{{ app_gid }}"
+    mode: "0750"
+  become: true
+
+- name: ⬆️ Pushes Caddy config
+  ansible.builtin.template:
+    src: docmost.caddy.j2
+    dest: "{{ caddy_sites }}/docmost.caddy"
+    mode: "0770"
+    group: "{{ app_gid }}"
+  notify: reload caddy
+
+- name: 🚀 Starts container stack
+  community.docker.docker_compose_v2:
+    project_src: "{{ docmost_path }}"
+    state: present

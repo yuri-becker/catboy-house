@@ -1,0 +1,6 @@
+---
+# meta file for roles/docmost
+dependencies:
+  - role: set_docker_gateway
+  - role: postgres
+  - role: auth
