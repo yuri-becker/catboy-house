@@ -28,6 +28,7 @@ services:
       MOBYGAMES_API_KEY: "{{ romm_mobygames_api_key }}"
       STEAMGRIDDB_API_KEY: "{{ romm_steamgriddb_api_key }}"
       ROMM_HOST: "{{ romm_domain }}"
+      UPLOAD_TIMEOUT: 0
     volumes:
       - "{{ romm_volume_resources }}:/romm/resources"
       - "{{ romm_volume_redis }}:/redis-data"
