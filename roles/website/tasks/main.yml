@@ -1,0 +1,9 @@
+---
+# tasks file for roles/website
+- name: ⬆️ Pushes Caddy config
+  ansible.builtin.template:
+    src: website.caddy.j2
+    dest: "{{ caddy_sites }}/website.caddy"
+    mode: "0770"
+    group: "{{ app_gid }}"
+  notify: reload caddy

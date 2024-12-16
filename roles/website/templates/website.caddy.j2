@@ -1,0 +1,9 @@
+{{ root_domain }} {
+    reverse_proxy https://{{ website_target }} {
+        header_up Host {{ website_target }}
+    }
+}
+
+www.{{ root_domain }} {
+    redir https://{{ root_domain }}
+}

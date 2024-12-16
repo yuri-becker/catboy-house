@@ -29,6 +29,7 @@
     - "{{ nextcloud_volume_mariadb }}"
     - "{{ nextcloud_volume_keydb }}"
     - "{{ nextcloud_volume_onlyoffice }}"
+    - "{{ nextcloud_volume_fonts }}"
   become: true
 
 - name: 📂 Creates Nextcloud volume
@@ -56,6 +57,16 @@
     mode: "0770"
     group: "{{ app_gid }}"
   notify: reload caddy
+
+- name: ⬆️ Pushes fonts
+  ansible.builtin.copy:
+    src: files/fonts
+    dest: "{{ nextcloud_volume_fonts }}"
+    owner: "{{ nextcloud_uid }}"
+    group: "{{ app_gid }}"
+    mode: "0774"
+  become: true
+  notify: restart onlyoffice
 
 - name: 🚀 Sets up cron job
   ansible.builtin.cron:

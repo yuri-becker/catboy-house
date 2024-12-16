@@ -85,3 +85,6 @@
 
     - role: docmost
       tags: docmost
+
+    - role: website
+      tags: website

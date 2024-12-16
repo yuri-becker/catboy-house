@@ -42,6 +42,7 @@ services:
       - "{{ nextcloud_network_name }}"
     volumes:
       - "{{ nextcloud_volume_onlyoffice }}:/var/www/onlyoffice/Data"
+      - "{{ nextcloud_volume_fonts }}:/usr/share/fonts/custom"
     environment:
       JWT_SECRET: "{{ nextcloud_onlyoffice_secret }}"
 
