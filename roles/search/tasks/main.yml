@@ -47,6 +47,7 @@
     owner: "{{ search_uid }}"
     group: "{{ app_gid }}"
   become: true
+  notify: restart searxng
 
 - name: ⬆️ Pushes Limiter Config
   ansible.builtin.template:
@@ -56,6 +57,7 @@
     owner: "{{ search_uid }}"
     group: "{{ app_gid }}"
   become: true
+  notify: restart searxng
 
 - name: ⬆️ Pushes Caddy config
   ansible.builtin.template:

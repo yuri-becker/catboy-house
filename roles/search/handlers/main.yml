@@ -1,0 +1,9 @@
+---
+# handlers file for roles/search
+- name: 🚀 Restarts Searxng
+  community.docker.docker_compose_v2:
+    project_src: "{{ search_path }}"
+    services:
+      - searxng
+    state: restarted
+  listen: restart searxng
