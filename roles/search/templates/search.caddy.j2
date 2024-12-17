@@ -1,0 +1,5 @@
+{{ search_domain }} {
+    import common-headers
+    encode zstd gzip
+    reverse_proxy {{ docker_gateway }}:{{ search_port }}
+}

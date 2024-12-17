@@ -88,3 +88,6 @@
 
     - role: website
       tags: website
+
+    - role: search
+      tags: search

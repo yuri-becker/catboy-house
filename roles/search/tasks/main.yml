@@ -1,0 +1,71 @@
+---
+# tasks file for roles/search
+- name: 👤 Creates user
+  ansible.builtin.user:
+    state: present
+    name: "{{ search_user_name }}"
+    uid: "{{ search_uid }}"
+    create_home: false
+    group: "{{ app_gid }}"
+  become: true
+
+- name: 📂 Creates service path
+  ansible.builtin.file:
+    path: "{{ search_path }}"
+    state: directory
+    mode: "0750"
+    owner: "{{ search_uid }}"
+    group: "{{ app_gid }}"
+  become: true
+
+- name: 📂 Creates volume
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0700"
+    owner: "{{ search_uid }}"
+    group: "{{ app_gid }}"
+  loop:
+    - "{{ search_volume_keydb }}"
+    - "{{ search_volume_searxng }}"
+  become: true
+
+- name: ⬆️ Pushes compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ search_path }}/docker-compose.yml"
+    owner: "{{ search_uid }}"
+    group: "{{ app_gid }}"
+    mode: "0750"
+  become: true
+
+- name: ⬆️ Pushes SearXNG Config
+  ansible.builtin.template:
+    src: settings.yml.j2
+    dest: "{{ search_volume_searxng }}/settings.yml"
+    mode: "0700"
+    owner: "{{ search_uid }}"
+    group: "{{ app_gid }}"
+  become: true
+
+- name: ⬆️ Pushes Limiter Config
+  ansible.builtin.template:
+    src: limiter.toml.j2
+    dest: "{{ search_volume_searxng }}/limiter.toml"
+    mode: "0700"
+    owner: "{{ search_uid }}"
+    group: "{{ app_gid }}"
+  become: true
+
+- name: ⬆️ Pushes Caddy config
+  ansible.builtin.template:
+    src: search.caddy.j2
+    dest: "{{ caddy_sites }}/search.caddy"
+    mode: "0770"
+    group: "{{ app_gid }}"
+  notify: reload caddy
+
+- name: 🚀 Starts container stack
+  community.docker.docker_compose_v2:
+    project_src: "{{ search_path }}"
+    state: present

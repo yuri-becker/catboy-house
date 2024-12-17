@@ -1,0 +1,24 @@
+services:
+  valkey:
+    image: docker.io/valkey/valkey:8-alpine
+    container_name: "{{ search_valkey_container_name }}"
+    restart: unless-stopped
+    command: valkey-server --save 30 1 --loglevel warning
+    user: "{{ search_uid }}:{{ app_gid }}"
+    volumes:
+      - "{{ search_volume_keydb }}:/data"
+
+  searxng:
+    image: searxng/searxng:latest
+    container_name: "{{ search_searxng_container_name }}"
+    restart: unless-stopped
+    user: "{{ search_uid }}:{{ app_gid }}"
+    depends_on:
+      - valkey
+    ports:
+      - "{{ docker_gateway }}:{{ search_port }}:8080"
+    volumes:
+      - "{{ search_volume_searxng }}:/etc/searxng"
+    environment:
+      SEARXNG_BASE_URL: "https://{{ search_domain }}/"
+      INSTANCE_NAME: "{{ search_instance_name }}"
