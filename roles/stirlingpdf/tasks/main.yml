@@ -1,0 +1,63 @@
+---
+# tasks file for roles/stirlingpdf
+- name: 👤 Creates user
+  ansible.builtin.user:
+    state: present
+    name: "{{ stirlingpdf_user_name }}"
+    uid: "{{ stirlingpdf_uid }}"
+    create_home: false
+    home: "{{ stirlingpdf_path }}"
+    groups:
+      - "{{ app_gid }}"
+  become: true
+
+- name: 📂 Creates volumes
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0700"
+    owner: "{{ stirlingpdf_uid }}"
+  become: true
+  loop:
+    - "{{ stirlingpdf_volume_trainingdata }}"
+    - "{{ stirlingpdf_volume_configs }}"
+    - "{{ stirlingpdf_volume_custom_files }}"
+    - "{{ stirlingpdf_volume_pipeline }}"
+    - "{{ stirlingpdf_volume_logs }}"
+
+- name: ⬆️ Pushes settings
+  ansible.builtin.template:
+    src: settings.yml.j2
+    dest: "{{ stirlingpdf_volume_configs }}/settings.yml"
+    mode: "0700"
+    owner: "{{ stirlingpdf_uid }}"
+  become: true
+
+- name: ⬆️ Pushes Caddy config
+  ansible.builtin.template:
+    src: stirlingpdf.caddy.j2
+    dest: "{{ caddy_sites }}/stirlingpdf.caddy"
+    mode: "0770"
+    group: "{{ app_gid }}"
+  notify: reload caddy
+
+- name: 🚀 Starts container
+  community.docker.docker_container:
+    name: "{{ stirlingpdf_container__name }}"
+    image: stirlingtools/stirling-pdf:latest
+    state: started
+    restart_policy: unless-stopped
+    user: "{{ stirlingpdf_uid }}:{{ app_gid }}"
+    ports:
+      - "{{ docker_gateway }}:{{ stirlingpdf_port }}:8080"
+    volumes:
+      - "{{ stirlingpdf_volume_trainingdata }}:/usr/share/tessdata"
+      - "{{ stirlingpdf_volume_configs }}:/configs"
+      - "{{ stirlingpdf_volume_custom_files }}:/customFiles"
+      - "{{ stirlingpdf_volume_pipeline }}:/pipeline"
+      - "{{ stirlingpdf_volume_logs }}:/logs"
+    env:
+      DOCKER_ENABLE_SECURITY: "false"
+      INSTALL_BOOK_AND_ADVANCED_HTML_OPS: "true"
+      PUID: "{{ stirlingpdf_uid }}"
+      PGID: "{{ app_gid }}"

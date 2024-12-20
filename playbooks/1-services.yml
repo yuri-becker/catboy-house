@@ -91,3 +91,6 @@
 
     - role: search
       tags: search
+
+    - role: stirlingpdf
+      tags: stirlingpdf
