@@ -18,6 +18,15 @@
     group: "{{ app_gid }}"
   become: true
 
+- name: 📂 Creates library volume
+  ansible.builtin.file:
+    path: "{{ romm_volume_library }}"
+    state: directory
+    mode: "0775"
+    owner: "{{ romm_uid }}"
+    group: "{{ app_gid }}"
+  become: true
+
 - name: 📂 Creates volumes
   ansible.builtin.file:
     path: "{{ item }}"
@@ -28,7 +37,6 @@
   loop:
     - "{{ romm_volume_resources }}"
     - "{{ romm_volume_redis }}"
-    - "{{ romm_volume_library }}"
     - "{{ romm_volume_assets }}"
     - "{{ romm_volume_config }}"
   become: true
