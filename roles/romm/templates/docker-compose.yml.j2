@@ -29,6 +29,12 @@ services:
       STEAMGRIDDB_API_KEY: "{{ romm_steamgriddb_api_key }}"
       ROMM_HOST: "{{ romm_domain }}"
       UPLOAD_TIMEOUT: 0
+      OIDC_ENABLED: "true"
+      OIDC_PROVIDER: "authelia"
+      OIDC_CLIENT_ID: "{{ romm_authelia_client_id }}"
+      OIDC_CLIENT_SECRET: "{{ romm_authelia_client_password }}"
+      OIDC_REDIRECT_URI: "https://{{ romm_domain }}/api/oauth/openid"
+      OIDC_SERVER_APPLICATION_URL: "https://{{ auth_authelia_domain }}"
     volumes:
       - "{{ romm_volume_resources }}:/romm/resources"
       - "{{ romm_volume_redis }}:/redis-data"

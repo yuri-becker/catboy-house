@@ -1,5 +1,5 @@
 ---
-website_target: "catboy-house-web-hyvv.shuttle.app"
+website_target: catboy-house-web-hyvv.shuttle.app
 website_authelia_client_id: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   31393534613537363130633165373439643262396664356435366232393532363465383834613534

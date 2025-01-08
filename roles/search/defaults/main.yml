@@ -1,12 +1,12 @@
 ---
 # defaults file for roles/search
-search_user_name: "search"
-search_directory: "search"
+search_user_name: search
+search_directory: search
 search_path: "{{ services_path_2 }}/{{ search_directory }}"
 search_volume_searxng: "{{ search_path }}/volumes/searxng"
 search_volume_keydb: "{{ search_path }}/volumes/keydb"
-search_container_prefix: "search"
+search_container_prefix: search
 search_valkey_container_name: "{{ search_container_prefix }}-valkey"
 search_searxng_container_name: "{{ search_container_prefix }}-searxng"
 search_instance_name: "{{ search_domain }}"
-search_uid: 977  # set in https://github.com/searxng/searxng/blob/master/Dockerfile
+search_uid: 977 # set in https://github.com/searxng/searxng/blob/master/Dockerfile

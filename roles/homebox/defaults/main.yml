@@ -5,6 +5,6 @@ homebox_container_name: homebox
 homebox_mailer_from: "{{ homebox_smtp_user }}"
 homebox_allow_registration: "true"
 homebox_web_max_upload_size: "10"
-homebox_service_directory: "homebox"
+homebox_service_directory: homebox
 homebox_service_path: "{{ services_path_2 }}/{{ homebox_service_directory }}"
 homebox_volume_data: "{{ homebox_service_path }}/volumes/data"
