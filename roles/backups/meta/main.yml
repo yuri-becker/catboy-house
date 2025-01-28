@@ -10,3 +10,4 @@ dependencies:
   - role: linkding
   - role: mealie
   - role: paperless
+  - role: woodpecker

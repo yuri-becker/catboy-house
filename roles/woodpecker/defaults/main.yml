@@ -1,0 +1,14 @@
+---
+# defaults file for roles/woodpecker
+woodpecker_container_prefix: woodpecker
+woodpecker_network: "{{ woodpecker_container_prefix }}"
+woodpecker_user_name: woodpecker
+woodpecker_server_container_name: "{{ woodpecker_container_prefix }}-server"
+woodpecker_agent_container_name: "{{ woodpecker_container_prefix }}-agent"
+woodpecker_directory: woodpecker
+woodpecker_path: "{{ services_path_2 }}/{{ woodpecker_directory }}"
+woodpecker_volume_server: "{{ woodpecker_path }}/volumes/server"
+woodpecker_volume_agent: "{{ woodpecker_path }}/volumes/agent"
+woodpecker_db_name: woodpecker
+woodpecker_db_max_connections: 2
+woodpecker_max_workflows: 4

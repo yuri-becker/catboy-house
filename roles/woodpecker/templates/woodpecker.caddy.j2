@@ -1,0 +1,5 @@
+{{ woodpecker_domain }} {
+	import common-headers
+    import logging {{ woodpecker_domain }}
+    reverse_proxy {{ docker_gateway }}:{{ woodpecker_port }}
+}

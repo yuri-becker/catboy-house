@@ -1,0 +1,76 @@
+---
+# tasks file for roles/woodpecker
+- name: 👤 Creates user
+  ansible.builtin.user:
+    state: present
+    name: "{{ woodpecker_user_name }}"
+    uid: "{{ woodpecker_uid }}"
+    create_home: false
+    groups:
+      - "{{ app_gid }}"
+      - docker
+  become: true
+
+- name: 👤 Creates database
+  community.postgresql.postgresql_db:
+    name: "{{ woodpecker_db_name }}"
+    state: present
+
+- name: 👤 Creates database user
+  community.postgresql.postgresql_user:
+    db: "{{ woodpecker_db_name }}"
+    name: "{{ woodpecker_db_user }}"
+    password: "{{ woodpecker_db_password }}"
+    state: present
+
+- name: 👤 Grants privileges to user
+  community.postgresql.postgresql_privs:
+    db: "{{ woodpecker_db_name }}"
+    roles: "{{ woodpecker_db_user }}"
+    grant_option: false
+    type: schema
+    obj: public
+    privs: ALL
+
+- name: 📂 Creates service path
+  ansible.builtin.file:
+    path: "{{ woodpecker_path }}"
+    state: directory
+    mode: "0750"
+    owner: "{{ woodpecker_uid }}"
+    group: "{{ app_gid }}"
+  become: true
+
+- name: 📂 Creates volumes
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0750"
+    owner: "{{ woodpecker_uid }}"
+    group: "{{ app_gid }}"
+  loop:
+    - "{{ woodpecker_volume_server }}"
+    - "{{ woodpecker_volume_agent }}"
+  become: true
+
+- name: ⬆️ Pushes compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ woodpecker_path }}/docker-compose.yml"
+    owner: "{{ woodpecker_uid }}"
+    group: "{{ app_gid }}"
+    mode: "0750"
+  become: true
+
+- name: ⬆️ Pushes Caddy config
+  ansible.builtin.template:
+    src: woodpecker.caddy.j2
+    dest: "{{ caddy_sites }}/woodpecker.caddy"
+    mode: "0770"
+    group: "{{ app_gid }}"
+  notify: reload caddy
+
+- name: 🚀 Starts container stack
+  community.docker.docker_compose_v2:
+    project_src: "{{ woodpecker_path }}"
+    state: present

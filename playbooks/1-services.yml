@@ -94,3 +94,6 @@
 
     - role: stirlingpdf
       tags: stirlingpdf
+
+    - role: woodpecker
+      tags: woodpecker

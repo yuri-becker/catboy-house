@@ -1,0 +1,47 @@
+networks:
+  "{{ woodpecker_network }}":
+    name: "{{ woodpecker_network }}"
+  "{{ postgres_network }}":
+    name: "{{ postgres_network }}"
+    external: true
+
+services:
+  server:
+    image: woodpeckerci/woodpecker-server:latest
+    container_name: "{{ woodpecker_server_container_name }}"
+    restart: unless-stopped
+    networks:
+      - "{{ woodpecker_network }}"
+      - "{{ postgres_network }}"
+    ports:
+      - "{{ docker_gateway }}:{{ woodpecker_port }}:8000"
+    volumes:
+      - "{{ woodpecker_volume_server }}:/var/lib/woodpecker/"
+    environment:
+      WOODPECKER_OPEN: false
+      WOODPECKER_HOST: "https://{{ woodpecker_domain }}"
+      WOODPECKER_GITHUB: true
+      WOODPECKER_GITHUB_CLIENT: "{{ woodpecker_github_client_id }}"
+      WOODPECKER_GITHUB_SECRET: "{{ woodpecker_github_client_secret }}"
+      WOODPECKER_AGENT_SECRET: "{{ woodpecker_agent_secret }}"
+      WOODPECKER_DISABLE_USER_AGENT_REGISTRATION: true
+      WOODPECKER_DATABASE_DRIVER: postgres
+      WOODPECKER_DATABASE_DATASOURCE: "postgres://{{ woodpecker_db_user }}:{{ woodpecker_db_password }}@{{ postgres_hostname }}:5432/{{ woodpecker_db_name
+      }}?sslmode=disable"
+
+  agent:
+    image: woodpeckerci/woodpecker-agent:latest
+    container_name: "{{ woodpecker_agent_container_name }}"
+    command: agent
+    restart: unless-stopped
+    depends_on:
+      - server
+    networks:
+      - "{{ woodpecker_network }}"
+    volumes:
+      - "{{ woodpecker_volume_agent }}:/etc/woodpecker"
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      WOODPECKER_SERVER: server:9000
+      WOODPECKER_AGENT_SECRET: "{{ woodpecker_agent_secret }}"
+      WOODPECKER_MAX_WORKFLOWS: "{{ woodpecker_max_workflows }}"
