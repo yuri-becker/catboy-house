@@ -7,7 +7,7 @@ networks:
 
 services:
   server:
-    image: woodpeckerci/woodpecker-server:latest
+    image: woodpeckerci/woodpecker-server:v3
     container_name: "{{ woodpecker_server_container_name }}"
     restart: unless-stopped
     networks:
@@ -30,7 +30,7 @@ services:
       }}?sslmode=disable"
 
   agent:
-    image: woodpeckerci/woodpecker-agent:latest
+    image: woodpeckerci/woodpecker-agent:v3
     container_name: "{{ woodpecker_agent_container_name }}"
     command: agent
     restart: unless-stopped
