@@ -10,6 +10,9 @@ networks:
   "{{ grafana_prom_network }}":
     name: "{{ grafana_prom_network }}"
     external: true
+  "{{ seedbox_slskd_network }}":
+    name: "{{ seedbox_slskd_network }}"
+    external: true
 services:
   gluetun:
     image: qmcgaw/gluetun:latest
@@ -23,10 +26,12 @@ services:
       - "{{ docker_gateway }}:8888:8888/tcp" # Gluetun Local Network HTTP proxy
       - "{{ docker_gateway }}:8388:8388/tcp" # Gluetun Local Network Shadowsocks
       - "{{ docker_gateway }}:8388:8388/udp" # Gluetun Local Network Shadowsocks
-      - "{{ docker_gateway }}:{{ seedbox_webui_port }}:{{ seedbox_webui_port }}"
+      - "{{ docker_gateway }}:{{ seedbox_qbittorrent_port }}:{{ seedbox_qbittorrent_port }}"
+      - "{{ docker_gateway }}:{{ seedbox_slskd_port }}:{{ seedbox_slskd_port }}"
     networks:
       - "{{ seedbox_network_name }}"
       - "{{ grafana_prom_network }}"
+      - "{{ seedbox_slskd_network }}"
     volumes:
       - "{{ seedbox_volume_gluetun }}:/gluetun"
     environment:
@@ -52,7 +57,7 @@ services:
       PGID: "{{ app_gid }}"
       TZ: "{{ ansible_date_time.tz }}"
       DELUGE_LOGLEVEL: "debug"
-      WEBUI_PORT: "{{ seedbox_webui_port }}"
+      WEBUI_PORT: "{{ seedbox_qbittorrent_port }}"
     network_mode: "service:gluetun"
 
   prom_exporter:
@@ -62,7 +67,36 @@ services:
       - qbittorrent
     environment:
       QBITTORRENT_HOST: "localhost"
-      QBITTORRENT_PORT: "{{ seedbox_webui_port }}"
+      QBITTORRENT_PORT: "{{ seedbox_qbittorrent_port }}"
       QBITTORRENT_SSL: false
       EXPORTER_PORT: "{{ seedbox_promex_port }}"
+    network_mode: "service:gluetun"
+
+  slskd:
+    image: slskd/slskd
+    depends_on:
+      - gluetun
+    container_name: "{{ seedbox_slskd_name }}"
+    restart: unless-stopped
+    volumes:
+      - "{{ music_path }}:/music"
+      - "{{ downloads_music_path }}:/downloads"
+      - "{{ seedbox_volume_slskd }}:/app"
+    user: "{{ app_uid }}:{{ app_gid }}"
+    environment:
+      TZ: "{{ ansible_date_time.tz }}"
+      SLSKD_REMOTE_CONFIGURATION: "false"
+      SLSKD_NO_AUTH: "true"
+      SLSKD_FILE_PERMISSION_MODE: "770"
+      SLSKD_DOWNLOADS_DIR: "/downloads"
+      SLSKD_INCOMPLETE_DIR: "/downloads/incomplete"
+      SLSKD_REMOTE_FILE_MANAGEMENT: "false"
+      SLSKD_SHARED_DIR: "[Music]/music"
+      SLSKD_UPLOAD_SPEED_LIMIT: "{{ seedbox_slskd_up_speedlimit_kib }}"
+      SLSKD_DOWNLOAD_SPEED_LIMIT: "{{ seedbox_slskd_down_speedlimit_kib }}"
+      SLSKD_SLSK_LISTEN_PORT: "{{ seedbox_slskd_listen_port }}"
+      SLSKD_HTTP_PORT: "{{ seedbox_slskd_port }}"
+      SLSKD_NO_HTTPS: "true"
+      SLSKD_SLSK_USERNAME: "{{ seedbox_slskd_username }}"
+      SLSKD_SLSK_PASSWORD: "{{ seedbox_slskd_password }}"
     network_mode: "service:gluetun"

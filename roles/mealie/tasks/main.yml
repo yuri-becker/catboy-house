@@ -10,7 +10,7 @@
     path: "{{ mealie_volume_data }}"
     state: directory
     owner: "{{ app_uid }}"
-    group: "1000"
+    group: "{{ app_gid }}"
     mode: "0755"
   become: true
 

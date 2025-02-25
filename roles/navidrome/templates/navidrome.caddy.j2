@@ -1,0 +1,27 @@
+{{ navidrome_domain }} {
+    import common-headers
+    import logging {{ navidrome_domain }}
+
+    @protected not path /share/* /rest/*
+    forward_auth @protected {{ docker_gateway }}:{{ auth_authelia_port }} {
+        uri /api/authz/forward-auth
+        copy_headers Remote-User Remote-Groups Remote-Email Remote-Name
+    }
+
+#    # See https://www.navidrome.org/docs/usage/reverse-proxy/
+#    @subsonic path /rest/*
+#    forward_auth @subsonic {{ docker_gateway }}:{{ auth_authelia_port }} {
+#        uri /api/authz/forward-auth
+#        copy_headers Remote-User Remote-Groups Remote-Email Remote-Name
+#
+#        @error status 1xx 3xx 4xx 5xx
+#        handle_response @error {
+#            respond <<SUBSONICERR
+#            <subsonic-response xmlns="http://subsonic.org/restapi" status="failed" version="1.16.1" type="proxy-auth" serverVersion="n/a" openSubsonic="true">
+#                <error code="40" message="Invalid credentials or unsupported client"></error>
+#            </subsonic-response>
+#            SUBSONICERR 200
+#        }
+#    }
+    reverse_proxy {{ docker_gateway }}:{{ navidrome_port }}
+}

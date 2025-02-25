@@ -31,3 +31,9 @@
     import logging {{ arr_jellyseerr_domain }}
     reverse_proxy {{ docker_gateway }}:{{ arr_jellyseerr_port }}
 }
+
+{{ arr_lidarr_domain }} {
+    import common-headers
+    import logging {{ arr_lidarr_domain }}
+    reverse_proxy {{ docker_gateway }}:{{ arr_lidarr_port }}
+}

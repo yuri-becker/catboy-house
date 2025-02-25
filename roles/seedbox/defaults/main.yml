@@ -4,8 +4,13 @@ seedbox_service_directory: seedbox
 seedbox_service_path: "{{ services_path }}/{{ seedbox_service_directory }}"
 seedbox_volume_qbittorrent: "{{ seedbox_service_path }}/volumes/qbittorrent"
 seedbox_volume_gluetun: "{{ seedbox_service_path }}/volumes/gluetun"
+seedbox_volume_slskd: "{{ seedbox_service_path }}/volumes/slskd"
 seedbox_container_prefix: seedbox
 seedbox_qbittorrent_container_name: "{{ seedbox_container_prefix }}-qbittorrent"
 seedbox_gluetun_container_name: "{{ seedbox_container_prefix }}-gluetun"
 seedbox_gluetun_prom_exporter_name: "{{ seedbox_container_prefix }}-prom-exporter"
+seedbox_slskd_name: "{{ seedbox_container_prefix }}-slskd"
 seedbox_network_name: seedbox-network
+seedbox_slskd_up_speedlimit_kib: 102400
+seedbox_slskd_down_speedlimit_kib: 4096000
+seedbox_slskd_network: "{{ seedbox_container_prefix }}-slskd-network"

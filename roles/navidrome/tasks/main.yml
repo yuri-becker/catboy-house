@@ -1,0 +1,40 @@
+---
+# tasks file for roles/navidrome
+- name: 📂 Creates volumes
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ app_uid }}"
+    group: "{{ app_gid }}"
+    mode: "770"
+  loop:
+    - "{{ music_path }}"
+    - "{{ navidrome_volume_data }}"
+  become: true
+
+- name: ⬆️ Pushes Caddy config
+  ansible.builtin.template:
+    src: navidrome.caddy.j2
+    dest: "{{ caddy_sites }}/navidrome.caddy"
+    mode: "0770"
+    group: "{{ app_gid }}"
+  notify: reload caddy
+
+- name: 🚀 Starts container
+  community.docker.docker_container:
+    name: "{{ navidrome_container_name }}"
+    image: deluan/navidrome:latest
+    state: started
+    restart_policy: unless-stopped
+    user: "{{ app_uid }}:{{ app_gid }}"
+    ports:
+      - "{{ docker_gateway }}:{{ navidrome_port }}:4533"
+    env:
+      ND_MUSICFOLDER: "/music"
+      ND_DATAFOLDER: "/data"
+      ND_ENABLEGRAVATAR: "true"
+      ND_REVERSEPROXYWHITELIST: "0.0.0.0/0" # Access through anything but caddy is not possible
+      ND_ENABLEUSEREDITING: "false"
+    volumes:
+      - "{{ navidrome_volume_data }}:/data"
+      - "{{ music_path }}:/music"

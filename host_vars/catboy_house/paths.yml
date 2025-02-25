@@ -2,6 +2,8 @@
 services_path: /root/services
 services_path_2: /home/services
 downloads_path: /home/Downloads
+downloads_music_path: /home/DownloadsMusic
 books_path: /home/Books
 movies_path: /home/Movies
+music_path: /home/Music
 tv_path: /home/TV

@@ -1,8 +1,17 @@
+networks:
+  "{{ arr_network }}":
+    name: "{{ arr_network }}"
+  "{{ seedbox_slskd_network }}":
+    name: "{{ seedbox_slskd_network }}"
+    external: true
+
 services:
   sonarr:
     image: linuxserver/sonarr:latest
     container_name: "{{ arr_sonarr_container_name }}"
     restart: unless-stopped
+    networks:
+      - "{{ arr_network }}"
     ports:
       - "{{ docker_gateway }}:{{ arr_sonarr_port }}:8989"
     volumes:
@@ -18,6 +27,8 @@ services:
     image: linuxserver/radarr:latest
     container_name: "{{ arr_radarr_container_name }}"
     restart: unless-stopped
+    networks:
+      - "{{ arr_network }}"
     ports:
       - "{{ docker_gateway }}:{{ arr_radarr_port }}:7878"
     volumes:
@@ -35,6 +46,8 @@ services:
       - sonarr
       - radarr
     restart: unless-stopped
+    networks:
+      - "{{ arr_network }}"
     ports:
       - "{{ docker_gateway }}:{{ arr_prowlarr_port }}:9696"
     volumes:
@@ -50,6 +63,8 @@ services:
       - sonarr
       - radarr
     restart: unless-stopped
+    networks:
+      - "{{ arr_network }}"
     ports:
       - "{{ docker_gateway }}:{{ arr_bazarr_port }}:6767"
     volumes:
@@ -64,6 +79,8 @@ services:
     image: fallenbagel/jellyseerr:latest
     container_name: "{{ arr_jellyseerr_container_name }}"
     restart: unless-stopped
+    networks:
+      - "{{ arr_network }}"
     ports:
       - "{{ docker_gateway }}:{{ arr_jellyseerr_port }}:5055"
     volumes:
@@ -71,3 +88,37 @@ services:
     environment:
       LOG_LEVEL: info
       TZ: "{{ ansible_date_time.tz }}"
+
+  lidarr:
+    image: linuxserver/lidarr:latest
+    container_name: "{{ arr_lidarr_container_name }}"
+    restart: unless-stopped
+    networks:
+      - "{{ arr_network }}"
+    ports:
+      - "{{ docker_gateway }}:{{ arr_lidarr_port}}:8686"
+    volumes:
+      - "{{ arr_volume_lidarr }}:/config"
+      - "{{ music_path }}:/music"
+      - "{{ downloads_music_path }}:/downloads"
+    environment:
+      TZ: "{{ ansible_date_time.tz }}"
+      PUID: "{{ app_uid }}"
+      PGID: "{{ app_gid }}"
+
+  soularr:
+    image: mrusse08/soularr:latest
+    container_name: "{{ arr_soularr_container_name }}"
+    restart: unless-stopped
+    networks:
+      - "{{ arr_network }}"
+      - "{{ seedbox_slskd_network }}"
+    user: "{{ app_uid }}:{{ app_gid }}"
+    volumes:
+      - "{{ downloads_music_path }}:/downloads"
+      - "{{ arr_volume_soularr }}:/data"
+    environment:
+      TZ: "{{ ansible_date_time.tz }}"
+      PUID: "{{ app_uid }}"
+      PGID: "{{ app_gid }}"
+      SCRIPT_INTERVAL: 30
