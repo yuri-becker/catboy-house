@@ -23,6 +23,7 @@
     - "{{ arr_volume_jellyseerr }}"
     - "{{ arr_volume_lidarr }}"
     - "{{ arr_volume_soularr }}"
+    - "{{ arr_volume_lidify }}"
     - "{{ downloads_path }}"
     - "{{ downloads_music_path }}"
     - "{{ tv_path }}"

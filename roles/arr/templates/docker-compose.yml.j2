@@ -122,3 +122,27 @@ services:
       PUID: "{{ app_uid }}"
       PGID: "{{ app_gid }}"
       SCRIPT_INTERVAL: 30
+
+  lidify:
+    image: thewicklowwolf/lidify:latest
+    container_name: "{{ arr_lidify_container_name }}"
+    restart: unless-stopped
+    networks:
+      - "{{ arr_network }}"
+    ports:
+      - "{{ docker_gateway }}:{{ arr_lidify_port }}:5000"
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - "{{ arr_volume_lidify }}:/lidify/config"
+      - "{{ music_path }}:/music"
+    environment:
+      TZ: "{{ ansible_date_time.tz }}"
+      PUID: "{{ app_uid }}"
+      PGID: "{{ app_gid }}"
+      lidarr_address: "http://lidarr:8686"
+      lidarr_api_key: "{{ arr_lidarr_api_key }}"
+      root_folder_path: /music
+      search_for_missing_albums: "False"
+      mode: "LastFM"
+      last_fm_api_key: "{{ arr_lastfm_api_key }}"
+      last_fm_api_secret: "{{ arr_lastfm_api_secret }}"

@@ -68,6 +68,7 @@ access_control:
       subject: 'group:{{ auth_group_manager }}'
     - domain:
         - '{{ navidrome_domain }}'
+        - '{{ arr_lidify_domain }}'
       policy: 'two_factor'
       subject: 'group:{{ auth_group_privileged }}'
     - domain: "*.{{ root_domain }}"
