@@ -36,6 +36,10 @@
       ND_REVERSEPROXYWHITELIST: "0.0.0.0/0" # Access through anything but caddy is not possible
       ND_ENABLEUSEREDITING: "false"
       ND_ENABLESHARING: "true"
+      ND_SPOTIFY_ID: "{{ navidrome_spotify_id }}"
+      ND_SPOTIFY_SECRET: "{{ navidrome_spotify_secret }}"
+      ND_LASTFM_APIKEY: "{{ arr_lastfm_api_key }}"
+      ND_LASTFM_SECRET: "{{ arr_lastfm_api_secret }}"
     volumes:
       - "{{ navidrome_volume_data }}:/data"
       - "{{ music_path }}:/music"

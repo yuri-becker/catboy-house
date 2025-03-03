@@ -29,6 +29,7 @@ services:
       STEAMGRIDDB_API_KEY: "{{ romm_steamgriddb_api_key }}"
       ROMM_HOST: "{{ romm_domain }}"
       UPLOAD_TIMEOUT: 0
+      DISABLE_DOWNLOAD_ENDPOINT_AUTH: "true"
       OIDC_ENABLED: "true"
       OIDC_PROVIDER: "authelia"
       OIDC_CLIENT_ID: "{{ romm_authelia_client_id }}"
