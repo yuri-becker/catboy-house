@@ -231,6 +231,10 @@ identity_providers:
         client_secret: "{{ docmost_authelia_client_secret_digest }}"
         public: false
         authorization_policy: "two_factor"
+        grant_types:
+          - authorization_code
+        redirect_uris:
+          - "{{ docmost_authelia_redirect_uri }}"
         scopes:
           - 'openid'
           - 'profile'

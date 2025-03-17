@@ -17,7 +17,7 @@ services:
       - "{{ docmost_volume_keydb }}:/data"
 
   docmost:
-    image: docmost/docmost:latest
+    image: docmost/docmost:uwu
     container_name: "{{ docmost_docmost_container_name }}"
     restart: unless-stopped
     depends_on:
