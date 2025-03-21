@@ -105,6 +105,15 @@ identity_providers:
       allowed_origins:
         - "https://{{ mealie_domain }}"
       allowed_origins_from_client_redirect_uris: true
+    claims_policies:
+        default:
+            id_token: ['preferred_username', 'name']
+        with_email:
+            id_token: ['email', 'email_verified', 'alt_emails', 'preferred_username', 'name']
+        with_groups:
+            id_token: ['groups', 'preferred_username', 'name']
+        all:
+            id_token: ['groups', 'email', 'email_verified', 'alt_emails', 'preferred_username', 'name']
     clients:
       - client_id: "{{ grafana_authelia_client_id }}"
         client_name: "Grafana"
@@ -115,6 +124,7 @@ identity_providers:
         pkce_challenge_method: 'S256'
         redirect_uris:
           - 'https://{{ grafana_domain }}/login/generic_oauth'
+        claims_policy: 'all'
         scopes:
           - 'openid'
           - 'profile'
@@ -132,6 +142,7 @@ identity_providers:
         pkce_challenge_method: 'S256'
         redirect_uris:
           - 'https://{{ paperless_domain }}/accounts/oidc/authelia/login/callback/'
+        claims_policy: 'all'
         scopes:
           - 'openid'
           - 'profile'
@@ -149,6 +160,7 @@ identity_providers:
         pkce_challenge_method: 'S256'
         redirect_uris:
           - 'https://{{ nextcloud_domain }}/apps/oidc_login/oidc'
+        claims_policy: 'all'
         scopes:
           - 'openid'
           - 'profile'
@@ -166,6 +178,7 @@ identity_providers:
         grant_types:
           - authorization_code
         pkce_challenge_method: 'S256'
+        claims_policy: 'all'
         redirect_uris:
           - 'https://{{ mealie_domain }}/login'
         scopes:
@@ -185,6 +198,7 @@ identity_providers:
         pkce_challenge_method: 'S256'
         redirect_uris:
           - 'https://{{ linkding_domain }}/oidc/callback/'
+        claims_policy: 'all'
         scopes:
           - 'openid'
           - 'profile'
@@ -202,6 +216,7 @@ identity_providers:
         pkce_challenge_method: "S256"
         redirect_uris:
           - "https://{{ jellyfin_domain }}/sso/OID/r/authelia"
+        claims_policy: 'with_groups'
         scopes:
           - "openid"
           - "profile"
@@ -219,10 +234,12 @@ identity_providers:
         redirect_uris:
           - "http://127.0.0.1:8000/oidc/callback"
           - "https://{{ root_domain }}/oidc/callback"
+        claims_policy: 'all'
         scopes:
           - "openid"
           - "groups"
           - "profile"
+          - "email"
         userinfo_signed_response_alg: "none"
         token_endpoint_auth_method: "client_secret_basic"
 
@@ -235,6 +252,7 @@ identity_providers:
           - authorization_code
         redirect_uris:
           - "{{ docmost_authelia_redirect_uri }}"
+        claims_policy: 'all'
         scopes:
           - 'openid'
           - 'profile'
@@ -252,6 +270,7 @@ identity_providers:
           - authorization_code
         redirect_uris:
           - "http://127.0.0.1:8000/oidc/callback"
+        claims_policy: 'with_groups'
         scopes:
           - "openid"
           - "groups"
@@ -268,6 +287,7 @@ identity_providers:
           - authorization_code
         redirect_uris:
           - "https://{{ romm_domain }}/api/oauth/openid"
+        claims_policy: 'all'
         scopes:
           - "openid"
           - "groups"
