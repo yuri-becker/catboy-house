@@ -8,3 +8,4 @@ homebox_web_max_upload_size: "10"
 homebox_service_directory: homebox
 homebox_service_path: "{{ services_path_2 }}/{{ homebox_service_directory }}"
 homebox_volume_data: "{{ homebox_service_path }}/volumes/data"
+homebox_db_name: homebox

@@ -1,18 +1,14 @@
 networks:
-  "{{ grafana_network }}":
-    name: "{{ grafana_network }}"
+  default:
   "{{ grafana_prom_network }}":
     name: "{{ grafana_prom_network }}"
     external: true
-
 
 services:
   loki:
     image: grafana/loki:latest
     container_name: "{{ grafana_loki_container_name }}"
     user: "{{ grafana_uid }}"
-    networks:
-      - "{{ grafana_network }}"
     ports:
       - "{{ docker_gateway }}:{{ grafana_loki_port }}:3100"
     volumes:
@@ -22,8 +18,6 @@ services:
   promtail:
     image: grafana/promtail:3.0.1
     container_name: "{{ grafana_promtail_container_name }}"
-    networks:
-      - "{{ grafana_network }}"
     volumes:
       - "{{ grafana_volume_promtail_config }}:/etc/promtail"
       - "/var/log:/var/log"
@@ -36,7 +30,7 @@ services:
     restart: unless-stopped
     user: "{{ grafana_uid }}"
     networks:
-      - "{{ grafana_network }}"
+      - default
       - "{{ grafana_prom_network }}"
     volumes:
       - "{{ grafana_volume_prometheus_config }}:/etc/prometheus"
@@ -67,8 +61,6 @@ services:
     container_name: "{{ grafana_grafana_container_name }}"
     restart: unless-stopped
     user: "{{ grafana_uid }}"
-    networks:
-      - "{{ grafana_network }}"
     ports:
       - "{{ docker_gateway }}:{{ grafana_port }}:3000"
     volumes:

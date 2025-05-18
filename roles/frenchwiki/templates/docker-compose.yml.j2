@@ -1,0 +1,22 @@
+networks:
+  default:
+  "{{ postgres_network }}":
+    name: "{{ postgres_network }}"
+    external: true
+
+services:
+  memcached:
+    image: memcached:latest
+    container_name: "{{ frenchwiki_memcached_container_name }}"
+    restart: unless-stopped
+
+  minio:
+    image: minio/minio:latest
+    container_name: "{{ frenchwiki_minio_container_name }}"
+    restart: unless-stopped
+    user: "{{ frenchwiki_uid }}:{{ app_gid }}"
+    volumes:
+      - "{{ frenchwiki_volume_minio }}:/data"
+    environment:
+      MINIO_ROOT_USER: "{{ frenchwiki_minio_user }}"
+      MINIO_ROOT_PASSWORD: "{{ frenchwiki_minio_password }}"

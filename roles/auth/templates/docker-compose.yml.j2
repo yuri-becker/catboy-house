@@ -1,6 +1,5 @@
 networks:
-  "{{ auth_network }}":
-    name: "{{ auth_network }}"
+  default:
   "{{ auth_ldap_network }}":
     name: "{{ auth_ldap_network }}"
     external: true
@@ -11,8 +10,6 @@ services:
     image: postgres:16
     restart: unless-stopped
     user: "{{ app_uid }}:{{ app_gid }}"
-    networks:
-      - "{{ auth_network }}"
     volumes:
       - "{{ auth_volume_lldap_postgres }}:/var/lib/postgresql/data"
     environment:
@@ -25,7 +22,7 @@ services:
     image: lldap/lldap:stable
     restart: unless-stopped
     networks:
-      - "{{ auth_network }}"
+      - default
       - "{{ auth_ldap_network }}"
     depends_on:
       - lldap_postgres
@@ -55,8 +52,6 @@ services:
     image: postgres:16
     restart: unless-stopped
     user: "{{ app_uid }}:{{ app_gid }}"
-    networks:
-      - "{{ auth_network }}"
     volumes:
       - "{{ auth_volume_authelia_postgres }}:/var/lib/postgresql/data"
     environment:
@@ -68,8 +63,6 @@ services:
     container_name: "{{ auth_authelia_container_name }}"
     image: authelia/authelia:latest
     restart: unless-stopped
-    networks:
-      - "{{ auth_network }}"
     depends_on:
       - authelia_postgres
       - lldap

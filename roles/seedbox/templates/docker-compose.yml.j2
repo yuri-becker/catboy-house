@@ -3,7 +3,7 @@ networks:
     name: "{{ seedbox_network_name }}"
     driver: bridge
     ipam:
-      driver: defaults
+      driver: default
       config:
       - subnet: 172.80.10.0/24
         gateway: 172.80.10.1

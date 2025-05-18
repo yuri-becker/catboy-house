@@ -1,6 +1,5 @@
 networks:
-  "{{ nextcloud_network_name }}":
-    name: "{{ nextcloud_network_name }}"
+  default:
   "{{ auth_ldap_network }}":
     name: "{{ auth_ldap_network }}"
     external: true
@@ -11,8 +10,6 @@ services:
     container_name: "{{ nextcloud_mariadb_container_name }}"
     restart: unless-stopped
     user: "{{ nextcloud_uid }}"
-    networks:
-      - "{{ nextcloud_network_name }}"
     command: --transaction-isolation=READ-COMMITTED --log-bin=binlog --binlog-format=ROW
     volumes:
       - "{{ nextcloud_volume_mariadb }}:/var/lib/mysql"
@@ -27,8 +24,6 @@ services:
     container_name: "{{ nextcloud_keydb_container_name }}"
     restart: unless-stopped
     user: "{{ nextcloud_uid }}"
-    networks:
-      - "{{ nextcloud_network_name }}"
     command: keydb-server --appendonly yes
     volumes:
       - "{{ nextcloud_volume_keydb }}:/data"
@@ -38,8 +33,6 @@ services:
     container_name: "{{ nextcloud_onlyoffice_container_name }}"
     ports:
       - "{{ docker_gateway }}:{{ nextoffice_onlyoffice_port }}:80"
-    networks:
-      - "{{ nextcloud_network_name }}"
     volumes:
       - "{{ nextcloud_volume_onlyoffice }}:/var/www/onlyoffice/Data"
       - "{{ nextcloud_volume_fonts }}:/usr/share/fonts/custom"
@@ -58,7 +51,7 @@ services:
     volumes:
       - "{{ nextcloud_volume_nextcloud }}:/var/www/html"
     networks:
-      - "{{ nextcloud_network_name }}"
+      - default
       - "{{ auth_ldap_network }}"
     environment:
       MYSQL_HOST: mariadb

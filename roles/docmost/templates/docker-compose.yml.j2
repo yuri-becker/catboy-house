@@ -1,6 +1,5 @@
 networks:
-  "{{ docmost_network }}":
-    name: "{{ docmost_network }}"
+  default:
   "{{ postgres_network }}":
     name: "{{ postgres_network }}"
     external: true
@@ -11,8 +10,6 @@ services:
     container_name: "{{ docmost_keydb_container_name }}"
     restart: unless-stopped
     user: "{{ docmost_uid }}:{{ app_gid }}"
-    networks:
-      - "{{ docmost_network }}"
     volumes:
       - "{{ docmost_volume_keydb }}:/data"
 
@@ -23,7 +20,7 @@ services:
     depends_on:
       - keydb
     networks:
-      - "{{ docmost_network }}"
+      - default
       - "{{ postgres_network }}"
     ports:
       - "{{ docker_gateway }}:{{ docmost_port }}:3000"
