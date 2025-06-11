@@ -5,9 +5,9 @@ dependencies:
   - role: auth
   - role: docmost
   - role: heyform
-  - role: homebox
   - role: kimai
   - role: linkding
   - role: mealie
+  - role: nextcloud
   - role: paperless
   - role: woodpecker

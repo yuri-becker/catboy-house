@@ -80,9 +80,6 @@
     - role: wakapi
       tags: wakapi
 
-    - role: homebox
-      tags: homebox
-
     - role: docmost
       tags: docmost
 

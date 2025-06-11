@@ -1,5 +1,0 @@
----
-# meta file for roles/homebox
-dependencies:
-  - role: set_docker_gateway
-  - role: postgres
