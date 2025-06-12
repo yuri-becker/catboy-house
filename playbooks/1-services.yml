@@ -41,9 +41,6 @@
     - role: grafana
       tags: grafana
 
-    - role: kimai
-      tags: kimai
-
     - role: paperless
       tags: paperless
 
@@ -97,3 +94,6 @@
 
     - role: navidrome
       tags: navidrome
+
+    - role: satisfactory
+      tags: satisfactory

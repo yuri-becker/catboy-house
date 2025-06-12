@@ -1,0 +1,16 @@
+---
+# defaults file for roles/satisfactory
+satisfactory_user_name: satisfactory
+satisfactory_service_directory: satisfactory
+satisfactory_service_path: "{{ services_path_2 }}/{{ satisfactory_service_directory }}"
+satisfactory_volume_config: "{{ satisfactory_service_path }}/volumes/config"
+satisfactory_container_name: satisfactory
+satisfactory_memory_reservation: 4G
+satisfactory_memory: 8G
+satisfactory_steam_beta: "false"
+satisfactory_max_players: "4"
+satisfactory_autosavenum: "5"
+satisfactory_uid: "1000"
+satisfactory_gid: "1000"
+satisfactory_server_game_port: "7777"
+satisfactory_server_messaging_port: "8888"

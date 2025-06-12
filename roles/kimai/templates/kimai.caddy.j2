@@ -1,7 +1,0 @@
-{{ kimai_domain }} {
-	import common-headers
-    import logging {{ kimai_domain }}
-    reverse_proxy {{ docker_gateway }}:{{ kimai_port }} {
-        flush_interval -1
-    }
-}

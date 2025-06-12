@@ -1,0 +1,42 @@
+---
+# tasks file for roles/satisfactory
+- name: 📂 Creates service path
+  ansible.builtin.file:
+    path: "{{ satisfactory_service_path }}"
+    state: directory
+    mode: "0750"
+    owner: "{{ satisfactory_uid }}"
+    group: "{{ satisfactory_gid }}"
+  become: true
+
+- name: 📂 Creates volumes
+  ansible.builtin.file:
+    path: "{{ satisfactory_volume_config }}"
+    state: directory
+    mode: "0700"
+    owner: "{{ satisfactory_uid }}"
+    group: "{{ app_gid }}"
+  become: true
+
+- name: 🚀 Starts container
+  community.docker.docker_container:
+    name: "{{ satisfactory_container_name }}"
+    image: wolveix/satisfactory-server:latest
+    state: started
+    restart_policy: unless-stopped
+    ports:
+      - "{{ satisfactory_server_game_port }}:{{ satisfactory_server_game_port }}/tcp"
+      - "{{ satisfactory_server_game_port }}:{{ satisfactory_server_game_port }}/udp"
+      - "{{ satisfactory_server_messaging_port }}:{{ satisfactory_server_messaging_port }}/tcp"
+    env:
+      PUID: "{{ satisfactory_uid }}"
+      PGID: "{{ satisfactory_gid }}"
+      STEAMBETA: "{{ satisfactory_steam_beta }}"
+      MAXPLAYERS: "{{ satisfactory_max_players }}"
+      AUTOSAVENUM: "{{ satisfactory_autosavenum }}"
+      SERVERGAMEPORT: "{{ satisfactory_server_game_port }}"
+      SERVERMESSAGINGPORT: "{{ satisfactory_server_messaging_port }}"
+    volumes:
+      - "{{ satisfactory_volume_config }}:/config"
+    memory_reservation: "{{ satisfactory_memory_reservation }}"
+    memory: "{{ satisfactory_memory }}"
