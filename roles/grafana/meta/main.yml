@@ -1,4 +1,0 @@
----
-# meta file for roles/grafana
-dependencies:
-  - role: set_docker_gateway

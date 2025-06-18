@@ -1,5 +1,5 @@
 ---
+# meta file for roles/monitoring
 dependencies:
   - role: set_docker_gateway
   - role: auth
-  - role: monitoring

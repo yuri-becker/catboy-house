@@ -1,0 +1,60 @@
+networks:
+  default:
+  "{{ monitoring_prom_network }}":
+    name: "{{ monitoring_prom_network }}"
+    external: true
+
+services:
+  promtail:
+    image: grafana/promtail:3.0.1
+    container_name: "{{ monitoring_promtail_container_name }}"
+    volumes:
+      - "{{ monitoring_volume_promtail_config }}:/etc/promtail"
+      - "/var/log:/var/log"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    command: -config.file=/etc/promtail/promtail.yml
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: "{{ monitoring_cadvisor_container_name }}"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+
+  prometheus:
+    image: prom/prometheus
+    container_name: "{{ monitoring_prometheus_container_name }}"
+    restart: unless-stopped
+    user: "{{ monitoring_uid }}"
+    networks:
+      - default
+      - "{{ monitoring_prom_network }}"
+    volumes:
+      - "{{ monitoring_volume_prometheus_config }}:/etc/prometheus"
+      - "{{ monitoring_volume_prometheus_data }}:/prometheus"
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--log.level=debug"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - cadvisor
+
+  node_exporter:
+    image: prom/node-exporter:latest
+    container_name: "{{ monitoring_node_exporter_container_name }}"
+    restart: unless-stopped
+    networks:
+      - "{{ monitoring_prom_network }}"
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    pid: host
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro

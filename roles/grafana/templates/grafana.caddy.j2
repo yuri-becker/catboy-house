@@ -1,5 +1,0 @@
-{{ grafana_domain }} {
-	import common-headers
-    import logging {{ grafana_domain }}
-    reverse_proxy {{ docker_gateway }}:{{ grafana_port }}
-}

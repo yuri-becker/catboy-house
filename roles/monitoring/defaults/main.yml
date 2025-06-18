@@ -1,0 +1,14 @@
+---
+# defaults file for roles/monitoring
+monitoring_container_prefix: monitoring
+monitoring_promtail_container_name: "{{ monitoring_container_prefix }}-promtail"
+monitoring_prometheus_container_name: "{{ monitoring_container_prefix }}-prometheus"
+monitoring_node_exporter_container_name: "{{ monitoring_container_prefix }}-node-exporter"
+monitoring_prom_network: "{{ monitoring_container_prefix }}-prom-network"
+monitoring_service_directory: monitoring
+monitoring_service_path: "{{ services_path_2 }}/{{ monitoring_service_directory }}"
+monitoring_volume_promtail_config: "{{ monitoring_service_path }}/volumes/promtail-config"
+monitoring_volume_prometheus_config: "{{ monitoring_service_path }}/volumes/prometheus-config"
+monitoring_volume_prometheus_data: "{{ monitoring_service_path }}/volumes/prometheus-data"
+monitoring_user_name: monitoring
+monitoring_cadvisor_container_name: "{{ monitoring_container_prefix }}-cadvisor"

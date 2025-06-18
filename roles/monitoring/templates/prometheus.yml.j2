@@ -1,0 +1,22 @@
+global:
+  scrape_interval: 60s
+
+remote_write:
+  - url: '{{ monitoring_remote_write_url }}'
+    basic_auth:
+      username: '{{ monitoring_remote_write_username }}'
+      password: '{{ monitoring_remote_write_password }}'
+
+scrape_configs:
+  - job_name: 'qbittorrent'
+    static_configs:
+      - targets: ['gluetun:{{ seedbox_promex_port }}']
+  - job_name: 'node'
+    static_configs:
+      - targets: ['node_exporter:9100']
+  - job_name: 'docker'
+    static_configs:
+      - targets: ['host.docker.internal:27949']
+  - job_name: cadvisor
+    static_configs:
+      - targets: ['cadvisor:8080']

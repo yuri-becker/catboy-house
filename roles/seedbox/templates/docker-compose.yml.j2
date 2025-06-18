@@ -7,8 +7,8 @@ networks:
       config:
       - subnet: 172.80.10.0/24
         gateway: 172.80.10.1
-  "{{ grafana_prom_network }}":
-    name: "{{ grafana_prom_network }}"
+  "{{ monitoring_prom_network }}":
+    name: "{{ monitoring_prom_network }}"
     external: true
   "{{ seedbox_slskd_network }}":
     name: "{{ seedbox_slskd_network }}"
@@ -30,7 +30,7 @@ services:
       - "{{ docker_gateway }}:{{ seedbox_slskd_port }}:{{ seedbox_slskd_port }}"
     networks:
       - "{{ seedbox_network_name }}"
-      - "{{ grafana_prom_network }}"
+      - "{{ monitoring_prom_network }}"
       - "{{ seedbox_slskd_network }}"
     volumes:
       - "{{ seedbox_volume_gluetun }}:/gluetun"
