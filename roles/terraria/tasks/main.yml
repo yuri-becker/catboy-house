@@ -1,0 +1,36 @@
+---
+# tasks file for roles/terraria
+- name: 📂 Creates volumes
+  ansible.builtin.file:
+    path: "{{ terraria_volume_world }}"
+    state: directory
+    mode: "0700"
+    owner: "{{ app_uid }}"
+    group: "{{ app_gid }}"
+  become: true
+
+- name: ⬆️ Pushes Config file
+  ansible.builtin.template:
+    src: config.json.j2
+    dest: "{{ terraria_volume_world }}/config.json"
+    mode: "700"
+    owner: "{{ app_uid }}"
+    group: "{{ app_gid }}"
+  become: true
+
+- name: 🚀 Starts container
+  community.docker.docker_container:
+    name: "{{ terraria_container_name }}"
+    image: ryshe/terraria:latest
+    state: started
+    restart_policy: unless-stopped
+    ports:
+      - "{{ terraria_port }}:{{ terraria_port }}"
+    volumes:
+      - "{{ terraria_volume_world }}:/root/.local/share/Terraria/Worlds"
+    env:
+      WORLD_FILENAME: "{{ terraria_world_name }}.wld"
+    command:
+      - "-config /root/.local/share/Terraria/Worlds/config.json"
+      - "-world /root/.local/share/Terraria/Worlds/{{ terraria_world_name }}.wld"
+      - "-difficulty 0"

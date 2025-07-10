@@ -1,0 +1,7 @@
+---
+terraria_service_directory: terraria
+terraria_service_path: "{{ services_path_2 }}/{{ terraria_service_directory }}"
+terraria_volume_world: "{{ terraria_service_path }}/volumes/world"
+terraria_container_name: terraria
+terraria_port: 7777
+terraria_world_name: Terranya
