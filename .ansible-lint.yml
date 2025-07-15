@@ -1,2 +1,4 @@
 ---
 profile: production
+enable_list:
+  - yaml

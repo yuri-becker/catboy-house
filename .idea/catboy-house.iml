@@ -8,6 +8,8 @@
       <excludeFolder url="file://$MODULE_DIR$/playbooks/groups_vars" />
       <excludeFolder url="file://$MODULE_DIR$/playbooks/host_vars" />
       <excludeFolder url="file://$MODULE_DIR$/playbooks/roles" />
+      <excludeFolder url="file://$MODULE_DIR$/.ansible" />
+      <excludeFolder url="file://$MODULE_DIR$/.fact-cache" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.9" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
