@@ -26,3 +26,13 @@
     group: root
   become: true
   notify: restart docker
+
+- name: 👤 Creates Docker Build User
+  ansible.builtin.user:
+    state: present
+    name: "{{ docker_build_user }}"
+    uid: "{{ docker_build_uid }}"
+    create_home: true
+    groups:
+      - docker
+  become: true

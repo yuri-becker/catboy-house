@@ -106,6 +106,8 @@ Task names are prefixed with specific emojis to make the output and nature of th
 * 🚀 are application/container launches.
 * 📂 are folder creations.
 * ⬆️ for file/template copying.
+* ⬇️ for downloads/clones.
+* 🔨 for build tasks.
 * 📦 are package installations.
 * 👤 are user and group creations.
 * 💾 are fact sets.
