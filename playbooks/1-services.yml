@@ -24,6 +24,10 @@
       login_port: "{{ postgres_port }}"
       login_user: "{{ postgres_user }}"
       login_password: "{{ postgres_password }}"
+    community.mysql.mysql_db:
+      login_unix_socket: /run/mysqld/mysqld.sock
+    community.mysql.mysql_user:
+      login_unix_socket: /run/mysqld/mysqld.sock
     community.docker.docker_compose_v2:
       remove_orphans: true
 
@@ -102,3 +106,6 @@
 
     - role: terraria
       tags: terraria
+
+    - role: writefreely
+      tags: writefreely

@@ -1,0 +1,59 @@
+---
+# handlers file for roles/writefreely
+- name: 🔨 Build Writefreely
+  listen: build writefreely
+  community.general.make:
+    chdir: "{{ writefreely_sources }}"
+    params:
+      GOCMD: "{{ writefreely_service_path }}/go/bin/go{{ writefreely_go_version }}"
+    target: build-no-sqlite
+  become: true
+  become_user: "{{ writefreely_user }}"
+  register: writefreely_built
+  notify: restart writefreely
+
+- name: 🔨 Build Writefreely Less
+  listen: build writefreely
+  community.general.make:
+    chdir: "{{ writefreely_sources }}/less"
+    target: all
+  become: true
+  become_user: "{{ writefreely_user }}"
+  notify: restart writefreely
+
+- name: 🔨 Build Writefreely Prose
+  listen: build writefreely
+  community.general.make:
+    chdir: "{{ writefreely_sources }}/prose"
+    target: all
+  become: true
+  become_user: "{{ writefreely_user }}"
+  notify: restart writefreely
+
+- name: ⛔ Aborts playbook
+  listen: build writefreely
+  ansible.builtin.fail:
+    msg: Could not build writefreely!
+  when: writefreely_built is failed
+
+- name: 🚀 Reloads Service
+  listen: reload writefreely
+  ansible.builtin.systemd_service:
+    name: "{{ writefreely_service }}"
+    state: reloaded
+  become: true
+
+- name: 🚀 Enables Service
+  listen: enable writefreely
+  ansible.builtin.systemd_service:
+    name: "{{ writefreely_service }}"
+    enabled: true
+    state: started
+  become: true
+
+- name: 🚀 Restarts Writefreely
+  listen: restart writefreely
+  ansible.builtin.systemd_service:
+    name: "{{ writefreely_service }}"
+    state: restarted
+  become: true

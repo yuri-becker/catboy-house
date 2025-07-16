@@ -1,0 +1,22 @@
+---
+# tasks file for roles/mariadb
+- name: 📦 Installs mariadb
+  ansible.builtin.apt:
+    name: mariadb-server
+    state: present
+  become: true
+
+- name: ⬆️ Pushes Configuration file
+  ansible.builtin.template:
+    src: mariadb.cnf.j2
+    dest: /etc/mysql/mariadb.cnf
+    mode: "0644"
+  become: true
+  notify: restart mariadb
+
+- name: 🚀 Starts MariaDB service
+  ansible.builtin.systemd_service:
+    name: mariadb
+    enabled: true
+    state: started
+  become: true

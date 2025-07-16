@@ -8,6 +8,7 @@ services:
   promtail:
     image: grafana/promtail:3.0.1
     container_name: "{{ monitoring_promtail_container_name }}"
+    restart: unless-stopped
     volumes:
       - "{{ monitoring_volume_promtail_config }}:/etc/promtail"
       - "/var/log:/var/log"
@@ -17,6 +18,7 @@ services:
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:latest
     container_name: "{{ monitoring_cadvisor_container_name }}"
+    restart: unless-stopped
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw

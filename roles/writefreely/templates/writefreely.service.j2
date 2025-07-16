@@ -1,0 +1,15 @@
+[Unit]
+Description=WriteFreely
+After=syslog.target network.target mariadb.service
+
+[Service]
+Type=simple
+User={{ writefreely_user }}
+StandardOutput=syslog
+StandardError=syslog
+WorkingDirectory={{ writefreely_pwd }}
+ExecStart={{ writefreely_binary }}
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

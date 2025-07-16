@@ -35,10 +35,10 @@
     networks:
       - name: "{{ auth_ldap_network }}"
     ports:
-      - "{{ jellyfin_port }}:8096"
+      - "{{ docker_gateway }}:{{ jellyfin_port }}:8096"
     env:
-      PUID: "1000"
-      PGID: "100"
+      PUID: "{{ app_uid }}"
+      PGID: "{{ app_gid }}"
     volumes:
       - "{{ jellyfin_volume_config }}:/config"
       - "{{ movies_path }}:/data/movies"

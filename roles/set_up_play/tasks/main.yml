@@ -1,12 +1,12 @@
 ---
 - name: 📦 Installs system dependencies
   ansible.builtin.apt:
-    name: "{{ item }}"
+    package:
+      - python3-pip
+      - virtualenv
+      - libpq-dev
+      - python3-mysqldb
     state: present
-  loop:
-    - python3-pip
-    - virtualenv
-    - libpq-dev
   become: true
 
 - name: 📂 Creates root directory
@@ -52,6 +52,7 @@
       - psycopg2-binary
       - docker
       - docker-compose
+      - PyMySQL
     state: present
   become: true
 

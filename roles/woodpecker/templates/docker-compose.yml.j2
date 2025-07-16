@@ -27,6 +27,7 @@ services:
       WOODPECKER_DATABASE_DRIVER: postgres
       WOODPECKER_DATABASE_DATASOURCE: "postgres://{{ woodpecker_db_user }}:{{ woodpecker_db_password }}@{{ postgres_hostname }}:5432/{{ woodpecker_db_name
       }}?sslmode=disable"
+      WOODPECKER_PLUGINS_PRIVILEGED: woodpeckerci/plugin-docker-buildx
 
   agent:
     image: woodpeckerci/woodpecker-agent:v3
@@ -42,3 +43,4 @@ services:
       WOODPECKER_SERVER: server:9000
       WOODPECKER_AGENT_SECRET: "{{ woodpecker_agent_secret }}"
       WOODPECKER_MAX_WORKFLOWS: "{{ woodpecker_max_workflows }}"
+      WOODPECKER_PLUGINS_PRIVILEGED:

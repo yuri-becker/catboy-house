@@ -1,0 +1,8 @@
+---
+# handlers file for roles/mariadb
+- name: 🚀 Restarts MariaDB
+  ansible.builtin.systemd_service:
+    name: mariadb
+    state: restarted
+  become: true
+  listen: restart mariadb

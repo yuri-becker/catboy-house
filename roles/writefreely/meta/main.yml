@@ -1,0 +1,5 @@
+---
+# meta file for roles/writefreely
+dependencies:
+  - role: set_docker_gateway
+  - role: mariadb
