@@ -10,6 +10,7 @@ location:
         - "{{ paperless_service_path }}"
         - "{{ satisfactory_service_path }}/volumes/config/saved"
         - "{{ woodpecker_path }}"
+        - "{{ writefreely_service_path }}"
     repositories:
         - "ssh://backup-server/./repo"
 
@@ -25,8 +26,10 @@ location:
 hooks:
   postgresql_databases:
     - name: all
-      pg_dump_command: "docker exec {{ postgres_container_name }} pg_dumpall --user {{ postgres_user }}"
-      pg_restore_command: "docker exec {{ postgres_container_name }} pg_restore --user {{ postgres_user }}"
+      pg_dump_command: "docker exec {{ postgres_container_name }} pg_dumpall --user {{ postgres_root_user }}"
+      pg_restore_command: "docker exec {{ postgres_container_name }} pg_restore --user {{ postgres_root_user }}"
+  mysql_databases:
+    - name: all
 
 storage:
     encryption_passphrase: "{{ backups_encryption_passphrase }}"

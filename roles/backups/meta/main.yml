@@ -11,3 +11,4 @@ dependencies:
   - role: paperless
   - role: satisfactory
   - role: woodpecker
+  - role: writefreely

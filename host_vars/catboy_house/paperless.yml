@@ -1,11 +1,4 @@
 ---
-paperless_domain: paperless.{{ root_domain }}
-paperless_port: 28945
-paperless_uid: 1945
-paperless_ocr_languages: eng deu dan
-paperless_ocr_language: deu
-paperless_task_workers: 2
-paperless_threads_per_worker: 3
 paperless_secret: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   37663261666637363638616435363936633834366230646137343235663563373235306364326665

@@ -1,5 +1,5 @@
 ---
-# defaults file for roles/writefreely
+# defaults for writefreely
 writefreely_service_path: "{{ services_path_2 }}/writefreely"
 writefreely_user: writefreely
 writefreely_sources: "{{ writefreely_service_path }}/src"
@@ -7,4 +7,4 @@ writefreely_pwd: "{{ writefreely_service_path }}/var"
 writefreely_go_version: 1.24.5
 writefreely_service: writefreely
 writefreely_database: writefreely
-writefreely_database_user: writefreely
+writefreely_domain: "dreams.{{ root_domain }}"

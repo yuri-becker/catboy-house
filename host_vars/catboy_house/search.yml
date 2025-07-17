@@ -1,6 +1,4 @@
 ---
-search_port: 28947
-search_domain: search.{{ root_domain }}
 search_secret: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   61363361333535306465653265373366646432336561643464333231623438663131613536653161

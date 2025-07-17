@@ -1,4 +1,0 @@
----
-stirlingpdf_uid: "1950"
-stirlingpdf_port: 28952
-stirlingpdf_domain: pdf.{{ root_domain }}

@@ -1,5 +1,4 @@
 ---
-terraria_service_directory: terraria
 terraria_service_path: "{{ services_path_2 }}/{{ terraria_service_directory }}"
 terraria_sources: "{{ terraria_service_path }}/src"
 terraria_volume_world: "{{ terraria_service_path }}/volumes/world"

@@ -12,3 +12,4 @@ docmost_volume_docmost: "{{ docmost_path }}/volumes/docmost"
 docmost_volume_keydb: "{{ docmost_path }}/volumes/keydb"
 docmost_smtp_from_address: "{{ docmost_smtp_user }}"
 docmost_smtp_from_name: Docmost
+docmost_domain: wiki.{{ root_domain }}

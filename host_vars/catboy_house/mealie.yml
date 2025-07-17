@@ -1,6 +1,5 @@
 ---
-mealie_port: 28949
-mealie_domain: mealie.{{ root_domain }}
+mealie_domain: "mealie.{{ root_domain }}"
 mealie_postgres_user: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   39316239383838313333636666613637663338626338326436393161346639666433663631376634

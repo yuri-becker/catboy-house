@@ -2,6 +2,7 @@
 # defaults file for roles/jellyfin
 jellyfin_container_name: jellyfin
 jellyfin_service_directory: jellyfin
+jellyfin_domain: "jellyfin.{{ root_domain }}"
 jellyfin_service_path: "{{ services_path }}/{{ jellyfin_service_directory }}"
 jellyfin_volume_config: "{{ jellyfin_service_path }}/volumes/config"
 jellyfin_volume_web: "{{ jellyfin_service_path }}/volumes/web"

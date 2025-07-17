@@ -1,7 +1,4 @@
 ---
-woodpecker_domain: ci.{{ root_domain }}
-woodpecker_uid: 1157
-woodpecker_port: 28953
 woodpecker_agent_secret: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   33336331323562326565396539653531373238313235356430383838356630343736633265663462

@@ -12,3 +12,4 @@ heyform_volume_heyform_assets: "{{ heyform_service_path }}/volumes/heyform-asset
 heyform_user_name: heyform
 heyform_verify_user_email: true
 heyform_smtp_form: HeyForm <{{ heyform_smtp_user }}>
+heyform_domain: forms.{{ root_domain }}

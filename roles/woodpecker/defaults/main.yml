@@ -12,3 +12,4 @@ woodpecker_volume_agent: "{{ woodpecker_path }}/volumes/agent"
 woodpecker_db_name: woodpecker
 woodpecker_db_max_connections: 2
 woodpecker_max_workflows: 4
+woodpecker_domain: "ci.{{ root_domain }}"

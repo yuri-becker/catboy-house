@@ -7,3 +7,5 @@ books_path: /home/Books
 movies_path: /home/Movies
 music_path: /home/Music
 tv_path: /home/TV
+caddy_path: "{{ services_path }}/caddy"
+caddy_sites: "{{ caddy_path }}/sites"

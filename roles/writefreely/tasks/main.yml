@@ -82,8 +82,8 @@
 
 - name: 👤 Creates database user
   community.mysql.mysql_user:
-    name: "{{ writefreely_database_user }}"
-    password: "{{ writefreely_database_password }}"
+    name: "{{ writefreely_user }}"
+    password: "{{ writefreely_db_password }}"
     priv:
       "writefreely.*": ALL
       "*.*": USAGE

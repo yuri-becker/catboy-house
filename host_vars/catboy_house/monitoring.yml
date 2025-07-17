@@ -1,5 +1,4 @@
 ---
-monitoring_uid: 1943
 monitoring_grafana_authelia_client_secret_digest: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   65653430663531363036313033626636326261643064316533306534306232633635633735653937

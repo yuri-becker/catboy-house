@@ -1,0 +1,59 @@
+networks:
+  default:
+  "{{ postgres_network }}":
+    name: "{{ postgres_network }}"
+    external: true
+
+services:
+  valkey:
+    container_name: "{{ yamtrack_valkey_container }}"
+    image: valkey/valkey:8-alpine
+    restart: unless-stopped
+    volumes:
+      - "{{ yamtrack_volume_valkey }}:/data"
+    user: "{{ yamtrack_uid }}:{{ app_gid }}"
+
+  yamtrack:
+    container_name: "{{ yamtrack_container }}"
+    image: ghcr.io/fuzzygrim/yamtrack
+    restart: unless-stopped
+    depends_on:
+      - valkey
+    networks:
+      - default
+      - "{{ postgres_network }}"
+    ports:
+      - "{{ docker_gateway }}:{{ yamtrack_port }}:8000"
+    environment:
+      TZ: "{{ ansible_date_time.tz }}"
+      PUID: "{{ yamtrack_uid }}"
+      PGID: "{{ app_gid }}"
+      SECRET: "{{ yamtrack_secret }}"
+      REDIS_URL: "redis://valkey:6379"
+      URLS: "{{ yamtrack_url }}"
+      REGISTRATION: "{{ yamtrack_allow_registration }}"
+      WEB_CONCURRENCY: "{{ yamtrack_web_processes }}"
+      SOCIAL_PROVIDERS: "{{ yamtrack_social_providers }}"
+      SOCIALACCOUNT_PROVIDERS: '{{ yamtrack_socialaccount_providers | tojson}}'
+
+      # Database
+      DB_HOST: "{{ postgres_hostname }}"
+      DB_PORT: 5432
+      DB_NAME: "{{ yamtrack_db }}"
+      DB_USER: "{{ yamtrack_user }}"
+      DB_PASSWORD: "{{ yamtrack_db_password }}"
+
+      # API Keys
+      TMDB_API: "{{ tmdb_api_key }}"
+      MAL_API: "{{ myanimelist_api_key }}"
+      IGDB_ID: "{{ igdb_api_key }}"
+      IGDB_SECRET: "{{ igdb_api_secret }}"
+      HARDCOVER_API: "{{ hardcover_api_key }}"
+      COMICVINE_API: "{{ comicvine_api_key }}"
+      TRAKT_API: "{{ trakt_api_key }}"
+
+      # NSFW
+      TMDB_NSFW: "{{ yamtrack_nsfw }}"
+      MAL_NSFW: "{{ yamtrack_nsfw }}"
+      MU_NSFW: "{{ yamtrack_nsfw }}"
+      IGDB_NSFW: "{{ yamtrack_nsfw }}"

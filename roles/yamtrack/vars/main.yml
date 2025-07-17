@@ -1,0 +1,19 @@
+---
+# vars for yamtrack
+yamtrack_url: "https://{{ yamtrack_domain }}"
+yamtrack_socialaccount_providers: >
+  {
+    "openid_connect": {
+      "APPS": [
+        {
+          "provider_id": "{{ yamtrack_auth_provider_authelia }}",
+          "name": "auth.catboy.house",
+          "client_id": "{{ auth_client_yamtrack_id }}",
+          "secret": "{{ auth_client_yamtrack_secret }}",
+          "settings": {
+            "server_url": "{{ auth_discovery_url }}"
+          }
+        }
+      ]
+    }
+  }

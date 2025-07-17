@@ -1,8 +1,6 @@
 ---
-seedbox_qbittorrent_port: 30214
-seedbox_qbittorrent_domain: bittorrent.{{ root_domain }}
-seedbox_slskd_port: 30213
 seedbox_slskd_domain: slskd.{{ root_domain }}
+seedbox_qbittorrent_domain: bittorrent.{{ root_domain }}
 seedbox_vpn_input_port: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   39393265663631303239323533656237363965373931326232666566323766323664636139623434
@@ -24,7 +22,6 @@ seedbox_vpn_service_provider: !vault |
   37613864643965336461623435663835316330633238313961626263663665383732663939313835
   6638333731656161610a646537366537343166306531626236643732323438353438386266633966
   3362
-seedbox_promex_port: 44401
 seedbox_vpn_server_names: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   32313864393538323466633463333531326133383436646433376339356562343665613062643030

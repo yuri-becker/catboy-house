@@ -43,7 +43,7 @@
 
 - name: 🚀 Starts container
   community.docker.docker_container:
-    name: "{{ stirlingpdf_container__name }}"
+    name: "{{ stirlingpdf_container_name }}"
     image: stirlingtools/stirling-pdf:latest
     state: started
     restart_policy: unless-stopped

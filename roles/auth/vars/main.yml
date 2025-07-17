@@ -1,0 +1,3 @@
+---
+# vars for auth
+auth_discovery_url: "https://{{ auth_authelia_domain }}/.well-known/openid-configuration"

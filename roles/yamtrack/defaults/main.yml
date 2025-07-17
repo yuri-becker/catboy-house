@@ -1,0 +1,12 @@
+---
+yamtrack_prefix: yamtrack
+yamtrack_container: "{{ yamtrack_prefix }}"
+yamtrack_valkey_container: "{{ yamtrack_prefix }}-valkey"
+yamtrack_service_path: "{{ services_path_2 }}/yamtrack"
+yamtrack_volume_valkey: "{{ yamtrack_service_path }}/var/valkey"
+yamtrack_db: yamtrack
+yamtrack_user: yamtrack
+yamtrack_nsfw: "True"
+yamtrack_allow_registration: "True"
+yamtrack_web_processes: 4
+yamtrack_social_providers: allauth.socialaccount.providers.openid_connect

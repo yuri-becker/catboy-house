@@ -1,3 +1,0 @@
----
-pyload_port: 29158
-pyload_domain: pyload.{{ root_domain }}

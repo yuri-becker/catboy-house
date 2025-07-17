@@ -1,6 +1,4 @@
 ---
-wakapi_port: 28943
-wakapi_domain: wakapi.{{ root_domain }}
 wakapi_password_salt: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   65393735346365316362393764356532393464303161353530613534393338373834376166643064

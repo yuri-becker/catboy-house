@@ -1,0 +1,60 @@
+---
+# tasks for yamtrack
+- name: 👤 Creates user
+  ansible.builtin.user:
+    state: present
+    name: "{{ yamtrack_user }}"
+    uid: "{{ yamtrack_uid }}"
+    create_home: true
+    home: "{{ yamtrack_service_path }}"
+    groups:
+      - "{{ app_gid }}"
+  become: true
+
+- name: 👤 Creates database
+  community.postgresql.postgresql_db:
+    name: "{{ yamtrack_db }}"
+
+- name: 👤 Creates database user
+  community.postgresql.postgresql_user:
+    login_db: "{{ yamtrack_db }}"
+    name: "{{ yamtrack_user }}"
+    password: "{{ yamtrack_db_password }}"
+
+- name: 👤 Grants privileges to user
+  community.postgresql.postgresql_privs:
+    db: "{{ yamtrack_db }}"
+    roles: "{{ yamtrack_user }}"
+    grant_option: false
+    type: schema
+    obj: public
+    privs: ALL
+
+- name: 📂 Creates application directories
+  ansible.builtin.file:
+    state: directory
+    path: "{{ yamtrack_volume_valkey }}"
+    mode: "0700"
+  become: true
+  become_user: "{{ yamtrack_user }}"
+
+- name: ⬆️ Pushes Compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ yamtrack_service_path }}/docker-compose.yml"
+    mode: "750"
+    owner: "{{ yamtrack_user }}"
+    group: docker
+  become: true
+
+- name: 🚀 Starts Container Stack
+  community.docker.docker_compose_v2:
+    project_src: "{{ yamtrack_service_path }}"
+
+- name: ⬆️ Pushes Caddy config
+  ansible.builtin.template:
+    src: yamtrack.caddy.j2
+    dest: "{{ caddy_sites }}/yamtrack.caddy"
+    mode: "0770"
+    group: "{{ app_gid }}"
+  notify: reload caddy

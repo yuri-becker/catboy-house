@@ -39,8 +39,8 @@
     volumes:
       - "{{ postgres_volume_data }}:/var/lib/postgresql/data"
     env:
-      POSTGRES_USER: "{{ postgres_user }}"
-      POSTGRES_PASSWORD: "{{ postgres_password }}"
+      POSTGRES_USER: "{{ postgres_root_user }}"
+      POSTGRES_PASSWORD: "{{ postgres_root_password }}"
 
 - name: ⏱️ Waits until Postgres is started
   ansible.builtin.wait_for:

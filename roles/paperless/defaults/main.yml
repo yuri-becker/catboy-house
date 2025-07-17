@@ -6,8 +6,8 @@ paperless_postgres_container_name: "{{ paperless_container_prefix }}-postgres"
 paperless_gotenberg_container_name: "{{ paperless_container_prefix }}-gotenberg"
 paperless_tika_container_name: "{{ paperless_container_prefix }}-tika"
 paperless_paperless_container_name: "{{ paperless_container_prefix }}-paperless"
-paperless_ocr_languages: eng
-paperless_ocr_language: eng
+paperless_ocr_languages: eng deu dan
+paperless_ocr_language: deu
 paperless_user_name: paperless
 paperless_service_directory: paperless
 paperless_service_path: "{{ services_path_2 }}/{{ paperless_service_directory }}"
@@ -17,7 +17,8 @@ paperless_volume_paperless_data: "{{ paperless_service_path }}/volumes/paperless
 paperless_volume_paperless_media: "{{ paperless_service_path }}/volumes/paperless-media"
 paperless_volume_paperless_export: "{{ paperless_service_path }}/volumes/paperless-export"
 paperless_volume_paperless_consume: "{{ paperless_service_path }}/volumes/paperless-consume"
-paperless_task_workers: 1
-paperless_threads_per_worker: 1
+paperless_task_workers: 2
+paperless_threads_per_worker: 3
 paperless_app_title: Paperless
 paperless_smtp_sender: "{{ paperless_smtp_user }}"
+paperless_domain: paperless.{{ root_domain }}

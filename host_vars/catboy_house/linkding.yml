@@ -1,6 +1,5 @@
 ---
-linkding_port: 28948
-linkding_domain: bookmarks.{{ root_domain }}
+linkding_domain: "bookmarks.{{ root_domain }}"
 linkding_postgres_user: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   31636237306532323530666635333439643662376132353264313338353063643163383532393832

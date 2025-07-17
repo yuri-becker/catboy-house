@@ -11,3 +11,4 @@ wakapi_db_name: wakapi
 wakapi_db_max_connections: "2"
 wakapi_invite_codes: "false"
 wakapi_mail_sender: Wakapi <{{ wakapi_smtp_user }}>
+wakapi_domain: wakapi.{{ root_domain }}

@@ -1,0 +1,4 @@
+---
+# meta for terraria
+dependencies:
+  - docker

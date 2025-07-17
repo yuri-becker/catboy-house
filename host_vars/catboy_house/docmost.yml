@@ -1,7 +1,4 @@
 ---
-docmost_uid: 1949
-docmost_port: 28946
-docmost_domain: wiki.{{ root_domain }}
 docmost_db_user: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   35393536336136356430353665656463633966343632643438623964656633336332646663393865
