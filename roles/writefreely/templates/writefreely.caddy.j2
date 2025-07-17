@@ -1,5 +1,5 @@
 {{ writefreely_domain }} {
-    import logging {{ woodpecker_domain }}
+    import logging {{ writefreely_domain }}
 	encode gzip
     reverse_proxy 127.0.0.1:{{ writefreely_port }}
 }
