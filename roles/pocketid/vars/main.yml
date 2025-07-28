@@ -1,0 +1,12 @@
+---
+# vars for pocketid
+pocketid_db_connection: "postgres://{{ pocketid_user }}:{{ pocketid_db_password }}@{{ postgres_hostname }}:5432/{{ pocketid_db }}"
+pocketid_url: "https://{{ pocketid_domain }}"
+pocketid_oidc2proxy_common_options: >-
+  --email-domain '*'
+  --provider oidc
+  --oidc-issuer-url https://{{ pocketid_domain }}
+  --provider-display-name 'catboy.house account 🔑'
+  --custom-sign-in-logo -
+  --footer -
+  --banner -

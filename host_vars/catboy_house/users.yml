@@ -1,11 +1,15 @@
 ---
+search_uid: 977 # set in https://github.com/searxng/searxng/blob/master/Dockerfile
 app_uid: "1000"
 app_gid: "100"
 nextcloud_uid: "1155"
 romm_uid: "1156"
 woodpecker_uid: "1157"
+
 docker_build_uid: "1800"
+
 monitoring_uid: "1943"
+pocketid_uid: "1944"
 paperless_uid: "1945"
 postgres_uid: "1947"
 docmost_uid: "1949"

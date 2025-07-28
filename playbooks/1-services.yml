@@ -35,6 +35,9 @@
     - role: caddy
       tags: caddy
 
+    - role: pocketid
+      tags: pocketid
+
     - role: auth
       tags: auth
 

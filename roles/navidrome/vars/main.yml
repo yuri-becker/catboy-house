@@ -1,0 +1,12 @@
+---
+navidrome_proxy_command: >-
+  {{ pocketid_oidc2proxy_common_options }}
+  --client-id {{ navidrome_auth_client_id }}
+  --client-secret {{ navidrome_auth_client_secret }}
+  --cookie-secret {{ navidrome_cookie_secret }}
+  --scope 'openid email profile'
+  --skip-auth-route ^/share/
+  --skip-auth-route ^/rest/
+  --pass-user-headers
+  --http-address 0.0.0.0:{{ navidrome_port }}
+  --upstream http://navidrome:4533

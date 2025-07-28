@@ -13,4 +13,3 @@ auth_volume_authelia_postgres: "{{ auth_service_path }}/volumes/authelia-postgre
 auth_volume_authelia: "{{ auth_service_path }}/volumes/authelia"
 auth_lldap_container_name: "{{ auth_container_prefix }}-lldap"
 auth_authelia_container_name: "{{ auth_container_prefix }}-authelia"
-

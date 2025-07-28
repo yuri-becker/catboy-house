@@ -1,0 +1,7 @@
+---
+# defaults file for pocketid
+pocketid_container: pocketid
+pocketid_path: "{{ services_path_2 }}/pocketid"
+pocketid_volume_data: "{{ pocketid_path }}/var/data"
+pocketid_user: pocketid
+pocketid_db: pocketid

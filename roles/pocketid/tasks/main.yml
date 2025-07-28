@@ -1,0 +1,97 @@
+---
+# tasks for pocket-id
+- name: 👤 Creates user
+  ansible.builtin.user:
+    state: present
+    name: "{{ pocketid_user }}"
+    uid: "{{ pocketid_uid }}"
+    create_home: true
+    home: "{{ pocketid_path }}"
+    groups:
+      - "{{ app_gid }}"
+  become: true
+
+- name: 👤 Creates database
+  community.postgresql.postgresql_db:
+    name: "{{ pocketid_db }}"
+
+- name: 👤 Creates database user
+  community.postgresql.postgresql_user:
+    login_db: "{{ pocketid_db }}"
+    name: "{{ pocketid_user }}"
+    password: "{{ pocketid_db_password }}"
+
+- name: 👤 Grants privileges to user
+  community.postgresql.postgresql_privs:
+    login_db: "{{ pocketid_db }}"
+    roles: "{{ pocketid_user }}"
+    grant_option: false
+    type: schema
+    obj: public
+    privs: ALL
+
+- name: 📂 Creates volume
+  ansible.builtin.file:
+    state: directory
+    path: "{{ pocketid_volume_data }}"
+    mode: "0700"
+  become: true
+  become_user: "{{ pocketid_user }}"
+
+- name: 🚀 Starts Container
+  community.docker.docker_container:
+    state: started
+    name: "{{ pocketid_container }}"
+    hostname: "{{ pocketid_hostname }}"
+    image: ghcr.io/pocket-id/pocket-id:v1-distroless
+    restart_policy: unless-stopped
+    user: "{{ pocketid_uid }}:{{ app_gid }}"
+    ports:
+      - "{{ docker_gateway }}:{{ pocketid_port }}:1411"
+    volumes:
+      - "{{ pocketid_volume_data }}:/app/data"
+    networks:
+      - name: "{{ postgres_network }}"
+      - name: "{{ monitoring_prom_network }}"
+        aliases: ["{{ pocketid_hostname }}"]
+    env:
+      APP_NAME: "catboy.house account~"
+      ACCENT_COLOR: "#7287fd"
+      MAXMIND_LICENSE_KEY: "{{ maxmind_api_key }}"
+      APP_URL: "{{ pocketid_url }}"
+      PUID: "{{ pocketid_uid }}"
+      PGID: "{{ app_gid }}"
+      TRUST_PROXY: "true"
+      DB_PROVIDER: postgres
+      DB_CONNECTION_STRING: "{{ pocketid_db_connection }}"
+      ENCRYPTION_KEY: "{{ pocketid_encryption_key }}"
+      KEYS_STORAGE: database
+      UI_CONFIG_DISABLED: "true"
+      EMAILS_VERIFIED: "true"
+      ALLOW_USER_SIGNUPS: withToken
+      SMTP_HOST: "{{ smtp_server }}"
+      SMTP_PORT: "{{ smtp_port }}"
+      SMTP_FROM: "{{ auth_smtp_user }}"
+      SMTP_USER: "{{ auth_smtp_user }}"
+      SMTP_PASSWORD: "{{ auth_smtp_password }}"
+      SMTP_TLS: starttls
+      EMAIL_LOGIN_NOTIFICATION_ENABLED: "true"
+      EMAIL_ONE_TIME_ACCESS_AS_ADMIN_ENABLED: "true"
+      EMAIL_API_KEY_EXPIRATION_ENABLED: "true"
+      METRICS_ENABLED: "true"
+      OTEL_METRICS_EXPORTER: prometheus
+      OTEL_EXPORTER_PROMETHEUS_PORT: "{{ pocketid_metrics_port }}"
+    healthcheck:
+      test: ["CMD", "/app/pocket-id", "healthcheck"]
+      interval: 1m30s
+      timeout: 5s
+      retries: 2
+      start_period: 10s
+
+- name: ⬆️ Pushes Caddy config
+  ansible.builtin.template:
+    src: pocketid.caddy.j2
+    dest: "{{ caddy_sites }}/pocketid.caddy"
+    mode: "0770"
+    group: "{{ app_gid }}"
+  notify: reload caddy

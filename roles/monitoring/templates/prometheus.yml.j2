@@ -29,3 +29,7 @@ scrape_configs:
         action: labeldrop
       - regex: ^device$
         action: labeldrop
+
+  - job_name: pocketid
+    static_configs:
+      - targets: ['{{ pocketid_hostname }}:{{ pocketid_metrics_port }}']

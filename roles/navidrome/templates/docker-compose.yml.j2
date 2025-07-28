@@ -1,0 +1,29 @@
+services:
+  proxy:
+    container_name: "{{ navidrome_proxy_container }}"
+    image: quay.io/oauth2-proxy/oauth2-proxy:v7.6.0
+    restart: unless-stopped
+    ports:
+      - "{{ docker_gateway }}:{{ navidrome_port }}:{{ navidrome_port }}"
+    command: "{{ navidrome_proxy_command }}"
+
+  navidrome:
+    container_name: "{{ navidrome_container }}"
+    image: deluan/navidrome:latest
+    restart: unless-stopped
+    user: "{{ app_uid }}:{{ app_gid }}"
+    environment:
+      ND_MUSICFOLDER: "/music"
+      ND_DATAFOLDER: "/data"
+      ND_ENABLEGRAVATAR: "true"
+      ND_REVERSEPROXYWHITELIST: "0.0.0.0/0" # No ports open to the outside
+      ND_ENABLEUSEREDITING: "false"
+      ND_ENABLESHARING: "true"
+      ND_SPOTIFY_ID: "{{ spotify_api_key }}"
+      ND_SPOTIFY_SECRET: "{{ spotify_api_secret }}"
+      ND_LASTFM_APIKEY: "{{ lastfm_api_key }}"
+      ND_LASTFM_SECRET: "{{ lastfm_api_secret }}"
+      ND_REVERSEPROXYUSERHEADER: X-Forwarded-Preferred-Username
+    volumes:
+      - "{{ navidrome_volume_data }}:/data"
+      - "{{ music_path }}:/music"

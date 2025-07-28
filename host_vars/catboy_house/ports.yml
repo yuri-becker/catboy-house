@@ -1,12 +1,15 @@
 ---
 # Fixed Ports (default for usability/simplicity)
-search_uid: 977 # set in https://github.com/searxng/searxng/blob/master/Dockerfile
 mariadb_port: 3306
 terraria_port: 7777
-satisfactory_server_game_port: 28001
-satisfactory_server_messaging_port: 28000
+satisfactory_server_game_port: "28001"
+satisfactory_server_messaging_port: "28000"
 
 # Application Ports
+postgres_port: 27802
+auth_lldap_port: 27900
+auth_authelia_port: 27901
+
 wakapi_port: 28943
 paperless_port: 28945
 docmost_port: 28946
@@ -21,9 +24,9 @@ yamtrack_port: 28954
 romm_port: 29156
 pyload_port: 29158
 navidrome_port: 29159
-postgres_port: 27802
-auth_lldap_port: 27900
-auth_authelia_port: 27901
+
+pocketid_port: 29000
+
 jellyfin_port: 30212
 seedbox_slskd_port: 30213
 seedbox_qbittorrent_port: 30214
@@ -35,5 +38,7 @@ arr_jellyseerr_port: 30219
 arr_lidarr_port: 30220
 arr_lidify_port: 30221
 writefreely_port: 30222
+
 heyform_port: 30300
+
 seedbox_promex_port: 44401

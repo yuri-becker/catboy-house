@@ -20,26 +20,16 @@
     group: "{{ app_gid }}"
   notify: reload caddy
 
-- name: 🚀 Starts container
-  community.docker.docker_container:
-    name: "{{ navidrome_container_name }}"
-    image: deluan/navidrome:latest
-    state: started
-    restart_policy: unless-stopped
-    user: "{{ app_uid }}:{{ app_gid }}"
-    ports:
-      - "{{ docker_gateway }}:{{ navidrome_port }}:4533"
-    env:
-      ND_MUSICFOLDER: "/music"
-      ND_DATAFOLDER: "/data"
-      ND_ENABLEGRAVATAR: "true"
-      ND_REVERSEPROXYWHITELIST: "0.0.0.0/0" # Access through anything but caddy is not possible
-      ND_ENABLEUSEREDITING: "false"
-      ND_ENABLESHARING: "true"
-      ND_SPOTIFY_ID: "{{ spotify_api_key }}"
-      ND_SPOTIFY_SECRET: "{{ spotify_api_secret }}"
-      ND_LASTFM_APIKEY: "{{ lastfm_api_key }}"
-      ND_LASTFM_SECRET: "{{ lastfm_api_secret }}"
-    volumes:
-      - "{{ navidrome_volume_data }}:/data"
-      - "{{ music_path }}:/music"
+- name: ⬆️ Pushes compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ navidrome_path }}/docker-compose.yml"
+    mode: "0750"
+    owner: "{{ app_uid }}"
+    group: "docker"
+  become: true
+
+- name: 🚀 Starts container stack
+  community.docker.docker_compose_v2:
+    project_src: "{{ navidrome_path }}"
+    state: present

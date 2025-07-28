@@ -1,12 +1,5 @@
 {{ navidrome_domain }} {
     import common-headers
     import logging {{ navidrome_domain }}
-
-    @protected not path /share/* /rest/*
-    forward_auth @protected {{ docker_gateway }}:{{ auth_authelia_port }} {
-        uri /api/authz/forward-auth
-        copy_headers Remote-User Remote-Groups Remote-Email Remote-Name
-    }
-    
     reverse_proxy {{ docker_gateway }}:{{ navidrome_port }}
 }

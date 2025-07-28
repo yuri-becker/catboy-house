@@ -1,6 +1,7 @@
 ---
 # defaults file for roles/navidrome
-navidrome_container_name: navidrome
+navidrome_container: navidrome
+navidrome_proxy_container: navidrome-proxy
 navidrome_directory: navidrome
 navidrome_path: "{{ services_path_2 }}/{{ navidrome_directory }}"
 navidrome_volume_data: "{{ navidrome_path }}/volumes/data"

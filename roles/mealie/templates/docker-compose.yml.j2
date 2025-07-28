@@ -45,7 +45,7 @@ services:
       ALLOW_SIGNUP: False
       OIDC_AUTH_ENABLED: true
       OIDC_SIGNUP_ENABLED: true
-      OIDC_CONFIGURATION_URL: "{{ authelia_discovery_url }}"
+      OIDC_CONFIGURATION_URL: "{{ auth_discovery_url }}"
       OIDC_CLIENT_ID: "{{ mealie_authelia_client_id }}"
       OIDC_CLIENT_SECRET: "{{ mealie_authelia_client_secret_password }}"
       OIDC_USER_GROUP: "{{ auth_group_privileged }}"
