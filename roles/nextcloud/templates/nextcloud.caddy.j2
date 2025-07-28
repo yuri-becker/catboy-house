@@ -11,5 +11,10 @@
         }
     }
 
+    handle_path /whiteboard/* {
+        uri strip_prefix /whiteboard
+        reverse_proxy {{ docker_gateway }}:{{ nextcloud_whiteboard_port }}
+    }
+
     reverse_proxy {{ docker_gateway }}:{{ nextcloud_port }}
 }

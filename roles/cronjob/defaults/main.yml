@@ -1,0 +1,3 @@
+---
+# defaults for cronjob
+cronjob_script_path: /usr/local/bin/cronjob-with-notification.py

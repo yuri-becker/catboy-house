@@ -1,0 +1,12 @@
+---
+# tasks file for roles/unattended_upgrades
+- include_role:
+    name: cronjob
+    public: no
+  vars:
+    cronjob_name: check for updates
+    cronjob_special_time: daily
+    cronjob_command: apt -qq update
+    cronjob_user: root
+    cronjob_notification_avatar: "https://cdn.jsdelivr.net/gh/selfhst/icons/png/debian.png"
+    cronjob_notification_as: apt (daily)

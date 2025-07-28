@@ -44,8 +44,8 @@
     - role: watchtower
       tags: watchtower
 
-    - role: unattended_upgrades
-      tags: unattended_upgrades
+    - role: check_for_updates
+      tags: check_for_updates
 
     - role: monitoring
       tags: monitoring

@@ -2,7 +2,7 @@
 # defaults file for roles/stirlingpdf
 stirlingpdf_user_name: stirlingpdf
 stirlingpdf_container_name: stirlingpdf
-stirlingpdf_path: "{{ services_path_2 }}/{{ stirlingpdf_directory }}"
+stirlingpdf_path: "{{ services_path_2 }}/stirlingpdf"
 stirlingpdf_volume_trainingdata: "{{ stirlingpdf_path }}/volumes/traningdata"
 stirlingpdf_volume_configs: "{{ stirlingpdf_path }}/volumes/configs"
 stirlingpdf_volume_custom_files: "{{ stirlingpdf_path }}/volumes/customFiles"

@@ -2,16 +2,16 @@
 # tasks file for roles/create_admins
 - name: 📦 Installs helper packages
   ansible.builtin.apt:
-    name: "{{ item }}"
+    package:
+      - bat
+      - btop
+      - fzf
+      - kitty-terminfo
+      - ranger
+      - lsd
+      - vim
     state: present
-  loop:
-    - bat
-    - btop
-    - fzf
-    - kitty-terminfo
-    - ranger
-    - lsd
-    - vim
+  become: true
 
 - name: 👤 Creates app group
   ansible.builtin.group:

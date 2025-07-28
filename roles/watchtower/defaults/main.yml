@@ -2,3 +2,5 @@
 watchtower_schedule: 0 0 6 * * *
 watchtower_monitor_only: "false"
 watchtower_cleanup: "true"
+watchtower_notification_avatar: https://cdn.jsdelivr.net/gh/selfhst/icons/png/watchtower.png
+watchtower_notification_name: Watchtower (daily)

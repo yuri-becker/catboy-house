@@ -44,14 +44,16 @@
   become_user: "{{ docker_build_user }}"
   changed_when: true
 
-- name: 🚀 Sets up rebuild cronjob
-  ansible.builtin.cron:
-    name: "{{ terraria_build_cronjob_name }}"
-    special_time: "weekly"
-    job: "{{ terraria_build_command }}"
-    user: "{{ docker_build_user }}"
-    state: present
-  become: true
+- include_role:
+    name: cronjob
+    public: no
+  vars:
+    cronjob_name: "{{ terraria_build_cronjob_name }}"
+    cronjob_special_time: weekly
+    cronjob_command: "{{ terraria_build_command }}"
+    cronjob_user: "{{ docker_build_user }}"
+    cronjob_notification_avatar: "https://cdn.jsdelivr.net/gh/selfhst/icons/png/docker.png"
+    cronjob_notification_as: Terraria Build (weekly)
 
 - name: 📂 Creates volumes
   ansible.builtin.file:
@@ -83,6 +85,8 @@
       - "{{ terraria_volume_world }}:/root/.local/share/Terraria/Worlds"
     env:
       WORLD_FILENAME: "{{ terraria_world_name }}.wld"
+    labels:
+      com.centurylinklabs.watchtower.no-pull: "true"
     command:
       - "-config /root/.local/share/Terraria/Worlds/config.json"
       - "-world /root/.local/share/Terraria/Worlds/{{ terraria_world_name }}.wld"

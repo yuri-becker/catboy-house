@@ -44,10 +44,9 @@
 - name: 🚀 Starts container
   community.docker.docker_container:
     name: "{{ stirlingpdf_container_name }}"
-    image: stirlingtools/stirling-pdf:latest
+    image: ghcr.io/stirling-tools/stirling-pdf:latest-fat
     state: started
     restart_policy: unless-stopped
-    user: "{{ stirlingpdf_uid }}:{{ app_gid }}"
     ports:
       - "{{ docker_gateway }}:{{ stirlingpdf_port }}:8080"
     volumes:

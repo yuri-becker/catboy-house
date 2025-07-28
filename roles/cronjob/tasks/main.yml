@@ -1,0 +1,25 @@
+---
+# tasks for notifications
+- name: 📦 Installs Apprise
+  ansible.builtin.apt:
+    package:
+      - apprise
+      - python3
+  become: true
+
+- name: ⬆️ Pushes cronjob script
+  ansible.builtin.copy:
+    src: cronjob.py
+    dest: "{{ cronjob_script_path }}"
+    mode: "0555"
+  become: true
+
+- name: 🚀 Installs cronjob
+  ansible.builtin.cron:
+    name: "{{ cronjob_name }}"
+    special_time: "{{ cronjob_special_time }}"
+    job: "{{ cronjob_complete_command }}"
+    user: "{{ cronjob_user }}"
+    state: present
+  become: true
+

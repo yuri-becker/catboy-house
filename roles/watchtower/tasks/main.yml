@@ -15,3 +15,5 @@
       WATCHTOWER_MONITOR_ONLY: "{{ watchtower_monitor_only }}"
       WATCHTOWER_SCHEDULE: "{{ watchtower_schedule }}"
       WATCHTOWER_CLEANUP: "{{ watchtower_cleanup }}"
+      WATCHTOWER_RUN_ONCE: "true"
+      WATCHTOWER_NOTIFICATION_SKIP_TITLE: "true"

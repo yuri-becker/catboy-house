@@ -6,6 +6,7 @@ nextcloud_mariadb_container_name: "{{ nextcloud_container_prefix }}-mariadb"
 nextcloud_keydb_container_name: "{{ nextcloud_container_prefix }}-keydb"
 nextcloud_onlyoffice_container_name: "{{ nextcloud_container_prefix }}-onlyoffice"
 nextcloud_nextcloud_container_name: "{{ nextcloud_container_prefix }}-nextcloud"
+nextcloud_whiteboard_container: "{{ nextcloud_container_prefix }}-whiteboard"
 nextcloud_service_directory: nextcloud
 nextcloud_service_path: "{{ services_path_2 }}/{{ nextcloud_service_directory }}"
 nextcloud_volume_mariadb: "{{ nextcloud_service_path }}/volumes/mariadb"

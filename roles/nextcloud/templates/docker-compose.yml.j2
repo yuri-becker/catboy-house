@@ -39,6 +39,17 @@ services:
     environment:
       JWT_SECRET: "{{ nextcloud_onlyoffice_secret }}"
 
+  whiteboard:
+    image: ghcr.io/nextcloud-releases/whiteboard:stable
+    container_name: "{{ nextcloud_whiteboard_container }}"
+    ports:
+      - "{{ docker_gateway }}:{{ nextcloud_whiteboard_port }}:3002"
+    environment:
+      NEXTCLOUD_URL: "https://{{ nextcloud_domain }}"
+      JWT_SECRET_KEY: "{{ nextcloud_secret }}"
+      STORAGE_STRATEGY: redis
+      REDIS_URL: redis://keydb
+
   nextcloud:
     image: nextcloud:latest
     container_name: "{{ nextcloud_nextcloud_container_name }}"

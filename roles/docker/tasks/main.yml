@@ -36,3 +36,15 @@
     groups:
       - docker
   become: true
+
+
+- include_role:
+    name: cronjob
+    public: no
+  vars:
+    cronjob_name: docker prune
+    cronjob_special_time: weekly
+    cronjob_command: docker image prune -f
+    cronjob_user: "{{ docker_build_user }}"
+    cronjob_notification_avatar: "https://cdn.jsdelivr.net/gh/selfhst/icons/png/docker.png"
+    cronjob_notification_as: Docker Prune (weekly)

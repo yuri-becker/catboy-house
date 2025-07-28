@@ -18,10 +18,11 @@ linkding_port: 28948
 mealie_port: 28949
 nextcloud_port: 28950
 nextoffice_onlyoffice_port: 28951
-stirlingpdf_port: 28952
+nextcloud_whiteboard_port: 28952
 woodpecker_port: 28953
 yamtrack_port: 28954
 romm_port: 29156
+stirlingpdf_port: 28957
 pyload_port: 29158
 navidrome_port: 29159
 

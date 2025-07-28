@@ -1,8 +1,21 @@
 security:
-  enableLogin: false
+  enableLogin: true
+  loginMethod: oauth2
+  oauth2:
+    enabled: true
+    issuer: "{{ pocketid_url }}"
+    clientId: "{{ stirlingpdf_auth_client_id }}"
+    clientSecret: "{{ stirlingpdf_auth_client_secret }}"
+    autoCreateUser: true
+    blockRegistration: false
+    useAsUsername: preferred_username
+    scopes: openid, profile
+    provider: id.catboy.house
+
 
 ui:
   appName: "{{ stirlingpdf_app_name }}"
+  appNameNavbar: Stirling PDF
 
 metrics:
   enabled: false

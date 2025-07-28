@@ -26,6 +26,8 @@ services:
       - "{{ docker_gateway }}:{{ docmost_port }}:3000"
     volumes:
       - "{{ docmost_volume_docmost }}:/app/data/storage"
+    labels:
+      com.centurylinklabs.watchtower.no-pull: "true"
     environment:
       APP_URL: "https://{{ docmost_domain }}"
       APP_SECRET: "{{ docmost_secret }}"
