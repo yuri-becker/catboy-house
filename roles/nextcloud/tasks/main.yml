@@ -81,3 +81,14 @@
   community.docker.docker_compose_v2:
     project_src: "{{ nextcloud_service_path }}"
     state: present
+
+- include_role:
+    name: cronjob
+    public: no
+  vars:
+    cronjob_name: nextcloud app update
+    cronjob_special_time: daily
+    cronjob_command:  docker exec -it -u www-data nextcloud-nextcloud php occ app:update --all
+    cronjob_user: "root"
+    cronjob_notification_avatar: "https://cdn.jsdelivr.net/gh/selfhst/icons/png/nextcloud.png"
+    cronjob_notification_as: Nextcloud App Update (daily)

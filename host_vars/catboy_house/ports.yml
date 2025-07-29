@@ -14,7 +14,6 @@ wakapi_port: 28943
 paperless_port: 28945
 docmost_port: 28946
 search_port: 28947
-linkding_port: 28948
 mealie_port: 28949
 nextcloud_port: 28950
 nextoffice_onlyoffice_port: 28951

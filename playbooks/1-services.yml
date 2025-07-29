@@ -53,9 +53,6 @@
     - role: paperless
       tags: paperless
 
-    - role: linkding
-      tags: linkding
-
     - role: mealie
       tags: mealie
 

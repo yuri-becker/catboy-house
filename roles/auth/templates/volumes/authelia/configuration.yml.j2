@@ -114,24 +114,6 @@ identity_providers:
             id_token: ['groups', 'preferred_username', 'name']
         all:
             id_token: ['groups', 'email', 'email_verified', 'alt_emails', 'preferred_username', 'name']
-    clients:
-      - client_id: "{{ monitoring_grafana_authelia_client_id }}"
-        client_name: "Grafana Cloud"
-        client_secret: "{{ monitoring_grafana_authelia_client_secret_digest }}"
-        public: false
-        authorization_policy: 'two_factor'
-        require_pkce: true
-        pkce_challenge_method: 'S256'
-        redirect_uris:
-          - 'https://catboy.grafana.net/login/generic_oauth'
-        claims_policy: 'all'
-        scopes:
-          - 'openid'
-          - 'profile'
-          - 'groups'
-          - 'email'
-        userinfo_signed_response_alg: 'none'
-        token_endpoint_auth_method: 'client_secret_basic'
 
       - client_id: "{{ paperless_authelia_client_id }}"
         client_name: "Paperless"
@@ -142,24 +124,6 @@ identity_providers:
         pkce_challenge_method: 'S256'
         redirect_uris:
           - 'https://{{ paperless_domain }}/accounts/oidc/authelia/login/callback/'
-        claims_policy: 'all'
-        scopes:
-          - 'openid'
-          - 'profile'
-          - 'email'
-          - 'groups'
-        userinfo_signed_response_alg: 'none'
-        token_endpoint_auth_method: 'client_secret_basic'
-
-      - client_id: "{{ nextcloud_authelia_client_id }}"
-        client_name: "Nextcloud"
-        client_secret: "{{ nextcloud_authelia_client_secret_digest }}"
-        public: false
-        authorization_policy: 'two_factor'
-        require_pkce: true
-        pkce_challenge_method: 'S256'
-        redirect_uris:
-          - 'https://{{ nextcloud_domain }}/apps/oidc_login/oidc'
         claims_policy: 'all'
         scopes:
           - 'openid'
@@ -188,24 +152,6 @@ identity_providers:
           - 'groups'
         userinfo_signed_response_alg: 'none'
         token_endpoint_auth_method: 'client_secret_basic'
-
-      - client_id: "{{ linkding_authelia_client_id }}"
-        client_name: "Linkding"
-        client_secret: "{{ linkding_authelia_client_secret_digest }}"
-        public: false
-        authorization_policy: "two_factor"
-        require_pkce: true
-        pkce_challenge_method: 'S256'
-        redirect_uris:
-          - 'https://{{ linkding_domain }}/oidc/callback/'
-        claims_policy: 'all'
-        scopes:
-          - 'openid'
-          - 'profile'
-          - 'email'
-          - 'groups'
-        userinfo_signed_response_alg: 'none'
-        token_endpoint_auth_method: 'client_secret_post'
 
       - client_id: "{{ jellyfin_authelia_client_id }}"
         client_name: "Jellyfin"
