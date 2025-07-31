@@ -6,7 +6,7 @@
   vars:
     cronjob_name: check for updates
     cronjob_special_time: daily
-    cronjob_command: apt -qq update
+    cronjob_command: apt -qqq update && apt list --upgradable -qq
     cronjob_user: root
     cronjob_notification_avatar: "https://cdn.jsdelivr.net/gh/selfhst/icons/png/debian.png"
     cronjob_notification_as: apt (daily)

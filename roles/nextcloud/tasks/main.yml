@@ -88,7 +88,7 @@
   vars:
     cronjob_name: nextcloud app update
     cronjob_special_time: daily
-    cronjob_command:  docker exec -it -u www-data nextcloud-nextcloud php occ app:update --all
+    cronjob_command:  docker exec -it -u www-data nextcloud-nextcloud php occ app:update --all --no-interaction
     cronjob_user: "root"
     cronjob_notification_avatar: "https://cdn.jsdelivr.net/gh/selfhst/icons/png/nextcloud.png"
     cronjob_notification_as: Nextcloud App Update (daily)

@@ -5,7 +5,6 @@ dependencies:
   - role: auth
   - role: docmost
   - role: heyform
-  - role: linkding
   - role: mealie
   - role: nextcloud
   - role: paperless
