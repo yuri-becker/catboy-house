@@ -115,6 +115,7 @@ identity_providers:
         all:
             id_token: ['groups', 'email', 'email_verified', 'alt_emails', 'preferred_username', 'name']
 
+    clients:
       - client_id: "{{ paperless_authelia_client_id }}"
         client_name: "Paperless"
         client_secret: "{{ paperless_authelia_client_secret_digest }}"
