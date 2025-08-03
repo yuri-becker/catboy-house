@@ -190,24 +190,6 @@ identity_providers:
         userinfo_signed_response_alg: "none"
         token_endpoint_auth_method: "client_secret_basic"
 
-      - client_id: "{{ docmost_authelia_client_id }}"
-        client_name: "Docmost"
-        client_secret: "{{ docmost_authelia_client_secret_digest }}"
-        public: false
-        authorization_policy: "two_factor"
-        grant_types:
-          - authorization_code
-        redirect_uris:
-          - "{{ docmost_authelia_redirect_uri }}"
-        claims_policy: 'all'
-        scopes:
-          - 'openid'
-          - 'profile'
-          - 'email'
-          - 'groups'
-        userinfo_signed_response_alg: 'none'
-        token_endpoint_auth_method: 'client_secret_basic'
-
       - client_id: "{{ choretrackerthing_authelia_client_id }}"
         client_name: "Chore Tracker Thing"
         client_secret: "{{ choretrackerthing_authelia_client_digest }}"
@@ -221,24 +203,6 @@ identity_providers:
         scopes:
           - "openid"
           - "groups"
-          - "profile"
-        userinfo_signed_response_alg: "none"
-        token_endpoint_auth_method: "client_secret_basic"
-
-      - client_id: "{{ romm_authelia_client_id }}"
-        client_name: "RomM"
-        client_secret: "{{ romm_authelia_client_digest }}"
-        public: false
-        authorization_policy: "two_factor"
-        grant_types:
-          - authorization_code
-        redirect_uris:
-          - "https://{{ romm_domain }}/api/oauth/openid"
-        claims_policy: 'all'
-        scopes:
-          - "openid"
-          - "groups"
-          - "email"
           - "profile"
         userinfo_signed_response_alg: "none"
         token_endpoint_auth_method: "client_secret_basic"

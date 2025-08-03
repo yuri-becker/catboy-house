@@ -24,7 +24,7 @@
 
 - name: 👤 Grants privileges to user
   community.postgresql.postgresql_privs:
-    db: "{{ docmost_db_name }}"
+    login_db: "{{ docmost_db_name }}"
     roles: "{{ docmost_db_user }}"
     grant_option: false
     type: schema

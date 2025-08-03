@@ -2,4 +2,4 @@
 # meta file for roles/romm
 dependencies:
   - role: set_docker_gateway
-  - role: auth
+  - role: pocketid
