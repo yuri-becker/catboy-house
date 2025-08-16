@@ -6,4 +6,6 @@ cronjob_complete_command: >-
   --name '{{ cronjob_notification_as }}'
   --webhook-id '{{ notifications_webhook_id }}'
   --webhook-token '{{ notifications_webhook_token }}'
+  {% if cronjob_dont_notify_if is defined %} --dont-notify-if '{{ cronjob_dont_notify_if }}' {% endif %}
+  --always-ping {{ cronjob_always_ping }}
   --command '{{ cronjob_command }}'

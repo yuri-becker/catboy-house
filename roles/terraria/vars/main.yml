@@ -1,6 +1,7 @@
 ---
 terraria_build_command: >-
   docker build
+  --quiet
   --pull
   --tag {{ terraria_image_name }}
   {{ terraria_sources }}/tshock

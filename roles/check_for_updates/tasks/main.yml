@@ -17,3 +17,5 @@
     cronjob_user: root
     cronjob_notification_avatar: "https://cdn.jsdelivr.net/gh/selfhst/icons/png/debian.png"
     cronjob_notification_as: apt (daily)
+    cronjob_dont_notify_if: "^\\s*$"
+    cronjob_always_ping: true

@@ -1,3 +1,4 @@
 ---
 # defaults for cronjob
 cronjob_script_path: /usr/local/bin/cronjob-with-notification.py
+cronjob_always_ping: "false"
