@@ -1,0 +1,28 @@
+server:
+  accept-license: accept
+  database:
+    plugin: mariadb
+    sql-path: "{{ teamspeak_pwd }}/sql/"
+    sql-create-path: "{{ teamspeak_pwd }}/sql/create_mariadb"
+    client-keep-days: 30
+    config:
+      skip-integrity-check: 0
+      host: "{{ docker_gateway }}"
+      port: {{ mariadb_port }}
+      timeout: 10
+      name: "{{ teamspeak_database }}"
+      username: "{{ teamspeak_user }}"
+      password: "{{ teamspeak_db_password }}"
+      connections: 10
+      log-queries: 0
+
+  query:
+    ssh:
+      enable: 0
+    http:
+      enable: 1
+      port: 10080
+      ip:
+        - 127.0.0.1
+    https:
+      enable: 0

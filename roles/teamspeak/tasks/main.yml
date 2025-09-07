@@ -1,0 +1,119 @@
+---
+# tasks for teamspeak
+
+- name: 👤 Creates User
+  ansible.builtin.user:
+    state: present
+    name: "{{ teamspeak_user }}"
+    uid: "{{ teamspeak_uid }}"
+    create_home: true
+    home: "{{ teamspeak_path }}"
+    group: "{{ app_gid }}"
+  become: true
+
+- name: 👤 Creates database
+  mysql_db:
+    name: "{{ teamspeak_database }}"
+  become: true
+
+- name: 👤 Creates database user
+  mysql_user:
+    name: "{{ teamspeak_user }}"
+    password: "{{ teamspeak_db_password }}"
+    priv:
+      "teamspeak.*": ALL
+      "*.*": USAGE
+    host: "catboy-house"
+  become: true
+
+#- name: ⬇️ Downloads Server
+#  fetch:
+#    src: "https://github.com/teamspeak/teamspeak6-server/releases/download/v6.0.0%2Fbeta6/teamspeak-server_linux_amd64-v6.0.0-beta6.tar.bz2"
+#    dest: "{{ teamspeak_tarball }}"
+#  become: true
+#  become_user: "{{ teamspeak_user }}"
+#
+#- name: Extracts server
+#  unarchive:
+#    src: "{{ teamspeak_tarball }}"
+#    dest: "{{ teamspeak_pwd }}"
+#  become: true
+#  become_user: "{{ teamspeak_user }}"
+#  notify: restart teamspeak
+
+- name: ⚙️ Marks server as executable
+  file:
+    path: "{{ teamspeak_pwd }}/tsserver"
+    mode: "0755"
+
+- name: ⬆️ Pushes systemd service
+  ansible.builtin.template:
+    src: teamspeak.service.j2
+    dest: "/etc/systemd/system/{{ teamspeak_service }}.service"
+    mode: "0755"
+  become: true
+
+- name: ⬆️ Pushes config
+  ansible.builtin.template:
+    src: tsserver.yaml.j2
+    dest: "{{ teamspeak_path }}/tsserver.yaml"
+    mode: "0700"
+  become: true
+  become_user: "{{ teamspeak_user }}"
+  notify: restart teamspeak
+
+- name: ⚙️ Makes voice port accessible
+  iptables:
+    chain: INPUT
+    destination_port: "9987"
+    protocol: udp
+    jump: ACCEPT
+  become: true
+
+- name: ⚙️ Makes file port accessible
+  iptables:
+    chain: INPUT
+    destination_port: "30033"
+    protocol: tcp
+    jump: ACCEPT
+  become: true
+
+- name: 🚀 Enables Systemd Service
+  ansible.builtin.systemd_service:
+    name: "{{ teamspeak_service }}"
+    enabled: true
+    state: started
+  become: true
+
+- name: ⬇️ Downloads Status Bot
+  git:
+    dest: "{{ teamspeak_status_bot_src }}"
+    repo: https://github.com/yuri-becker/teamspeak-status-bot.git
+    refspec: main
+    single_branch: true
+    update: true
+  become: true
+  become_user: "{{ teamspeak_user }}"
+
+- name: 🔨 Builds bot
+  community.docker.docker_image_build:
+    path: "{{ teamspeak_status_bot_src }}"
+    name: discord-status-bot
+    outputs:
+      - type: local
+        dest: "{{ teamspeak_path }}"
+  become: true
+
+- name: ⬆️ Pushes Bot service
+  ansible.builtin.template:
+    src: teamspeak-status-bot.service.j2
+    dest: "/etc/systemd/system/{{ teamspeak_status_bot_service }}.service"
+    mode: "0755"
+  become: true
+
+- name: 🚀 Enables Systemd Service
+  ansible.builtin.systemd_service:
+    name: "{{ teamspeak_status_bot_service }}"
+    enabled: true
+    state: started
+  become: true

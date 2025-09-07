@@ -1,0 +1,19 @@
+[Unit]
+Description=TeamSpeak Status Bot
+After=syslog.target network.target mariadb.service
+
+[Service]
+Type=simple
+User={{ teamspeak_user }}
+StandardOutput=journal
+StandardError=journal
+WorkingDirectory={{ teamspeak_path }}
+ExecStart={{ teamspeak_path }}/teamspeak-status-bot
+Environment="TSSTATUSBOT_DISCORD_TOKEN={{ teamspeak_bot_discord_token }}"
+Environment="TSSTATUSBOT_WEBQUERY_ENDPOINT=http://127.0.0.1:10080"
+Environment="TSSTATUSBOT_WEBQUERY_API_KEY={{ teamspeak_webquery_api_key }}"
+Environment="TSSTATUSBOT_VIRTUALSERVER_ID=1"
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

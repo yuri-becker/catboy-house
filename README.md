@@ -107,6 +107,7 @@ Task names are prefixed with specific emojis to make the output and nature of th
 * 📂 are folder creations.
 * ⬆️ for file/template copying.
 * ⬇️ for downloads/clones.
+* ⚙️ are configuration changes.
 * 🔨 for build tasks.
 * 📦 are package installations.
 * 👤 are user and group creations.

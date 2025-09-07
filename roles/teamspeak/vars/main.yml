@@ -1,0 +1,2 @@
+---
+teamspeak_tarball: "{{ teamspeak_path }}/teamspeak-server.tar.bz2"

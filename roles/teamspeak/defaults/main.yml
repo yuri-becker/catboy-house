@@ -1,0 +1,9 @@
+---
+teamspeak_user: teamspeak
+teamspeak_path: "{{ services_path_2 }}/teamspeak"
+teamspeak_container: teamspeak
+teamspeak_database: teamspeak
+teamspeak_service: teamspeak
+teamspeak_pwd: "{{ teamspeak_path }}/bin"
+teamspeak_status_bot_src: "{{ teamspeak_path }}/teamspeak-status-bot"
+teamspeak_status_bot_service: teamspeak-status-bot

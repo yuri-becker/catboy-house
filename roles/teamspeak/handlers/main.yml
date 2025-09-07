@@ -1,0 +1,13 @@
+---
+- name: 🚀 Reloads Daemon
+  listen: restart teamspeak
+  ansible.builtin.systemd_service:
+    name: "{{ teamspeak_service }}"
+    daemon_reload: true
+  become: true
+- name: 🚀 Restarts Teamspeak
+  listen: restart teamspeak
+  ansible.builtin.systemd_service:
+    name: "{{ teamspeak_service }}"
+    state: restarted
+  become: true
