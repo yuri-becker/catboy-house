@@ -1,8 +1,8 @@
 networks:
   "{{ arr_network }}":
     name: "{{ arr_network }}"
-  "{{ seedbox_slskd_network }}":
-    name: "{{ seedbox_slskd_network }}"
+  "{{ seedbox_external_network }}":
+    name: "{{ seedbox_external_network }}"
     external: true
 
 services:
@@ -97,7 +97,7 @@ services:
       - "{{ arr_network }}"
     ports:
       - "{{ docker_gateway }}:{{ arr_lidarr_port}}:8686"
-    volumes:
+\    volumes:
       - "{{ arr_volume_lidarr }}:/config"
       - "{{ music_path }}:/music"
       - "{{ downloads_music_path }}:/downloads"
@@ -113,7 +113,7 @@ services:
 ##    restart: unless-stopped
 ##    networks:
 ##      - "{{ arr_network }}"
-##      - "{{ seedbox_slskd_network }}"
+##      - "{{ seedbox_external_network }}"
 ##    user: "{{ app_uid }}:{{ app_gid }}"
 ##    volumes:
 ##      - "{{ downloads_music_path }}:/downloads"

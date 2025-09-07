@@ -10,8 +10,8 @@ networks:
   "{{ monitoring_prom_network }}":
     name: "{{ monitoring_prom_network }}"
     external: true
-  "{{ seedbox_slskd_network }}":
-    name: "{{ seedbox_slskd_network }}"
+  "{{ seedbox_external_network }}":
+    name: "{{ seedbox_external_network }}"
     external: true
 services:
   gluetun:
@@ -31,7 +31,7 @@ services:
     networks:
       - "{{ seedbox_network_name }}"
       - "{{ monitoring_prom_network }}"
-      - "{{ seedbox_slskd_network }}"
+      - "{{ seedbox_external_network }}"
     volumes:
       - "{{ seedbox_volume_gluetun }}:/gluetun"
     environment:

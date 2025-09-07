@@ -2,6 +2,7 @@
 # Fixed Ports (default for usability/simplicity)
 mariadb_port: 3306
 terraria_port: 7777
+teamspeak_voice_port: 9987
 satisfactory_server_game_port: "28001"
 satisfactory_server_messaging_port: "28000"
 
@@ -26,6 +27,8 @@ pyload_port: 29158
 navidrome_port: 29159
 
 pocketid_port: 29000
+
+teamspeak_file_port: 30033
 
 jellyfin_port: 30212
 seedbox_slskd_port: 30213

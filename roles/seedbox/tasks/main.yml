@@ -40,7 +40,7 @@
 
 - name: 👤 Creates slskd network
   community.docker.docker_network:
-    name: "{{ seedbox_slskd_network }}"
+    name: "{{ seedbox_external_network }}"
     state: present
 
 - name: 🚀 Starts container stack

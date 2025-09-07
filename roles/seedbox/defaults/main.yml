@@ -13,4 +13,4 @@ seedbox_slskd_name: "{{ seedbox_container_prefix }}-slskd"
 seedbox_network_name: seedbox-network
 seedbox_slskd_up_speedlimit_kib: 102400
 seedbox_slskd_down_speedlimit_kib: 4096000
-seedbox_slskd_network: "{{ seedbox_container_prefix }}-slskd-network"
+seedbox_external_network: "{{ seedbox_container_prefix }}-slskd-network"

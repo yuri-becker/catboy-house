@@ -112,3 +112,6 @@
 
     - role: yamtrack
       tags: yamtrack
+
+    - role: teamspeak
+      tags: teamspeak
