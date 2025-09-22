@@ -98,7 +98,7 @@
 - name: 🔨 Builds bot
   community.docker.docker_image_build:
     path: "{{ teamspeak_status_bot_src }}"
-    name: discord-status-bot
+    name: teamspeak-status-bot
     outputs:
       - type: local
         dest: "{{ teamspeak_path }}"

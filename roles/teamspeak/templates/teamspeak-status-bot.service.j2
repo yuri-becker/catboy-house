@@ -8,7 +8,7 @@ User={{ teamspeak_user }}
 StandardOutput=journal
 StandardError=journal
 WorkingDirectory={{ teamspeak_path }}
-ExecStart={{ teamspeak_path }}/teamspeak-status-bot
+ExecStart={{ teamspeak_status_bot_bin }}
 Environment="TSSTATUSBOT_DISCORD_TOKEN={{ teamspeak_bot_discord_token }}"
 Environment="TSSTATUSBOT_WEBQUERY_ENDPOINT=http://127.0.0.1:10080"
 Environment="TSSTATUSBOT_WEBQUERY_API_KEY={{ teamspeak_webquery_api_key }}"
