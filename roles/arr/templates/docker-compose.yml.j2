@@ -97,7 +97,7 @@ services:
       - "{{ arr_network }}"
     ports:
       - "{{ docker_gateway }}:{{ arr_lidarr_port}}:8686"
-\    volumes:
+    volumes:
       - "{{ arr_volume_lidarr }}:/config"
       - "{{ music_path }}:/music"
       - "{{ downloads_music_path }}:/downloads"
@@ -106,23 +106,22 @@ services:
       PUID: "{{ app_uid }}"
       PGID: "{{ app_gid }}"
 
-##  Disabled until https://github.com/Lidarr/Lidarr/issues/5498 is fixed.
-##  soularr:
-##    image: mrusse08/soularr:latest
-##    container_name: "{{ arr_soularr_container_name }}"
-##    restart: unless-stopped
-##    networks:
-##      - "{{ arr_network }}"
-##      - "{{ seedbox_external_network }}"
-##    user: "{{ app_uid }}:{{ app_gid }}"
-##    volumes:
-##      - "{{ downloads_music_path }}:/downloads"
-##      - "{{ arr_volume_soularr }}:/data"
-##    environment:
-##      TZ: "{{ ansible_date_time.tz }}"
-##      PUID: "{{ app_uid }}"
-##      PGID: "{{ app_gid }}"
-##      SCRIPT_INTERVAL: 30
+  soularr:
+    image: mrusse08/soularr:latest
+    container_name: "{{ arr_soularr_container_name }}"
+    restart: unless-stopped
+    networks:
+      - "{{ arr_network }}"
+      - "{{ seedbox_external_network }}"
+    user: "{{ app_uid }}:{{ app_gid }}"
+    volumes:
+      - "{{ downloads_music_path }}:/downloads"
+      - "{{ arr_volume_soularr }}:/data"
+    environment:
+      TZ: "{{ ansible_date_time.tz }}"
+      PUID: "{{ app_uid }}"
+      PGID: "{{ app_gid }}"
+      SCRIPT_INTERVAL: 30
 
   lidify:
     image: thewicklowwolf/lidify:latest
