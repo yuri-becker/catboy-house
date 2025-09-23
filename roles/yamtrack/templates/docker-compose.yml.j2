@@ -34,7 +34,7 @@ services:
       REGISTRATION: "{{ yamtrack_allow_registration }}"
       WEB_CONCURRENCY: "{{ yamtrack_web_processes }}"
       SOCIAL_PROVIDERS: "{{ yamtrack_social_providers }}"
-      SOCIALACCOUNT_PROVIDERS: '{{ yamtrack_socialaccount_providers | tojson}}'
+      SOCIALACCOUNT_PROVIDERS: {{ yamtrack_socialaccount_providers | tojson}}
 
       # Database
       DB_HOST: "{{ postgres_hostname }}"
