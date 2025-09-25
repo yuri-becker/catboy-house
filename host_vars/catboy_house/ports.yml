@@ -1,7 +1,6 @@
 ---
 # Fixed Ports (default for usability/simplicity)
 mariadb_port: 3306
-terraria_port: 7777
 teamspeak_voice_port: 9987
 satisfactory_server_game_port: "28001"
 satisfactory_server_messaging_port: "28000"
