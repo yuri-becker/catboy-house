@@ -1,0 +1,95 @@
+---
+- name: 👤 Creates User
+  ansible.builtin.user:
+    state: present
+    name: "{{ donetick_user }}"
+    uid: "{{ donetick_uid }}"
+    home: "{{ donetick_home }}"
+    create_home: true
+    group: "{{ app_gid }}"
+  become: true
+
+- name: 👤 Creates database
+  community.postgresql.postgresql_db:
+    name: "{{ donetick_db }}"
+    state: present
+
+- name: 👤 Creates database user
+  community.postgresql.postgresql_user:
+    login_db: "{{ donetick_db }}"
+    name: "{{ donetick_user }}"
+    password: "{{ donetick_db_password }}"
+    state: present
+
+- name: 👤 Grants privileges to user
+  community.postgresql.postgresql_privs:
+    login_db: "{{ donetick_db }}"
+    roles: "{{ donetick_user }}"
+    grant_option: false
+    type: schema
+    obj: public
+    privs: ALL
+
+- name: 📂 Creates Volumes
+  ansible.builtin.file:
+    path: "{{ donetick_data }}"
+    state: directory
+    mode: "0700"
+    owner: "{{ donetick_user }}"
+    group: "{{ app_gid }}"
+  become: true
+
+- name: 🚀 Starts container
+  community.docker.docker_container:
+    name: "{{ donetick_container }}"
+    image: donetick/donetick
+    user: "{{ donetick_uid }}:{{ app_gid }}"
+    state: started
+    restart_policy: unless-stopped
+    ports:
+      - "{{ docker_gateway }}:{{ donetick_port }}:{{ donetick_port }}"
+    networks:
+      - name: "{{ postgres_network }}"
+    volumes:
+      - "{{ donetick_data }}:/data"
+    env:
+      DT_ENV: selfhosted
+      DT_NAME: selfhosted
+      DT_IS_DONE_TICK_DOT_COM: "false"
+      DT_IS_USER_CREATION_DISABLED: "false"
+      DT_DATABASE_TYPE: postgres
+      DT_DATABASE_HOST: "{{ postgres_hostname }}"
+      DT_DATABASE_PORT: "5432"
+      DT_DATABASE_USER: "{{ donetick_user }}"
+      DT_DATABASE_PASSWORD: "{{ donetick_db_password }}"
+      DT_DATABASE_NAME: "{{ donetick_db }}"
+      DT_DATABASE_LOGGER: "warn"
+      DT_JWT_SECRET: "{{ donetick_jwt_secret }}"
+      DT_JWT_SESSION_TIME: 168h
+      DT_JWT_MAX_REFRESH: 168h
+      DT_SERVER_CORS_ALLOW_ORIGINS: "https://{{ donetick_domain }},https://localhost,capacitor://localhost"
+      DT_SERVER_PORT: "{{ donetick_port | string }}"
+      DT_SERVER_SERVE_FRONTEND: "true"
+      DT_SCHEDULER_JOBS_DUE_JOB: 30m
+      DT_SCHEDULER_JOBS_OVERDUE_JOB: 3h
+      DT_SCHEDULER_JOBS_PRE_DUE_JOB: 3h
+#      DT_EMAIL_HOST=
+#      DT_EMAIL_PORT=
+#      DT_EMAIL_KEY=
+#      DT_EMAIL_EMAIL=
+#      DT_EMAIL_APP_HOST=
+      DT_OAUTH2_CLIENT_ID: "{{ donetick_oidc_client_id }}"
+      DT_OAUTH2_CLIENT_SECRET: "{{ donetick_oidc_client_secret }}"
+      DT_OAUTH2_AUTH_URL: "{{ pocketid_auth_url }}"
+      DT_OAUTH2_TOKEN_URL: "{{ pocketid_token_url }}"
+      DT_OAUTH2_USER_INFO_URL: "{{ pocketid_userinfo_url }}"
+      DT_OAUTH2_NAMEL: catboy.house account
+#      DT_OAUTH2_REDIRECT_URL: "https://id.catboy.house/api/oidc/end-session"
+
+- name: ⬆️ Pushes Caddy config
+  ansible.builtin.template:
+    src: donetick.caddy.j2
+    dest: "{{ caddy_sites }}/donetick.caddy"
+    mode: "0770"
+    group: "{{ app_gid }}"
+  notify: reload caddy

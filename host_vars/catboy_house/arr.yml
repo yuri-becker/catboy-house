@@ -5,7 +5,6 @@ arr_prowlarr_domain: prowlarr.{{ root_domain }}
 arr_bazarr_domain: bazarr.{{ root_domain }}
 arr_jellyseerr_domain: jellyseerr.{{ root_domain }}
 arr_lidarr_domain: lidarr.{{ root_domain }}
-arr_lidify_domain: lidify.{{ root_domain }}
 arr_lidarr_api_key: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   34666630326637393030643266626562393865636563623066666266376639663966393365646664

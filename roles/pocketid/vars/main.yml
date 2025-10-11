@@ -10,3 +10,6 @@ pocketid_oidc2proxy_common_options: >-
   --custom-sign-in-logo -
   --footer -
   --banner -
+pocketid_auth_url: "{{ pocketid_url }}/authorize"
+pocketid_token_url: "{{ pocketid_url }}/api/oidc/token"
+pocketid_userinfo_url: "{{ pocketid_url }}/api/oidc/userinfo"

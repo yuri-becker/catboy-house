@@ -1,0 +1,5 @@
+---
+dependencies:
+  - role: set_docker_gateway
+  - role: pocketid
+  - role: postgres

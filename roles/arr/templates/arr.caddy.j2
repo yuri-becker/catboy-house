@@ -37,10 +37,3 @@
     import logging {{ arr_lidarr_domain }}
     reverse_proxy {{ docker_gateway }}:{{ arr_lidarr_port }}
 }
-
-{{ arr_lidify_domain }} {
-    import common-headers
-    import logging {{ arr_lidify_domain }}
-    import forward-auth {{ docker_gateway }}:{{ auth_authelia_port }}
-    reverse_proxy {{ docker_gateway }}:{{ arr_lidify_port }}
-}

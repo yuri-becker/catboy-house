@@ -112,3 +112,6 @@
 
     - role: teamspeak
       tags: teamspeak
+
+    - role: donetick
+      tags: donetick

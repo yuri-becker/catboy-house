@@ -1,0 +1,8 @@
+---
+donetick_user: donetick
+donetick_home: "{{ services_path_2 }}/donetick"
+donetick_data: "{{ donetick_home }}/data"
+donetick_config: "{{ donetick_home }}/config"
+donetick_domain: "todo.{{ root_domain }}"
+donetick_container: "donetick"
+donetick_db: donetick
