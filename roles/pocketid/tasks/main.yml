@@ -52,8 +52,7 @@
       - "{{ pocketid_volume_data }}:/app/data"
     networks:
       - name: "{{ postgres_network }}"
-      - name: "{{ monitoring_prom_network }}"
-        aliases: ["{{ pocketid_hostname }}"]
+
     env:
       APP_NAME: "catboy.house account~"
       ACCENT_COLOR: "#7287fd"
@@ -78,9 +77,6 @@
       EMAIL_LOGIN_NOTIFICATION_ENABLED: "true"
       EMAIL_ONE_TIME_ACCESS_AS_ADMIN_ENABLED: "true"
       EMAIL_API_KEY_EXPIRATION_ENABLED: "true"
-      METRICS_ENABLED: "true"
-      OTEL_METRICS_EXPORTER: prometheus
-      OTEL_EXPORTER_PROMETHEUS_PORT: "{{ pocketid_metrics_port }}"
     healthcheck:
       test: ["CMD", "/app/pocket-id", "healthcheck"]
       interval: 1m30s

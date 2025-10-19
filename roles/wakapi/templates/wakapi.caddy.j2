@@ -1,5 +1,5 @@
 {{ wakapi_domain }} {
 	import common-headers
-    import logging {{ wakapi_domain }}
+    import logging 
     reverse_proxy {{ docker_gateway }}:{{ wakapi_port }}
 }

@@ -1,6 +1,6 @@
 {{ romm_domain }} {
     import common-headers
-    import logging {{ romm_domain }}
+    import logging
     encode zstd gzip
     reverse_proxy {{ docker_gateway }}:{{ romm_port }}
 }

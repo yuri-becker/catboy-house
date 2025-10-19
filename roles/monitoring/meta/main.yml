@@ -1,4 +1,0 @@
----
-# meta file for roles/monitoring
-dependencies:
-  - role: docker

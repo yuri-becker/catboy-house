@@ -50,9 +50,6 @@
     - role: check_for_updates
       tags: check_for_updates
 
-    - role: monitoring
-      tags: monitoring
-
     - role: paperless
       tags: paperless
 
@@ -64,9 +61,6 @@
 
     - role: romm
       tags: romm
-
-    - role: pyload
-      tags: pyload
 
     - role: jellyfin
       tags: jellyfin

@@ -1,5 +1,5 @@
 {{ donetick_domain }} {
 	import common-headers
-    import logging {{ donetick_domain }}
+    import logging
     reverse_proxy {{ docker_gateway }}:{{ donetick_port }}
 }

@@ -1,5 +1,5 @@
 {{ paperless_domain }} {
 	import common-headers
-    import logging {{ paperless_domain }}
+    import logging
     reverse_proxy {{ docker_gateway }}:{{ paperless_port }}
 }

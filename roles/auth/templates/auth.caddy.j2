@@ -1,12 +1,12 @@
 {{ auth_lldap_domain }} {
 	import common-headers
-    import logging {{ auth_lldap_domain }}
-    import forward-auth {{ docker_gateway }}:{{ auth_authelia_port }}
+  import logging 
+  import forward-auth {{ docker_gateway }}:{{ auth_authelia_port }}
 	reverse_proxy {{ docker_gateway }}:{{ auth_lldap_port }}
 }
 
 {{ auth_authelia_domain }} {
 	import common-headers
-    import logging {{ auth_authelia_domain }}
+  import logging 
 	reverse_proxy {{ docker_gateway }}:{{ auth_authelia_port }}
 }

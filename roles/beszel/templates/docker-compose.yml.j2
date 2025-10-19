@@ -11,6 +11,8 @@ services:
       - "{{ beszel_socket }}:/beszel_socket"
     environment:
       DISABLE_PASSWORD_AUTH: true
+      SHARE_ALL_SYSTEMS: true
+      USER_CREATION: true
     healthcheck:
       test: ['CMD', '/beszel', 'health', '--url', 'http://localhost:8090']
       start_period: 20s 

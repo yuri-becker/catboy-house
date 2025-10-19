@@ -7,9 +7,6 @@ networks:
       config:
       - subnet: 172.80.10.0/24
         gateway: 172.80.10.1
-  "{{ monitoring_prom_network }}":
-    name: "{{ monitoring_prom_network }}"
-    external: true
   "{{ seedbox_external_network }}":
     name: "{{ seedbox_external_network }}"
     external: true
@@ -30,7 +27,6 @@ services:
       - "{{ docker_gateway }}:{{ seedbox_slskd_port }}:{{ seedbox_slskd_port }}"
     networks:
       - "{{ seedbox_network_name }}"
-      - "{{ monitoring_prom_network }}"
       - "{{ seedbox_external_network }}"
     volumes:
       - "{{ seedbox_volume_gluetun }}:/gluetun"
@@ -58,18 +54,6 @@ services:
       TZ: "{{ ansible_date_time.tz }}"
       DELUGE_LOGLEVEL: "debug"
       WEBUI_PORT: "{{ seedbox_qbittorrent_port }}"
-    network_mode: "service:gluetun"
-
-  prom_exporter:
-    image: ghcr.io/esanchezm/prometheus-qbittorrent-exporter
-    container_name: "{{ seedbox_gluetun_prom_exporter_name }}"
-    depends_on:
-      - qbittorrent
-    environment:
-      QBITTORRENT_HOST: "localhost"
-      QBITTORRENT_PORT: "{{ seedbox_qbittorrent_port }}"
-      QBITTORRENT_SSL: false
-      EXPORTER_PORT: "{{ seedbox_promex_port }}"
     network_mode: "service:gluetun"
 
   slskd:

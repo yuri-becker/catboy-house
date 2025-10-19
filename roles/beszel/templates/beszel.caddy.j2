@@ -1,6 +1,6 @@
 {{ beszel_domain }} {
-    import logging {{ beszel_domain }}
-   	request_body {
+    import logging
+    request_body {
         max_size 10MB
 	  }
     reverse_proxy {{ docker_gateway }}:{{ beszel_port }}

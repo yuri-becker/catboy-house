@@ -1,5 +1,5 @@
 {{ seedbox_qbittorrent_domain }} {
-    import logging {{ seedbox_qbittorrent_domain }}
+    import logging
 
     forward_auth {{ docker_gateway }}:{{ auth_authelia_port }} {
         header_up Host {upstream_hostport}
@@ -15,7 +15,7 @@
 }
 
 {{ seedbox_slskd_domain }} {
-    import logging {{ seedbox_slskd_domain }}
+    import logging
 
     forward_auth {{ docker_gateway }}:{{ auth_authelia_port }} {
         header_up Host {upstream_hostport}

@@ -8,7 +8,6 @@ seedbox_volume_slskd: "{{ seedbox_service_path }}/volumes/slskd"
 seedbox_container_prefix: seedbox
 seedbox_qbittorrent_container_name: "{{ seedbox_container_prefix }}-qbittorrent"
 seedbox_gluetun_container_name: "{{ seedbox_container_prefix }}-gluetun"
-seedbox_gluetun_prom_exporter_name: "{{ seedbox_container_prefix }}-prom-exporter"
 seedbox_slskd_name: "{{ seedbox_container_prefix }}-slskd"
 seedbox_network_name: seedbox-network
 seedbox_slskd_up_speedlimit_kib: 102400
