@@ -32,6 +32,9 @@
       remove_orphans: true
 
   roles:
+    - role: beszel
+      tags: beszel
+
     - role: caddy
       tags: caddy
 
@@ -104,9 +107,6 @@
     - role: satisfactory
       tags: satisfactory
 
-    - role: writefreely
-      tags: writefreely
-
     - role: yamtrack
       tags: yamtrack
 
@@ -115,3 +115,6 @@
 
     - role: donetick
       tags: donetick
+
+    - role: beszel
+      tags: beszel

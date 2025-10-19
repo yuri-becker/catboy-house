@@ -1,6 +1,6 @@
 ---
 # vars for cronjob
-cronjob_complete_command: >- 
+cronjob_complete_command: >-
   '{{ cronjob_script_path }}'
   --avatar '{{ cronjob_notification_avatar }}'
   --name '{{ cronjob_notification_as }}'

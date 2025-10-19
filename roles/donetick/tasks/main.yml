@@ -73,11 +73,11 @@
       DT_SCHEDULER_JOBS_DUE_JOB: 30m
       DT_SCHEDULER_JOBS_OVERDUE_JOB: 3h
       DT_SCHEDULER_JOBS_PRE_DUE_JOB: 3h
-#      DT_EMAIL_HOST=
-#      DT_EMAIL_PORT=
-#      DT_EMAIL_KEY=
-#      DT_EMAIL_EMAIL=
-#      DT_EMAIL_APP_HOST=
+      #      DT_EMAIL_HOST=
+      #      DT_EMAIL_PORT=
+      #      DT_EMAIL_KEY=
+      #      DT_EMAIL_EMAIL=
+      #      DT_EMAIL_APP_HOST=
       DT_OAUTH2_CLIENT_ID: "{{ donetick_oidc_client_id }}"
       DT_OAUTH2_CLIENT_SECRET: "{{ donetick_oidc_client_secret }}"
       DT_OAUTH2_AUTH_URL: "{{ pocketid_auth_url }}"

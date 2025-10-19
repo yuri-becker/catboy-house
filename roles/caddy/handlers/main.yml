@@ -14,7 +14,7 @@
 
 - name: 🚀 Reloads caddy
   listen: reload caddy
-  systemd:
+  ansible.builtin.systemd:
     name: caddy
     state: reloaded
   changed_when: true

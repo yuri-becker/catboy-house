@@ -37,10 +37,10 @@
       - docker
   become: true
 
-
-- include_role:
+- name: ⚙️ Sets up Cronjob
+  ansible.builtin.include_role:
     name: cronjob
-    public: no
+    public: false
   vars:
     cronjob_name: docker prune
     cronjob_special_time: weekly
@@ -48,3 +48,12 @@
     cronjob_user: "{{ docker_build_user }}"
     cronjob_notification_avatar: "https://cdn.jsdelivr.net/gh/selfhst/icons/png/docker.png"
     cronjob_notification_as: Docker Prune (weekly)
+
+- name: 🔎 Inspect Docker Bridge Network
+  community.docker.docker_network_info:
+    name: bridge
+  register: docker_bridge_network_info
+
+- name: 💾 Sets docker_gateway fact
+  ansible.builtin.set_fact:
+    docker_gateway: "{{ docker_bridge_network_info.network.IPAM.Config[0].Gateway }}"

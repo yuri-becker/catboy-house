@@ -77,23 +77,19 @@ ansible-vault encrypt_string '<password>' --name ansible_become_pass > host_vars
 
 **Running all Playbooks**
 ```sh
-./run.sh
+just run
 ```
 **Running tasks with specific tags**
 ```sh
-./run.sh --tags <tags> 
-```
-**Running single Playbooks**
-```sh
-ansible-playbook -i inventory.yml <playbook>
+just run <tags> 
 ```
 **Linting**
 ```sh
-ansible-lint
+just lint
 ```
 **Encrypting variables**
 ```sh
-ansible-vault encrypt_string <string> --name <var-name>
+just vault-decrypt <keys> <value> <file>
 ```
 
 ## Code conventions

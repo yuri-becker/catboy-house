@@ -1,0 +1,10 @@
+---
+beszel_domain: mon.{{ root_domain }}
+beszel_container_prefix: beszel
+beszel_hub_container: "{{ beszel_container_prefix }}-hub"
+beszel_agent_container: "{{ beszel_container_prefix }}-agent"
+beszel_path: "{{ services_path_2 }}/beszel"
+beszel_socket: "{{ beszel_path }}/beszel.sock"
+beszel_data_hub: "{{ beszel_path }}/var/hub"
+beszel_data_agent: "{{ beszel_path }}/var/agent"
+beszel_user: beszel

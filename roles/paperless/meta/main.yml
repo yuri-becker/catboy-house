@@ -1,4 +1,4 @@
 ---
 # meta file for roles/paperless
 dependencies:
-  - role: set_docker_gateway
+  - role: docker

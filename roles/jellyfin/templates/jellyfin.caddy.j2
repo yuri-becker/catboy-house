@@ -1,5 +1,4 @@
 {{ jellyfin_domain }} {
 	import common-headers
-    import logging {{ jellyfin_domain }}
 	reverse_proxy {{ docker_gateway }}:{{ jellyfin_port }}
 }

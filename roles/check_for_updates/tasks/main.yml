@@ -1,5 +1,4 @@
 ---
-# tasks file for roles/unattended_upgrades
 - name: ⬆️ Pushes script
   ansible.builtin.copy:
     src: check_for_updates.sh
@@ -7,9 +6,10 @@
     mode: "0555"
   become: true
 
-- include_role:
+- name: ⚙️ Sets up Cronjob
+  ansible.builtin.include_role:
     name: cronjob
-    public: yes
+    public: true
   vars:
     cronjob_name: check for updates
     cronjob_special_time: daily

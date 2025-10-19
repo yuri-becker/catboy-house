@@ -11,21 +11,25 @@ auth_lldap_port: 27900
 auth_authelia_port: 27901
 
 wakapi_port: 28943
+# 28944
 paperless_port: 28945
 docmost_port: 28946
 search_port: 28947
+# 28949
 mealie_port: 28949
 nextcloud_port: 28950
 nextoffice_onlyoffice_port: 28951
 nextcloud_whiteboard_port: 28952
 woodpecker_port: 28953
 yamtrack_port: 28954
+# 28955
 romm_port: 29156
 stirlingpdf_port: 28957
 pyload_port: 29158
 navidrome_port: 29159
 
 pocketid_port: 29000
+beszel_port: 29001
 
 teamspeak_file_port: 30033
 
@@ -38,7 +42,8 @@ arr_prowlarr_port: 30217
 arr_bazarr_port: 30218
 arr_jellyseerr_port: 30219
 arr_lidarr_port: 30220
-writefreely_port: 30222
+# 30221
+# 30222
 donetick_port: 30223
 
 heyform_port: 30300

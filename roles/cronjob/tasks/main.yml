@@ -22,4 +22,3 @@
     user: "{{ cronjob_user }}"
     state: present
   become: true
-

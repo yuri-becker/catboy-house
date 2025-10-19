@@ -1,4 +1,0 @@
----
-# vars file for roles/writefreely
-writefreely_go: "{{ writefreely_service_path }}/go/bin/go{{ writefreely_go_version }}"
-writefreely_binary: "{{ writefreely_sources }}/cmd/writefreely/writefreely"
