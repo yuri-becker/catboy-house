@@ -6,7 +6,8 @@
     state: directory
     owner: "{{ app_uid }}"
     group: "{{ app_gid }}"
-    mode: "770"
+    mode: "775"
+    recurse: true
   loop:
     - "{{ music_path }}"
     - "{{ navidrome_volume_data }}"

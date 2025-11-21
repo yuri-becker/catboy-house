@@ -54,13 +54,15 @@ services:
     image: nextcloud:latest
     container_name: "{{ nextcloud_nextcloud_container_name }}"
     restart: unless-stopped
+    user: "{{ nextcloud_uid }}:{{ app_gid }}"
     depends_on:
       - mariadb
-      - keydb
+      - whiteboard
     ports:
       - "{{ docker_gateway }}:{{ nextcloud_port }}:80"
     volumes:
       - "{{ nextcloud_volume_nextcloud }}:/var/www/html"
+      - "{{ downloads_music_path }}:/music"
     networks:
       - default
       - "{{ auth_ldap_network }}"
@@ -69,7 +71,6 @@ services:
       MYSQL_DATABASE: nextcloud
       MYSQL_USER: "{{ nextcloud_mariadb_user }}"
       MYSQL_PASSWORD: "{{ nextcloud_mariadb_password }}"
-      REDIS_HOST: keydb
       SMTP_HOST: "{{ smtp_server }}"
       SMTP_PORT: "{{ smtp_port }}"
       SMTP_NAME: "{{ nextcloud_smtp_user }}"

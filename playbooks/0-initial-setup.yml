@@ -4,7 +4,12 @@
   roles:
     - role: set_up_play
       tags: set_up_play
+
     - role: create_admins
       tags: create_admins
+
+    - role: ssh
+      tags: ssh
+
     - role: docker
       tags: docker

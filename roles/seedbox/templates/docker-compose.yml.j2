@@ -65,6 +65,7 @@ services:
     volumes:
       - "{{ music_path }}:/music"
       - "{{ downloads_music_path }}:/downloads"
+      - "{{ downloads_music_incomplete }}:/incomplete"
       - "{{ seedbox_volume_slskd }}:/app"
     user: "{{ app_uid }}:{{ app_gid }}"
     environment:
@@ -73,7 +74,7 @@ services:
       SLSKD_NO_AUTH: "true"
       SLSKD_FILE_PERMISSION_MODE: "770"
       SLSKD_DOWNLOADS_DIR: "/downloads"
-      SLSKD_INCOMPLETE_DIR: "/downloads/incomplete"
+      SLSKD_INCOMPLETE_DIR: "/incomplete"
       SLSKD_REMOTE_FILE_MANAGEMENT: "false"
       SLSKD_SHARED_DIR: "[Music]/music"
       SLSKD_UPLOAD_SPEED_LIMIT: "{{ seedbox_slskd_up_speedlimit_kib }}"

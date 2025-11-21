@@ -26,19 +26,10 @@
     owner: "{{ nextcloud_uid }}"
     group: "{{ app_gid }}"
   loop:
+    - "{{ nextcloud_volume_nextcloud }}"
     - "{{ nextcloud_volume_mariadb }}"
-    - "{{ nextcloud_volume_keydb }}"
     - "{{ nextcloud_volume_onlyoffice }}"
     - "{{ nextcloud_volume_fonts }}"
-  become: true
-
-- name: 📂 Creates Nextcloud volume
-  ansible.builtin.file:
-    path: "{{ nextcloud_volume_nextcloud }}"
-    state: directory
-    mode: "0700"
-    owner: "33"
-    group: "{{ app_gid }}"
   become: true
 
 - name: ⬆️ Pushes compose file

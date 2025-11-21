@@ -1,0 +1,22 @@
+---
+- name: ⬆️ Pushes Config
+  ansible.builtin.template:
+    src: sshd_config.j2
+    dest: /etc/ssh/sshd_config
+    mode: "0644"
+    owner: root
+    group: root
+  become: true
+  notify: sshd config changed
+
+- name: ⚙️ Allow port
+  ansible.builtin.command: "ufw allow {{ sshd_port }}"
+  become: true
+  register: ufw_allow_sshd
+  changed_when: "'Rule added' in ufw_allow_sshd.stdout"
+
+- name: ⚙️ Disallow default ssh ports
+  ansible.builtin.command: "ufw deny 22"
+  become: true
+  register: ufw_deny_22
+  changed_when: "'Rule updated' in ufw_deny_22.stdout"

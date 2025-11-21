@@ -1,0 +1,21 @@
+---
+- name: ✅ Verifies sshd config
+  listen: sshd config changed
+  ansible.builtin.command: sshd -T
+  become: true
+  register: sshd_config_valid
+  when: true
+
+- name: ⛔ Aborts playbook
+  listen: sshd config changed
+  ansible.builtin.fail:
+    msg: sshd configuration is not valid
+  when: sshd_config_valid is failed
+
+- name: 🚀 Reloads sshd
+  listen: sshd config changed
+  ansible.builtin.systemd:
+    name: sshd
+    state: reloaded
+  changed_when: true
+  become: true

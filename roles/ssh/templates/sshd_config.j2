@@ -1,0 +1,9 @@
+Port {{ sshd_port }}
+PermitRootLogin prohibit-password
+ChallengeResponseAuthentication no
+UsePAM no
+X11Forwarding no
+PrintMotd yes
+PrintLastLog yes
+AcceptEnv LANG LC_*
+Subsystem	sftp	/usr/lib/openssh/sftp-server

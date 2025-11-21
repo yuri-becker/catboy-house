@@ -6,7 +6,4 @@ watchtower_notification_template: >-
   .LatestImageID.ShortID}}{{"\n"}}{{end}}{{end}}{{if .Updated}}
   {{range .Updated}}🎉 {{.Name}} ({{.ImageName}}) was updated.{{"\n"}}{{end}}
   {{end}}{{end}}{%endraw%}
-watchtower_notification_url: >-
-  discord://{{ notifications_webhook_token }}@{{ notifications_webhook_id }}
-  ?splitlines=false&avatarurl={{ watchtower_notification_avatar | urlencode }}
-  &username={{ watchtower_notification_name | urlencode }}
+watchtower_notification_url: "discord://{{ notifications_webhook_token }}@{{ notifications_webhook_id }}?splitlines=false&avatarurl={{ watchtower_notification_avatar | urlencode }}&username={{ watchtower_notification_name | urlencode }}"
