@@ -10,3 +10,4 @@ yamtrack_nsfw: "True"
 yamtrack_allow_registration: "True"
 yamtrack_web_processes: 4
 yamtrack_social_providers: allauth.socialaccount.providers.openid_connect
+yamtrack_socialaccount_only: "True"

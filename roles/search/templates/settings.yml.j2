@@ -1,12 +1,11 @@
 # see https://docs.searxng.org/admin/settings/settings.html#settings-use-default-settings
 use_default_settings: true
 server:
-  # base_url is defined in the SEARXNG_BASE_URL environment variable
   secret_key: "{{ search_secret }}"
   limiter: true
   image_proxy: true
   public_instance: true
 ui:
   static_use_hash: true
-redis:
-  url: redis://valkey:6379/0
+valkey:
+  url: valkey://valkey:6379/0

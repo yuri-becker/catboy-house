@@ -3,4 +3,4 @@
 dependencies:
   - role: docker
   - role: postgres
-  - role: auth
+  - role: pocketid

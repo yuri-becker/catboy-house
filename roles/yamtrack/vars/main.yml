@@ -6,12 +6,12 @@ yamtrack_socialaccount_providers: >
     "openid_connect": {
       "APPS": [
         {
-          "provider_id": "{{ yamtrack_auth_provider_authelia }}",
-          "name": "auth.catboy.house",
-          "client_id": "{{ auth_client_yamtrack_id }}",
-          "secret": "{{ auth_client_yamtrack_secret }}",
+          "provider_id": "{{ yamtrack_auth_provider_pocketid }}",
+          "name": "id.catboy.house",
+          "client_id": "{{ yamtrack_auth_client_id }}",
+          "secret": "{{ yamtrack_auth_client_secret}}",
           "settings": {
-            "server_url": "{{ auth_discovery_url }}"
+            "server_url": "{{ pocketid_wellknown_url }}"
           }
         }
       ]
