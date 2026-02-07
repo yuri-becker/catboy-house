@@ -12,7 +12,7 @@ auth_authelia_port: 27901
 
 wakapi_port: 28943
 # 28944
-paperless_port: 28945
+# 28945
 docmost_port: 28946
 search_port: 28947
 # 28949

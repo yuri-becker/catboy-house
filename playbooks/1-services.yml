@@ -50,9 +50,6 @@
     - role: check_for_updates
       tags: check_for_updates
 
-    - role: paperless
-      tags: paperless
-
     - role: mealie
       tags: mealie
 

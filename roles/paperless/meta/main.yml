@@ -1,4 +1,0 @@
----
-# meta file for roles/paperless
-dependencies:
-  - role: docker

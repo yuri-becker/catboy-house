@@ -52,15 +52,15 @@
   loop: "{{ admins }}"
   become: true
 
-- name: 📂 Creates authorized_keys.j2
-  ansible.builtin.template:
-    src: authorized_keys.j2
-    dest: /home/{{ item.name }}/.ssh/authorized_keys
-    owner: "{{ item.name }}"
-    group: "{{ item.name }}"
-    mode: "0644"
-  loop: "{{ admins }}"
-  become: true
+# - name: 📂 Creates authorized_keys.j2
+#   ansible.builtin.template:
+#     src: authorized_keys.j2
+#     dest: /home/{{ item.name }}/.ssh/authorized_keys
+#     owner: "{{ item.name }}"
+#     group: "{{ item.name }}"
+#     mode: "0644"
+#   loop: "{{ admins }}"
+#   become: true
 
 - name: 📂 Creates services path
   ansible.builtin.file:

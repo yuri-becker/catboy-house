@@ -62,7 +62,7 @@ services:
       - "{{ docker_gateway }}:{{ nextcloud_port }}:80"
     volumes:
       - "{{ nextcloud_volume_nextcloud }}:/var/www/html"
-      - "{{ downloads_music_path }}:/music"
+      - "{{ music_path }}:/music"
     networks:
       - default
       - "{{ auth_ldap_network }}"

@@ -7,6 +7,5 @@ dependencies:
   - role: heyform
   - role: mealie
   - role: nextcloud
-  - role: paperless
   - role: satisfactory
   - role: woodpecker
