@@ -63,11 +63,11 @@
       DT_DATABASE_USER: "{{ donetick_user }}"
       DT_DATABASE_PASSWORD: "{{ donetick_db_password }}"
       DT_DATABASE_NAME: "{{ donetick_db }}"
-      DT_DATABASE_LOGGER: "warn"
+      DT_DATABASE_LOGGER: "3" # Warn?
       DT_JWT_SECRET: "{{ donetick_jwt_secret }}"
       DT_JWT_SESSION_TIME: 168h
       DT_JWT_MAX_REFRESH: 168h
-      DT_SERVER_CORS_ALLOW_ORIGINS: "https://{{ donetick_domain }},https://localhost,capacitor://localhost"
+      DT_SERVER_CORS_ALLOW_ORIGINS: "https://{{ donetick_domain }},https://localhost"
       DT_SERVER_PORT: "{{ donetick_port | string }}"
       DT_SERVER_SERVE_FRONTEND: "true"
       DT_SCHEDULER_JOBS_DUE_JOB: 30m
@@ -83,8 +83,9 @@
       DT_OAUTH2_AUTH_URL: "{{ pocketid_auth_url }}"
       DT_OAUTH2_TOKEN_URL: "{{ pocketid_token_url }}"
       DT_OAUTH2_USER_INFO_URL: "{{ pocketid_userinfo_url }}"
-      DT_OAUTH2_NAMEL: catboy.house account
-#      DT_OAUTH2_REDIRECT_URL: "https://id.catboy.house/api/oidc/end-session"
+      DT_OAUTH2_NAME: catboy.house account
+      DT_OAUTH2_SCOPES: "openid profile email"
+      DT_OAUTH2_REDIRECT_URL: "https://todo.catboy.house/auth/oauth2"
 
 - name: ⬆️ Pushes Caddy config
   ansible.builtin.template:

@@ -43,7 +43,7 @@
     state: started
     name: "{{ pocketid_container }}"
     hostname: "{{ pocketid_hostname }}"
-    image: ghcr.io/pocket-id/pocket-id:v1-distroless
+    image: ghcr.io/pocket-id/pocket-id:v2
     restart_policy: unless-stopped
     user: "{{ pocketid_uid }}:{{ app_gid }}"
     ports:
@@ -61,10 +61,8 @@
       PUID: "{{ pocketid_uid }}"
       PGID: "{{ app_gid }}"
       TRUST_PROXY: "true"
-      DB_PROVIDER: postgres
       DB_CONNECTION_STRING: "{{ pocketid_db_connection }}"
       ENCRYPTION_KEY: "{{ pocketid_encryption_key }}"
-      KEYS_STORAGE: database
       UI_CONFIG_DISABLED: "true"
       EMAILS_VERIFIED: "true"
       ALLOW_USER_SIGNUPS: withToken
