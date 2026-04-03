@@ -86,9 +86,6 @@
     - role: search
       tags: search
 
-    - role: stirlingpdf
-      tags: stirlingpdf
-
     - role: woodpecker
       tags: woodpecker
 

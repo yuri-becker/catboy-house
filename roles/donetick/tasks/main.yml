@@ -67,7 +67,7 @@
       DT_JWT_SECRET: "{{ donetick_jwt_secret }}"
       DT_JWT_SESSION_TIME: 168h
       DT_JWT_MAX_REFRESH: 168h
-      DT_SERVER_CORS_ALLOW_ORIGINS: "https://{{ donetick_domain }},https://localhost"
+      DT_SERVER_CORS_ALLOW_ORIGINS: "https://{{ donetick_domain }},https://localhost,http://localhost,http://{{ donetick_domain }}"
       DT_SERVER_PORT: "{{ donetick_port | string }}"
       DT_SERVER_SERVE_FRONTEND: "true"
       DT_SCHEDULER_JOBS_DUE_JOB: 30m

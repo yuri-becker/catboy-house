@@ -2,4 +2,5 @@
 dependencies:
   - role: docker
   - role: pocketid
+  - role: romm
   - role: navidrome

@@ -1,7 +1,6 @@
 ---
 # defaults file for roles/romm
 romm_container_prefix: romm
-romm_user_name: romm
 romm_contaier_name: "{{ romm_container_prefix }}-romm"
 romm_mariadb_container_name: "{{ romm_container_prefix }}-mariadb"
 romm_database_name: romm

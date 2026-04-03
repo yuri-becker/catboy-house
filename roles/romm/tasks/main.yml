@@ -1,20 +1,11 @@
 ---
 # tasks file for roles/romm
-- name: 👤 Creates user
-  ansible.builtin.user:
-    state: present
-    name: "{{ romm_user_name }}"
-    uid: "{{ romm_uid }}"
-    create_home: false
-    group: "{{ app_gid }}"
-  become: true
-
 - name: 📂 Creates service path
   ansible.builtin.file:
     path: "{{ romm_service_path }}"
     state: directory
     mode: "0750"
-    owner: "{{ romm_uid }}"
+    owner: "{{ app_uid }}"
     group: "{{ app_gid }}"
   become: true
 
@@ -23,7 +14,7 @@
     path: "{{ romm_volume_library }}"
     state: directory
     mode: "0775"
-    owner: "{{ romm_uid }}"
+    owner: "{{ app_uid }}"
     group: "{{ app_gid }}"
   become: true
 
@@ -32,7 +23,7 @@
     path: "{{ item }}"
     state: directory
     mode: "0750"
-    owner: "{{ romm_uid }}"
+    owner: "{{ app_uid }}"
     group: "{{ app_gid }}"
   loop:
     - "{{ romm_volume_resources }}"
@@ -45,7 +36,7 @@
   ansible.builtin.template:
     src: docker-compose.yml.j2
     dest: "{{ romm_service_path }}/docker-compose.yml"
-    owner: "{{ romm_uid }}"
+    owner: "{{ app_uid }}"
     group: "{{ app_gid }}"
     mode: "0755"
   become: true

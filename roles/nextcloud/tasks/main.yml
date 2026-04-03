@@ -1,20 +1,11 @@
 ---
 # tasks file for roles/nextcloud
-- name: 👤 Creates user
-  ansible.builtin.user:
-    state: present
-    name: "{{ nextcloud_user_name }}"
-    uid: "{{ nextcloud_uid }}"
-    create_home: false
-    group: "{{ app_gid }}"
-  become: true
-
 - name: 📂 Creates service path
   ansible.builtin.file:
     path: "{{ nextcloud_service_path }}"
     state: directory
     mode: "0750"
-    owner: "{{ nextcloud_uid }}"
+    owner: "{{ app_uid }}"
     group: "{{ app_gid }}"
   become: true
 
@@ -23,7 +14,7 @@
     path: "{{ item }}"
     state: directory
     mode: "0700"
-    owner: "{{ nextcloud_uid }}"
+    owner: "{{ app_uid }}"
     group: "{{ app_gid }}"
   loop:
     - "{{ nextcloud_volume_nextcloud }}"
@@ -36,7 +27,7 @@
   ansible.builtin.template:
     src: docker-compose.yml.j2
     dest: "{{ nextcloud_service_path }}/docker-compose.yml"
-    owner: "{{ nextcloud_uid }}"
+    owner: "{{ app_uid }}"
     group: "{{ app_gid }}"
     mode: "0750"
   become: true
@@ -53,7 +44,7 @@
   ansible.builtin.copy:
     src: files/fonts
     dest: "{{ nextcloud_volume_fonts }}"
-    owner: "{{ nextcloud_uid }}"
+    owner: "{{ app_uid }}"
     group: "{{ app_gid }}"
     mode: "0774"
   become: true
@@ -63,7 +54,7 @@
   ansible.builtin.cron:
     name: Nextcloud cron
     minute: "*/5"
-    job: docker exec -u 33 {{ nextcloud_nextcloud_container_name }} php -f /var/www/html/cron.php
+    job: docker exec -it nextcloud-nextcloud-1 php -f cron.php
     user: root
     state: present
   become: true

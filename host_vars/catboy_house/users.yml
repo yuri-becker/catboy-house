@@ -4,8 +4,6 @@ app_uid: "1000"
 app_gid: "100"
 docker_gid: "112"
 
-nextcloud_uid: "1155"
-romm_uid: "1156"
 woodpecker_uid: "1157"
 
 docker_build_uid: "1800"
@@ -16,7 +14,7 @@ beszel_uid: "1946"
 postgres_uid: "1947"
 # 1948
 docmost_uid: "1949"
-stirlingpdf_uid: "1950"
+# 1950
 # 1951
 yamtrack_uid: "1952"
 media_manager_uid: "1953"

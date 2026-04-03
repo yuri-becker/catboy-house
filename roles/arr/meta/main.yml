@@ -1,5 +1,6 @@
 ---
 dependencies:
   - role: docker
+  - role: pocketid
   - role: auth
   - role: seedbox

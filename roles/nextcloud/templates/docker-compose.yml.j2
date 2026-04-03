@@ -1,15 +1,8 @@
-networks:
-  default:
-  "{{ auth_ldap_network }}":
-    name: "{{ auth_ldap_network }}"
-    external: true
-
 services:
   mariadb:
     image: mariadb:10
-    container_name: "{{ nextcloud_mariadb_container_name }}"
     restart: unless-stopped
-    user: "{{ nextcloud_uid }}"
+    user: "{{ app_uid }}"
     command: --transaction-isolation=READ-COMMITTED --log-bin=binlog --binlog-format=ROW
     volumes:
       - "{{ nextcloud_volume_mariadb }}:/var/lib/mysql"
@@ -21,16 +14,14 @@ services:
 
   keydb:
     image: eqalpha/keydb:latest
-    container_name: "{{ nextcloud_keydb_container_name }}"
     restart: unless-stopped
-    user: "{{ nextcloud_uid }}"
+    user: "{{ app_uid }}"
     command: keydb-server --appendonly yes
     volumes:
       - "{{ nextcloud_volume_keydb }}:/data"
 
   onlyoffice:
     image: onlyoffice/documentserver:latest
-    container_name: "{{ nextcloud_onlyoffice_container_name }}"
     ports:
       - "{{ docker_gateway }}:{{ nextoffice_onlyoffice_port }}:80"
     volumes:
@@ -41,7 +32,6 @@ services:
 
   whiteboard:
     image: ghcr.io/nextcloud-releases/whiteboard:stable
-    container_name: "{{ nextcloud_whiteboard_container }}"
     ports:
       - "{{ docker_gateway }}:{{ nextcloud_whiteboard_port }}:3002"
     environment:
@@ -52,9 +42,8 @@ services:
 
   nextcloud:
     image: nextcloud:latest
-    container_name: "{{ nextcloud_nextcloud_container_name }}"
     restart: unless-stopped
-    user: "{{ nextcloud_uid }}:{{ app_gid }}"
+    user: "{{ app_uid }}:{{ app_gid }}"
     depends_on:
       - mariadb
       - whiteboard
@@ -63,9 +52,7 @@ services:
     volumes:
       - "{{ nextcloud_volume_nextcloud }}:/var/www/html"
       - "{{ music_path }}:/music"
-    networks:
-      - default
-      - "{{ auth_ldap_network }}"
+      - "{{ romm_volume_library }}:/roms"
     environment:
       MYSQL_HOST: mariadb
       MYSQL_DATABASE: nextcloud

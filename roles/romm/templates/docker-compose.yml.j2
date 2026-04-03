@@ -3,7 +3,7 @@ services:
     container_name: "{{ romm_mariadb_container_name }}"
     image: mariadb:latest
     restart: unless-stopped
-    user: "{{ romm_uid }}:{{ app_gid }}"
+    user: "{{ app_uid }}:{{ app_gid }}"
     environment:
       MYSQL_ROOT_PASSWORD: "{{ romm_database_root_password }}"
       MYSQL_DATABASE: "{{ romm_database_name }}"
@@ -16,7 +16,7 @@ services:
     container_name: "{{ romm_contaier_name }}"
     image: rommapp/romm:latest
     restart: unless-stopped
-    user: "{{ romm_uid }}:{{ app_gid }}"
+    user: "{{ app_uid }}:{{ app_gid }}"
     environment:
       DB_HOST: "{{ romm_mariadb_container_name }}"
       DB_NAME: "{{ romm_database_name }}"
@@ -25,8 +25,13 @@ services:
       ROMM_AUTH_SECRET_KEY: "{{ romm_auth_secret_key }}"
       IGDB_CLIENT_ID: "{{ igdb_api_key }}"
       IGDB_CLIENT_SECRET: "{{ igdb_api_secret }}"
-      MOBYGAMES_API_KEY: "{{ mobygames_api_key }}"
       STEAMGRIDDB_API_KEY: "{{ steamgriddb_api_key }}"
+      SCREENSCRAPER_USER:  "{{ screenscraper_user }}"
+      SCREENSCRAPER_PASSWORD: "{{ screenscraper_password }}"
+      HASHEOUS_API_ENABLED: "true"
+      HLTB_API_ENABLED: "true"
+      PLAYMATCH_API_ENABLED: "true"
+      RETROACHIEVEMENTS_API_KEY: "{{ retroachievements_api_key }}"
       ROMM_HOST: "{{ romm_domain }}"
       UPLOAD_TIMEOUT: 0
       DISABLE_DOWNLOAD_ENDPOINT_AUTH: "true"

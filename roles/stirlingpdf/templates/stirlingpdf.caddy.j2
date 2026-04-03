@@ -1,6 +1,0 @@
-{{ stirlingpdf_domain }} {
-    import common-headers
-    import logging 
-    encode zstd gzip
-    reverse_proxy {{ docker_gateway }}:{{ stirlingpdf_port }}
-}

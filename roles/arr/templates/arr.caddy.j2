@@ -37,3 +37,9 @@
     import logging
     reverse_proxy {{ docker_gateway }}:{{ arr_lidarr_port }}
 }
+
+{{ arr_soulsync_domain }} {
+    import common-headers
+    import logging
+    reverse_proxy {{ docker_gateway }}:{{ arr_soulsync_port }}
+}

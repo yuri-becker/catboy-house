@@ -75,10 +75,11 @@ services:
       PUID: "{{ app_uid }}"
       PGID: "{{ app_gid }}"
 
-  jellyseerr:
-    image: fallenbagel/jellyseerr:latest
-    container_name: "{{ arr_jellyseerr_container_name }}"
+  seerr:
+    image: ghcr.io/seerr-team/seerr:latest
     restart: unless-stopped
+    init: true
+    user: "{{ app_uid }}:{{ app_gid }}"
     networks:
       - "{{ arr_network }}"
     ports:
@@ -106,19 +107,12 @@ services:
       PUID: "{{ app_uid }}"
       PGID: "{{ app_gid }}"
 
-  soularr:
-    image: mrusse08/soularr:latest
-    container_name: "{{ arr_soularr_container_name }}"
+  soulsync-proxy:
+    image: quay.io/oauth2-proxy/oauth2-proxy:v7.14.3
     restart: unless-stopped
     networks:
       - "{{ arr_network }}"
-      - "{{ seedbox_external_network }}"
-    user: "{{ app_uid }}:{{ app_gid }}"
-    volumes:
-      - "{{ downloads_music_path }}:/downloads"
-      - "{{ arr_volume_soularr }}:/data"
-    environment:
-      TZ: "{{ ansible_date_time.tz }}"
-      PUID: "{{ app_uid }}"
-      PGID: "{{ app_gid }}"
-      SCRIPT_INTERVAL: 30
+    ports:
+      - "{{ docker_gateway }}:{{ arr_soulsync_port }}:{{ arr_soulsync_port }}"
+    command: "{{ soulsync_proxy_command }}"
+

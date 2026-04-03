@@ -1,0 +1,9 @@
+---
+soulsync_proxy_command: >-
+  {{ pocketid_oidc2proxy_common_options }}
+  --client-id {{ arr_auth_client_id }}
+  --client-secret {{ arr_auth_client_secret }}
+  --cookie-secret {{ arr_auth_cookie_secret }}
+  --scope 'openid email profile'
+  --http-address 0.0.0.0:{{ arr_soulsync_port }}
+  --upstream http://soulsync:8008

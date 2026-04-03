@@ -23,4 +23,4 @@ vault-encrypt key value file:
 
 [group('remote')]
 occ command:
-    ssh catboy-house -t docker exec -it -u www-data nextcloud-nextcloud php occ {{command}}
+    ssh catboy-house -t docker exec -it -u www-data nextcloud-nextcloud-1 php occ {{command}}

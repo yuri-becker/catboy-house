@@ -2,4 +2,3 @@
 # meta file for roles/woodpecker
 dependencies:
   - role: docker
-  - role: auth

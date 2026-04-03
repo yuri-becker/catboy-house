@@ -24,7 +24,7 @@ woodpecker_port: 28953
 yamtrack_port: 28954
 # 28955
 romm_port: 29156
-stirlingpdf_port: 28957
+# 28957
 sshd_port: 29158
 navidrome_port: 29159
 
@@ -42,7 +42,7 @@ arr_prowlarr_port: 30217
 arr_bazarr_port: 30218
 arr_jellyseerr_port: 30219
 arr_lidarr_port: 30220
-# 30221
+arr_soulsync_port: 30221
 # 30222
 donetick_port: 30223
 
