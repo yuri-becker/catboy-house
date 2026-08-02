@@ -24,6 +24,11 @@
       login_port: "{{ postgres_port }}"
       login_user: "{{ postgres_root_user }}"
       login_password: "{{ postgres_root_password }}"
+    community.postgresql.postgresql_ext:
+      login_host: 10.0.0.1
+      login_port: "{{ postgres_port }}"
+      login_user: "{{ postgres_root_user }}"
+      login_password: "{{ postgres_root_password }}"
     community.mysql.mysql_db:
       login_unix_socket: /run/mysqld/mysqld.sock
     community.mysql.mysql_user:

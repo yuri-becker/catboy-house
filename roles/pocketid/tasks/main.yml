@@ -15,6 +15,14 @@
   community.postgresql.postgresql_db:
     name: "{{ pocketid_db }}"
 
+- name: 👤 Creates extensions on database
+  community.postgresql.postgresql_ext:
+    login_db: "{{ pocketid_db }}"
+    name: "{{ item }}"
+  loop:
+    - citext
+    - pgcrypto
+
 - name: 👤 Creates database user
   community.postgresql.postgresql_user:
     login_db: "{{ pocketid_db }}"
@@ -72,6 +80,7 @@
       SMTP_USER: "{{ auth_smtp_user }}"
       SMTP_PASSWORD: "{{ auth_smtp_password }}"
       SMTP_TLS: starttls
+      SESSION_DURATION: "43200" # 30  days
       EMAIL_LOGIN_NOTIFICATION_ENABLED: "true"
       EMAIL_ONE_TIME_ACCESS_AS_ADMIN_ENABLED: "true"
       EMAIL_API_KEY_EXPIRATION_ENABLED: "true"
