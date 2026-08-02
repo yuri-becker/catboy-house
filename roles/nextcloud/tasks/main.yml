@@ -50,11 +50,29 @@
   become: true
   notify: restart onlyoffice
 
-- name: 🚀 Sets up cron job
+- name: 🚀 Sets up Nextcloud Background Cron
   ansible.builtin.cron:
-    name: Nextcloud cron
+    name: Nextcloud Background Tasks
     minute: "*/5"
     job: docker exec -it nextcloud-nextcloud-1 php -f cron.php
+    user: root
+    state: present
+  become: true
+
+- name: 🚀 Sets up Missing Indices Cron
+  ansible.builtin.cron:
+    name: Nextcloud Missing Indices
+    special_time: daily
+    job: docker exec -it nextcloud-nextcloud-1 php occ db:add-missing_indices
+    user: root
+    state: present
+  become: true
+
+- name: 🚀 Sets App Update Cron
+  ansible.builtin.cron:
+    name: Nextcloud App Updates
+    special_time: daily
+    job: docker exec -it nextcloud-nextcloud-1 php occ app:update --all
     user: root
     state: present
   become: true
