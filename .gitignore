@@ -1,3 +1,8 @@
 .vault_password
 .fact-cache
 **/__pycache__/**
+
+# Those are only symlinks
+playbooks/groups_vars/
+playbooks/host_vars/
+playbooks/roles/

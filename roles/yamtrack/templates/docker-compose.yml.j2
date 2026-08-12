@@ -25,7 +25,7 @@ services:
     ports:
       - "{{ docker_gateway }}:{{ yamtrack_port }}:8000"
     environment:
-      TZ: "{{ ansible_date_time.tz }}"
+      TZ: "{{ ansible_facts["date_time"]["tz"] }}"
       PUID: "{{ yamtrack_uid }}"
       PGID: "{{ app_gid }}"
       SECRET: "{{ yamtrack_secret }}"

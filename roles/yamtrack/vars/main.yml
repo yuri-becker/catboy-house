@@ -7,7 +7,7 @@ yamtrack_socialaccount_providers: >
       "APPS": [
         {
           "provider_id": "{{ yamtrack_auth_provider_pocketid }}",
-          "name": "id.catboy.house",
+          "name": "catboy.house account",
           "client_id": "{{ yamtrack_auth_client_id }}",
           "secret": "{{ yamtrack_auth_client_secret}}",
           "settings": {

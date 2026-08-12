@@ -23,7 +23,7 @@
 
 - name: 👤 Grants privileges to user
   community.postgresql.postgresql_privs:
-    db: "{{ yamtrack_db }}"
+    login_db: "{{ yamtrack_db }}"
     roles: "{{ yamtrack_user }}"
     grant_option: false
     type: schema
