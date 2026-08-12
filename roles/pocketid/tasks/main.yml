@@ -15,6 +15,14 @@
   community.postgresql.postgresql_db:
     name: "{{ pocketid_db }}"
 
+- name: 👤 Creates extensions on database
+  community.postgresql.postgresql_ext:
+    login_db: "{{ pocketid_db }}"
+    name: "{{ item }}"
+  loop:
+    - citext
+    - pgcrypto
+
 - name: 👤 Creates database user
   community.postgresql.postgresql_user:
     login_db: "{{ pocketid_db }}"
