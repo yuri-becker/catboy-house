@@ -26,8 +26,11 @@ timezone: Europe/Berlin
 root_domain: catboy.house
 admins:
   - name: yuri
-    public_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEVO+sAcMcvN62efZMYzorMrxmmuqQyKjJIsAFl8r3bA yuri@liquid
+    public_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHuHB64x3szqUzeUdnPRhAuCj0VOLMQ2rxuZ7x/Ncqjf yuri@solid id_catboy-house Fr 19. Jun 21:13:31 CEST 2026
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIoN17WxSklF2CVGsj9Pgt+puTx6ru98jAWVPL9AvMSx yuri@liquid id_catboy-house-l Mon Aug 17 13:46:31 CEST 2026
     uid: 2001
   - name: miya
-    public_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOWbgt85dCJs0UTYAMYquWRy+eEglso27WXoNxuJ06Su
+    public_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOWbgt85dCJs0UTYAMYquWRy+eEglso27WXoNxuJ06Su
     uid: 2002

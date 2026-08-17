@@ -37,6 +37,9 @@
       remove_orphans: true
 
   roles:
+    - role: system
+      tags: system
+
     - role: beszel
       tags: beszel
 

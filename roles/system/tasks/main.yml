@@ -1,0 +1,11 @@
+---
+- include_tasks: create-admins.yml
+
+- name: 📂 Creates services path
+  ansible.builtin.file:
+    state: directory
+    path: "{{ services_path }}"
+    owner: root
+    group: app
+    mode: "0751"
+  become: true

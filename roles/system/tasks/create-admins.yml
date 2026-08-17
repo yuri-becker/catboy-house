@@ -20,13 +20,6 @@
     gid: "{{ app_gid }}"
   become: true
 
-- name: 👤 Creates admin group
-  ansible.builtin.group:
-    state: present
-    name: admin
-    gid: "{{ create_admins_group_id }}"
-  become: true
-
 - name: 👤 Creates admin users
   ansible.builtin.user:
     state: present
@@ -36,9 +29,11 @@
     create_home: true
     append: true
     groups:
-      - admin
+      - adm
       - app
       - docker
+      - systemd-journal
+      - sudo
   loop: "{{ admins }}"
   become: true
 
@@ -52,21 +47,12 @@
   loop: "{{ admins }}"
   become: true
 
-# - name: 📂 Creates authorized_keys.j2
-#   ansible.builtin.template:
-#     src: authorized_keys.j2
-#     dest: /home/{{ item.name }}/.ssh/authorized_keys
-#     owner: "{{ item.name }}"
-#     group: "{{ item.name }}"
-#     mode: "0644"
-#   loop: "{{ admins }}"
-#   become: true
-
-- name: 📂 Creates services path
-  ansible.builtin.file:
-    state: directory
-    path: "{{ services_path }}"
-    owner: root
-    group: admin
-    mode: "0771"
+- name: 📂 Creates authorized_keys.j2
+  ansible.builtin.template:
+    src: authorized_keys.j2
+    dest: /home/{{ item.name }}/.ssh/authorized_keys_test
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+    mode: "0644"
+  loop: "{{ admins }}"
   become: true

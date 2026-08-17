@@ -12,7 +12,7 @@
       systems = [ "aarch64-darwin" "x86_64-linux" ];
       perSystem = { pkgs, ... }: {
         devShells.default = with pkgs; mkShell {
-          packages = [ ansible fish just ];
+          packages = [ ansible ansible-lint fish just ];
           shellHook = ''
             exec fish
           '';
