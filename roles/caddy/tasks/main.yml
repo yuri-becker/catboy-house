@@ -1,5 +1,19 @@
 ---
-# tasks file for roles/caddy
+- name: ⚙️ Adds Caddy key
+  ansible.builtin.copy:
+    src: files/caddy-stable-archive-keyring.gpg
+    dest: /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+    mode: "0644"
+    owner: "root"
+    group: "root"
+  become: true
+
+- name: ⚙️ Adds Caddy repo
+  ansible.builtin.deb822_repository:
+    repo: deb [signed-by=/usr/share/keyrings/caddy-stable-archive-keyring.gpg] https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main
+    state: present
+  become: true
+
 - name: 👤 Creates user
   ansible.builtin.user:
     state: present
@@ -23,6 +37,13 @@
     - "{{ caddy_sites }}"
   become: true
   become_user: "{{ caddy_user }}"
+
+- name: 📦 Installs caddy
+  ansible.builtin.apt:
+    name: caddy
+    state: present
+  become: true
+
 
 - name: ⬆️ Pushes Caddyfile
   ansible.builtin.template:
