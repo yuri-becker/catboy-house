@@ -12,12 +12,12 @@
   become: true
 
 - name: 👤 Creates database
-  community.mysql.mysql_db:
+  ansible.mariadb.mariadb_db:
     name: "{{ teamspeak_database }}"
   become: true
 
 - name: 👤 Creates database user
-  community.mysql.mysql_user:
+  ansible.mariadb.mariadb_user:
     name: "{{ teamspeak_user }}"
     password: "{{ teamspeak_db_password }}"
     priv:

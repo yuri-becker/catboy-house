@@ -11,7 +11,7 @@ auth_lldap_port: 27900
 auth_authelia_port: 27901
 
 wakapi_port: 28943
-# 28944
+valkey_port: 28944
 # 28945
 docmost_port: 28946
 search_port: 28947
@@ -30,6 +30,8 @@ navidrome_port: 29159
 
 pocketid_port: 29000
 beszel_port: 29001
+
+icinga_api_port: 29010
 
 teamspeak_file_port: 30033
 

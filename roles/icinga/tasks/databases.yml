@@ -1,0 +1,31 @@
+---
+- name: 📈 Creates Databases
+  ansible.builtin.include_role:
+    name: create_mariadb
+  vars:
+    create_mariadb_name: "{{ item.db }}"
+    create_mariadb_user: "{{ item.db }}"
+    create_mariadb_password: "{{ item.pw }}"
+  loop:
+    - db: "{{ icinga_web_db }}"
+      pw: "{{ icinga_web_db_password }}"
+    - db: "{{ icinga_icingadb_db }}"
+      pw: "{{ icinga_icingadb_db_password }}"
+
+
+- name: ✅ Check of Schema was already imported
+  ansible.builtin.shell: |
+    set -o pipefail
+    mariadb -e 'show tables;' icinga-icingadb | grep -c host
+  register: icinga_icingadb_schema_imported
+  failed_when: icinga_icingadb_schema_imported.rc == 2
+  changed_when: false
+  become: true
+
+- name: 📈 Imports icingadb schema
+  ansible.mariadb.mariadb_db:
+    name: "{{ icinga_icingadb_db }}"
+    state: import
+    target: /usr/share/icingadb/schema/mysql/schema.sql
+  become: true
+  when: icinga_icingadb_schema_imported.stdout == "0"

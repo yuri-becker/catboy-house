@@ -1,0 +1,8 @@
+{{ icinga_domain }} {
+
+  root * /usr/share/icingaweb2/public
+
+  php_fastcgi unix//run/php/php-fpm.sock {
+    env ICINGAWEB_CONFIGDIR /etc/icingaweb2
+  }
+}

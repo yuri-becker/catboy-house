@@ -107,6 +107,7 @@ Task names are prefixed with specific emojis to make the output and nature of th
 * 🔨 for build tasks.
 * 📦 are package installations.
 * 👤 are user and group creations.
+* 📈 are DB creations
 * 💾 are fact sets.
 * ✅ are checks.
 * ⛔ are fail states.

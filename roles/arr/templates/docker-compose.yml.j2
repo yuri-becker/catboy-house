@@ -88,7 +88,7 @@ services:
       - "{{ arr_volume_jellyseerr }}:/app/config"
     environment:
       LOG_LEVEL: info
-      TZ: "{{ ansible_date_time.tz }}"
+      TZ: "{{ ansible_facts["date_time"]["tz"] }}"
 
   lidarr:
     image: linuxserver/lidarr:latest
@@ -103,7 +103,7 @@ services:
       - "{{ music_path }}:/music"
       - "{{ downloads_music_path }}:/downloads"
     environment:
-      TZ: "{{ ansible_date_time.tz }}"
+      TZ: "{{ ansible_facts["date_time"]["tz"] }}"
       PUID: "{{ app_uid }}"
       PGID: "{{ app_gid }}"
 
@@ -115,4 +115,3 @@ services:
     ports:
       - "{{ docker_gateway }}:{{ arr_soulsync_port }}:{{ arr_soulsync_port }}"
     command: "{{ soulsync_proxy_command }}"
-

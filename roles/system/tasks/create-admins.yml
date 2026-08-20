@@ -8,7 +8,7 @@
       - fzf
       - kitty-terminfo
       - ranger
-      - lsd
+      - unar
       - vim
     state: present
   become: true

@@ -1,0 +1,13 @@
+database:
+  type: mysql
+  host: /run/mysqld/mysqld.sock
+  database: "{{ icinga_icingadb_db }}"
+  user: "{{ icinga_icingadb_db }}"
+  password: "{{ icinga_icingadb_db_password }}"
+
+redis:
+  host: 127.0.0.1
+  port: "{{ valkey_port }}"
+  username: "{{ valkey_user_icingadb }}"
+  password: "{{ valkey_icingadb_password }}"
+  database: "{{ valkey_db_icingadb }}"

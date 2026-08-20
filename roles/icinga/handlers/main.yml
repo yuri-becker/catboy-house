@@ -1,0 +1,17 @@
+---
+
+- name: 🚀 Reloads Icinga
+  listen: reload icinga
+  ansible.builtin.systemd:
+    name: icinga2
+    state: reloaded
+  changed_when: true
+  become: true
+
+- name: 🚀 Restarts IcingaDB
+  listen: restart icingadb
+  ansible.builtin.systemd:
+    name: icingadb
+    state: restarted
+  changed_when: true
+  become: true

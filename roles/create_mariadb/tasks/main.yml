@@ -1,0 +1,13 @@
+---
+- name: 📈 Creates database
+  ansible.mariadb.mariadb_db:
+    name: "{{ create_mariadb_name }}"
+  become: true
+
+- name: 👤 Creates database user
+  ansible.mariadb.mariadb_user:
+    name: "{{ create_mariadb_user }}"
+    host: "localhost"
+    password: "{{ create_mariadb_password }}"
+    priv: "{{ create_mariadb_name }}.*:ALL/*.*:USAGE"
+  become: true

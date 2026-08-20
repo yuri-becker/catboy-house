@@ -1,0 +1,16 @@
+---
+- name: 📦 Installs Valkey-Server
+  ansible.builtin.apt:
+    package: valkey-server
+    state: present
+  become: true
+
+- name: ⬆️ Pushes Valkey Config
+  ansible.builtin.template:
+    src: valkey.conf.j2
+    dest: /etc/valkey/valkey.conf
+    mode: "0650"
+    owner: valkey
+    group: valkey
+  become: true
+  notify: restart valkey

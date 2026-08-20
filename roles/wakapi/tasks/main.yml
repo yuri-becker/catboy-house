@@ -36,7 +36,7 @@
       ENV: production
       WAKAPI_PASSWORD_SALT: "{{ wakapi_password_salt }}"
       WAKAPI_LEADERBOARD_SCOPE: "{{ wakapi_leaderboard_scope }}"
-      WAKAPI_SUPPORT_CONTACT: "{{ webmaster_email }}"
+      WAKAPI_SUPPORT_CONTACT: "{{ admins[0].email }}"
       WAKAPI_MAX_INACTIVE_MONTHS: "{{ wakapi_max_inactive_months }}"
       WAKAPI_PUBLIC_URL: https://{{ wakapi_domain }}
       WAKAPI_INSECURE_COOKIES: "false"

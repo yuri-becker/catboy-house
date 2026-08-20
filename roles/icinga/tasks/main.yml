@@ -1,0 +1,39 @@
+---
+- name: Packages
+  ansible.builtin.include_tasks: packages.yml
+
+- name: 👤 Adds Icingadb user to valkey
+  ansible.builtin.user:
+    state: present
+    name: icingadb
+    append: true
+    groups:
+      - valkey
+  become: true
+
+- name: 👤 Gives ping net_raw capability
+  ansible.builtin.command: setcap cap_net_raw+ep /bin/ping
+  become: true
+  changed_when: false
+
+- name: 👤 Allows Nagios to privilege escalate for smartctl
+  ansible.builtin.copy:
+    src: files/nagios_check_smart
+    dest: /etc/sudoers.d/nagios_check_smart
+    owner: root
+    group: root
+    mode: "0400"
+  become: true
+
+- name: Databases
+  ansible.builtin.include_tasks: databases.yml
+
+- name: ⚙️ Sets up API
+  ansible.builtin.command:
+    cmd: icinga2 api setup
+    creates: /var/lib/icinga2/ca/ca.key
+  become: true
+  notify: restart icing
+
+- name: Configuration
+  ansible.builtin.include_tasks: configuration.yml

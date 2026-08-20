@@ -33,7 +33,7 @@ services:
     environment:
       UID: "{{ app_uid }}"
       GID: "{{ app_gid }}"
-      TZ: "{{ ansible_date_time.tz }}"
+      TZ: "{{ ansible_facts["date_time"]["tz"] }}"
       LLDAP_LDAP_BASE_DN: "{{ auth_base_dn }}"
       LLDAP_JWT_SECRET: "{{ auth_lldap_jwt_secret }}"
       LLDAP_KEY_SEED: "{{ auth_lldap_key_seed }}"

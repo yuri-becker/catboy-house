@@ -29,16 +29,17 @@
       login_port: "{{ postgres_port }}"
       login_user: "{{ postgres_root_user }}"
       login_password: "{{ postgres_root_password }}"
-    community.mysql.mysql_db:
-      login_unix_socket: /run/mysqld/mysqld.sock
-    community.mysql.mysql_user:
-      login_unix_socket: /run/mysqld/mysqld.sock
     community.docker.docker_compose_v2:
       remove_orphans: true
+    group/ansible.mariadb.all:
+      login_unix_socket: /run/mysqld/mysqld.sock
 
   roles:
     - role: system
       tags: system
+
+    - role: icinga
+      tags: icinga
 
     - role: beszel
       tags: beszel

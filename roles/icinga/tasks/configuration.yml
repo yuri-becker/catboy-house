@@ -1,0 +1,51 @@
+- name: 📁 Makes Icinga2 Folders
+  ansible.builtin.file:
+    state: directory
+    dest: "/etc/icinga2/{{ item.path }}"
+    owner: nagios
+    group: nagios
+    mode: "0740"
+  with_community.general.filetree: "../templates/icinga2"
+  when: item.state == "directory"
+  become: true
+
+- name: ⬆️ Pushes Icinga2 Configurations
+  ansible.builtin.template:
+    src: "icinga2/{{ item.path }}"
+    dest: "/etc/icinga2/{{ item.path }}"
+    owner: nagios
+    group: nagios
+    mode: "0640"
+  with_community.general.filetree: "../templates/icinga2"
+  when: item.state == "file"
+  become: true
+  notify: reload icinga
+
+- name: ⬆️ Pushes IcingaWeb Configurations
+  ansible.builtin.template:
+    src: "icingaweb/{{ item.path }}"
+    dest: "/etc/icingaweb2/{{ item.path }}"
+    owner: www-data
+    group: icingaweb2
+    mode: "0660"
+  with_community.general.filetree: "../templates/icingaweb"
+  when: item.state == "file"
+  become: true
+
+- name: ⬆️ Pushes IcingaDB Configuration
+  ansible.builtin.template:
+    src: "icingadb/config.yml"
+    dest: "/etc/icingadb/config.yml"
+    owner: icingadb
+    group: icingadb
+    mode: "0640"
+  become: true
+  notify: restart icingadb
+
+- name: ⬆️ Pushes Caddy config
+  ansible.builtin.template:
+    src: caddy/icinga.caddy
+    dest: "{{ caddy_sites }}/icinga.caddy"
+    mode: "0770"
+    group: "{{ app_gid }}"
+  notify: reload caddy

@@ -1,0 +1,8 @@
+---
+icinga_web_db: icinga-web
+icinga_director_db: icinga-director
+icinga_icingadb_db: icinga-icingadb
+icinga_domain: ici.{{ root_domain }}
+icinga_api_root: plastic8347
+icinga_api_web: skied2590
+icinga_api_director: perplexed0291

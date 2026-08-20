@@ -1,0 +1,86 @@
+# See https://raw.githubusercontent.com/valkey-io/valkey/8.1/valkey.conf
+
+bind 127.0.0.1 -::1
+protected-mode yes
+tcp-backlog 511
+timeout 0
+tcp-keepalive 300
+daemonize yes
+pidfile /run/valkey/valkey-server.pid
+loglevel notice
+databases 16
+always-show-logo no
+hide-user-data-from-log yes
+set-proc-title yes
+proc-title-template "{title} {listen-addr} {server-mode}"
+locale-collate ""
+stop-writes-on-bgsave-error yes
+rdbcompression yes
+rdbchecksum yes
+rdb-version-check strict
+dbfilename dump.rdb
+rdb-del-sync-files no
+dir /var/lib/valkey
+replica-serve-stale-data yes
+replica-read-only yes
+repl-diskless-sync yes
+repl-diskless-sync-delay 5
+repl-diskless-sync-max-replicas 0
+repl-diskless-load disabled
+dual-channel-replication-enabled no
+repl-disable-tcp-nodelay no
+replica-priority 100
+acllog-max-len 128
+lazyfree-lazy-eviction yes
+lazyfree-lazy-expire yes
+lazyfree-lazy-server-del yes
+replica-lazy-flush yes
+lazyfree-lazy-user-del yes
+lazyfree-lazy-user-flush yes
+oom-score-adj no
+oom-score-adj-values 0 200 800
+disable-thp yes
+appendonly no
+appendfilename "appendonly.aof"
+appenddirname "appendonlydir"
+appendfsync everysec
+no-appendfsync-on-rewrite no
+auto-aof-rewrite-percentage 100
+auto-aof-rewrite-min-size 64mb
+aof-load-truncated yes
+aof-use-rdb-preamble yes
+aof-timestamp-enabled no
+commandlog-execution-slower-than 10000
+commandlog-slow-execution-max-len 128
+commandlog-request-larger-than 1048576
+commandlog-large-request-max-len 128
+commandlog-reply-larger-than 1048576
+commandlog-large-reply-max-len 128
+latency-monitor-threshold 0
+notify-keyspace-events ""
+hash-max-listpack-entries 512
+hash-max-listpack-value 64
+list-max-listpack-size -2
+list-compress-depth 0
+set-max-intset-entries 512
+set-max-listpack-entries 128
+set-max-listpack-value 64
+zset-max-listpack-entries 128
+zset-max-listpack-value 64
+hll-sparse-max-bytes 3000
+stream-node-max-bytes 4096
+stream-node-max-entries 100
+activerehashing yes
+client-output-buffer-limit normal 0 0 0
+client-output-buffer-limit replica 256mb 64mb 60
+client-output-buffer-limit pubsub 32mb 8mb 60
+hz 10
+aof-rewrite-incremental-fsync yes
+rdb-save-incremental-fsync yes
+jemalloc-bg-thread yes
+
+# changed values
+port {{ valkey_port }}
+# Empty means it'll lot to stdout, therefore journal
+logfile ""
+user {{ valkey_user_icingadb }} allcommands allkeys allchannels on >{{ valkey_icingadb_password }}

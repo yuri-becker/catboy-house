@@ -1,0 +1,37 @@
+---
+- name: ⚙️ Adds Icinga key
+  ansible.builtin.copy:
+    src: files/icinga.gpg
+    dest: /usr/share/keyrings/icinga.gpg
+    mode: "0644"
+    owner: "root"
+    group: "root"
+  become: true
+
+- name: ⚙️ Adds Icinga repo
+  ansible.builtin.deb822_repository:
+    name: Icinga
+    types: deb
+    uris: https://packages.icinga.com/debian
+    suites: icinga-trixie
+    components:
+      - main
+    signed_by: /usr/share/keyrings/icinga.gpg
+  become: true
+
+- name: 📦 Installs Icinga
+  ansible.builtin.apt:
+    package:
+      - icinga2
+      - icingaweb2
+      - icingacli
+      - icingadb
+      - icingadb-web
+      - icinga-sso-web
+      - monitoring-plugins-basic
+      - monitoring-plugins-check-smart
+      - monitoring-plugins-systemd
+      - php-fpm
+      - php-mysql
+    state: present
+  become: true

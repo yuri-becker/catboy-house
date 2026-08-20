@@ -62,28 +62,34 @@
       - name: "{{ postgres_network }}"
 
     env:
-      APP_NAME: "catboy.house account~"
       ACCENT_COLOR: "#7287fd"
-      MAXMIND_LICENSE_KEY: "{{ maxmind_api_key }}"
-      APP_URL: "{{ pocketid_url }}"
-      PUID: "{{ pocketid_uid }}"
-      PGID: "{{ app_gid }}"
-      TRUST_PROXY: "true"
-      DB_CONNECTION_STRING: "{{ pocketid_db_connection }}"
-      ENCRYPTION_KEY: "{{ pocketid_encryption_key }}"
-      UI_CONFIG_DISABLED: "true"
-      EMAILS_VERIFIED: "true"
+      ANALYTICS_DISABLED: "true"
       ALLOW_USER_SIGNUPS: withToken
-      SMTP_HOST: "{{ smtp_server }}"
-      SMTP_PORT: "{{ smtp_port }}"
-      SMTP_FROM: "{{ auth_smtp_user }}"
-      SMTP_USER: "{{ auth_smtp_user }}"
-      SMTP_PASSWORD: "{{ auth_smtp_password }}"
-      SMTP_TLS: starttls
-      SESSION_DURATION: "43200" # 30  days
-      EMAIL_LOGIN_NOTIFICATION_ENABLED: "true"
-      EMAIL_ONE_TIME_ACCESS_AS_ADMIN_ENABLED: "true"
+      APP_NAME: "catboy.house account~"
+      APP_URL: "{{ pocketid_url }}"
+      DB_CONNECTION_STRING: "{{ pocketid_db_connection }}"
+      EMAILS_VERIFIED: "true"
       EMAIL_API_KEY_EXPIRATION_ENABLED: "true"
+      EMAIL_LOGIN_NOTIFICATION_ENABLED: "true"
+      EMAIL_ONE_TIME_ACCESS_AS_ADMIN_ENABLED: "false"
+      EMAIL_ONE_TIME_ACCESS_AS_UNAUTHENTICATED_ENABLED: "true"
+      ENCRYPTION_KEY: "{{ pocketid_encryption_key }}"
+      HOME_PAGE_URL: "/settings/apps"
+      MAXMIND_LICENSE_KEY: "{{ maxmind_api_key }}"
+      PGID: "{{ app_gid }}"
+      PUID: "{{ pocketid_uid }}"
+      REQUIRE_USER_EMAIL: "false"
+      SESSION_DURATION: "43200" # 30  days
+      SMTP_FROM: "{{ auth_smtp_user }}"
+      SMTP_HOST: "{{ smtp_server }}"
+      SMTP_PASSWORD: "{{ auth_smtp_password }}"
+      SMTP_PORT: "{{ smtp_port }}"
+      SMTP_TLS: starttls
+      SMTP_USER: "{{ auth_smtp_user }}"
+      TRUST_PROXY: "true"
+      UI_CONFIG_DISABLED: "true"
+      WEBAUTHN_USER_VERIFICATION: "preferred"
+      WEBAUTHN_ALLOW_SYNCED_PASSKEYS: "true"
     healthcheck:
       test: ["CMD", "/app/pocket-id", "healthcheck"]
       interval: 1m30s
