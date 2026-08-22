@@ -25,6 +25,12 @@
     mode: "0400"
   become: true
 
+- name: ⚙️ Allow port
+  ansible.builtin.command: "ufw allow {{ icinga_api_port }}"
+  become: true
+  register: ufw_allow_sshd
+  changed_when: "'Rule added' in ufw_allow_sshd.stdout"
+
 - name: Databases
   ansible.builtin.include_tasks: databases.yml
 

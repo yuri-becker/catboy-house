@@ -5,4 +5,6 @@
   php_fastcgi unix//run/php/php-fpm.sock {
     env ICINGAWEB_CONFIGDIR /etc/icingaweb2
   }
+
+  file_server
 }
