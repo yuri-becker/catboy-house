@@ -1,20 +1,19 @@
 {{ nextcloud_domain }} {
+  log
 	import common-headers
-    import logging 
-
-    redir /.well-known/carddav /remote.php/dav 301
-    redir /.well-known/caldav /remote.php/dav 301
-    handle_path /ds-vpath/* {
-        uri strip_prefix /ds-vpath
-        reverse_proxy {{ docker_gateway }}:{{ nextoffice_onlyoffice_port }} {
-            header_up X-Forwarded-Host {host}/ds-vpath
-        }
+  redir /.well-known/carddav /remote.php/dav 301
+  redir /.well-known/caldav /remote.php/dav 301
+  handle_path /ds-vpath/* {
+    uri strip_prefix /ds-vpath
+    reverse_proxy {{ docker_gateway }}:{{ nextoffice_onlyoffice_port }} {
+      header_up X-Forwarded-Host {host}/ds-vpath
     }
+  }
 
-    handle_path /whiteboard/* {
-        uri strip_prefix /whiteboard
-        reverse_proxy {{ docker_gateway }}:{{ nextcloud_whiteboard_port }}
-    }
+  handle_path /whiteboard/* {
+    uri strip_prefix /whiteboard
+    reverse_proxy {{ docker_gateway }}:{{ nextcloud_whiteboard_port }}
+  }
 
-    reverse_proxy {{ docker_gateway }}:{{ nextcloud_port }}
+  reverse_proxy {{ docker_gateway }}:{{ nextcloud_port }}
 }

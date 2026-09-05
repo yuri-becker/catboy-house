@@ -12,11 +12,11 @@
 - name: ⚙️ Allow port
   ansible.builtin.command: "ufw allow {{ sshd_port }}"
   become: true
-  register: ufw_allow_sshd
-  changed_when: "'Rule added' in ufw_allow_sshd.stdout"
+  register: ssh_ufw_allow
+  changed_when: "'Rule added' in ssh_ufw_allow.stdout"
 
 - name: ⚙️ Disallow default ssh ports
   ansible.builtin.command: "ufw deny 22"
   become: true
-  register: ufw_deny_22
-  changed_when: "'Rule updated' in ufw_deny_22.stdout"
+  register: ssh_ufw_deny
+  changed_when: "'Rule updated' in ssh_ufw_deny.stdout"

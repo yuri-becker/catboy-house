@@ -12,7 +12,6 @@
     - db: "{{ icinga_icingadb_db }}"
       pw: "{{ icinga_icingadb_db_password }}"
 
-
 - name: ✅ Check of Schema was already imported
   ansible.builtin.shell: |
     set -o pipefail

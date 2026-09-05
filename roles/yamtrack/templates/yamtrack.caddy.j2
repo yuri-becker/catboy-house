@@ -1,5 +1,5 @@
 {{ yamtrack_domain }} {
-    import logging 
+  log
 	encode gzip
-    reverse_proxy {{ docker_gateway }}:{{ yamtrack_port }}
+  reverse_proxy {{ docker_gateway }}:{{ yamtrack_port }}
 }

@@ -1,45 +1,41 @@
 {{ arr_sonarr_domain }} {
+  log
 	import common-headers
-    import logging
     import forward-auth {{ docker_gateway }}:{{ auth_authelia_port }}
     reverse_proxy {{ docker_gateway }}:{{ arr_sonarr_port }}
 }
 
 {{ arr_radarr_domain }} {
+  log
 	import common-headers
-    import logging
-    import forward-auth {{ docker_gateway }}:{{ auth_authelia_port }}
+  import forward-auth {{ docker_gateway }}:{{ auth_authelia_port }}
 	reverse_proxy {{ docker_gateway }}:{{ arr_radarr_port }}
 }
 
 {{ arr_prowlarr_domain }} {
+  log
 	import common-headers
-    import logging
-    import forward-auth {{ docker_gateway }}:{{ auth_authelia_port }}
+  import forward-auth {{ docker_gateway }}:{{ auth_authelia_port }}
+
 	reverse_proxy {{ docker_gateway }}:{{ arr_prowlarr_port }}
 }
 
 {{ arr_bazarr_domain }} {
+  log
 	import common-headers
-    import logging
-    import forward-auth {{ docker_gateway }}:{{ auth_authelia_port }}
+  import forward-auth {{ docker_gateway }}:{{ auth_authelia_port }}
 	reverse_proxy {{ docker_gateway }}:{{ arr_bazarr_port }}
 }
 
 {{ arr_jellyseerr_domain }} {
+  log
 	import common-headers
-    import logging
-    reverse_proxy {{ docker_gateway }}:{{ arr_jellyseerr_port }}
+  reverse_proxy {{ docker_gateway }}:{{ arr_jellyseerr_port }}
 }
 
 {{ arr_lidarr_domain }} {
-    import common-headers
-    import logging
-    reverse_proxy {{ docker_gateway }}:{{ arr_lidarr_port }}
+  log
+  import common-headers
+  reverse_proxy {{ docker_gateway }}:{{ arr_lidarr_port }}
 }
 
-{{ arr_soulsync_domain }} {
-    import common-headers
-    import logging
-    reverse_proxy {{ docker_gateway }}:{{ arr_soulsync_port }}
-}

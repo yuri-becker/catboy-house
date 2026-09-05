@@ -1,0 +1,8 @@
+- name: ⬆️ Pushes Script
+  ansible.builtin.copy:
+    src: files/notification.py
+    dest: /etc/icinga2/scripts/notification.py
+    mode: "0770"
+    owner: nagios
+    group: nagios
+  become: true

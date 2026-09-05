@@ -1,3 +1,0 @@
----
-# defaults for check_for_updates
-check_for_updates_script_path: /usr/local/bin/check-for-updates.sh

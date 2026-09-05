@@ -41,9 +41,6 @@
     - role: icinga
       tags: icinga
 
-    - role: beszel
-      tags: beszel
-
     - role: caddy
       tags: caddy
 
@@ -55,9 +52,6 @@
 
     - role: watchtower
       tags: watchtower
-
-    - role: check_for_updates
-      tags: check_for_updates
 
     - role: mealie
       tags: mealie
@@ -112,6 +106,3 @@
 
     - role: donetick
       tags: donetick
-
-    - role: beszel
-      tags: beszel

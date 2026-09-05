@@ -1,5 +1,5 @@
 {{ docmost_domain }} {
+  log
 	import common-headers
-    import logging 
-    reverse_proxy {{ docker_gateway }}:{{ docmost_port }}
+  reverse_proxy {{ docker_gateway }}:{{ docmost_port }}
 }

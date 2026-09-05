@@ -30,6 +30,7 @@
       - icinga-sso-web
       - monitoring-plugins-basic
       - monitoring-plugins-check-smart
+      - monitoring-plugins-contrib
       - monitoring-plugins-systemd
       - php-fpm
       - php-mysql

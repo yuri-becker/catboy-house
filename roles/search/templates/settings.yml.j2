@@ -5,7 +5,25 @@ server:
   limiter: true
   image_proxy: true
   public_instance: true
+  method: "POST"
 ui:
   static_use_hash: true
 valkey:
   url: valkey://valkey:6379/0
+engines:
+  - name: bing
+    disabled: false
+  - name: brave
+    disabled: true
+  - name: duckduckgo
+    disabled: true
+  - name: google cse
+    disabled: true
+  - name: startpage
+    disabled: true
+  - name: mwmbl
+    disabled: false
+  - name: fynd
+    disabled: false
+  - name: wikidata
+    disabled: true

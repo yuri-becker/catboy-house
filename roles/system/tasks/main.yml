@@ -1,6 +1,8 @@
 ---
-- include_tasks: journald.yml
-- include_tasks: create-admins.yml
+- name: Journald
+  ansible.builtin.include_tasks: journald.yml
+- name: Create-admins
+  ansible.builtin.include_tasks: create-admins.yml
 
 - name: 📂 Creates services path
   ansible.builtin.file:

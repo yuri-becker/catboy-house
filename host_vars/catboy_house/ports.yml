@@ -29,7 +29,7 @@ sshd_port: 29158
 navidrome_port: 29159
 
 pocketid_port: 29000
-beszel_port: 29001
+# 29001
 
 icinga_api_port: 29010
 
@@ -44,7 +44,6 @@ arr_prowlarr_port: 30217
 arr_bazarr_port: 30218
 arr_jellyseerr_port: 30219
 arr_lidarr_port: 30220
-arr_soulsync_port: 30221
 # 30222
 donetick_port: 30223
 

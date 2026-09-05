@@ -1,3 +1,40 @@
+{
+  log {
+    output stderr
+    format filter {
+      request>headers>Accept-Language delete
+      request>headers>Aceept delete
+      request>headers>Accept-Encoding delete
+      request>headers>Connection delete
+      reqeust>headers>Content-Encoding delete
+      reqeust>headers>Content-Length delete
+      request>headers>Content-Secure-Policy delete
+      request>headers>Ocs-Apirequest delete
+      request>proto delete
+      request>tls delete
+      resp_headers>Cache-Control delete
+      resp_headers>Content-Encoding delete
+      resp_headers>Content-Security-Policy delete
+      resp_headers>Content-Type delete
+      resp_headers>Strict-Transport-Security delete
+      resp_headers>X-Content-Type-Options delete
+      resp_headers>X-Frame-Options delete
+      resp_headers>X-Robots-Tag delete
+      resp_headers>X-Xss-Protection delete
+      resp_headers>X-Permitted-Cross-Domain-Policies delete
+      resp_headers>Via delete
+      resp_headers>Referred-Policy delete
+      resp_headers>Date delete
+      resp_headers>Alt-Svc delete
+      user_id delete
+      logger delete
+
+      wrap console
+    }
+  }
+}
+
+
 (common-headers) {
 	header * {
 		-Server
@@ -10,12 +47,6 @@
 		X-Content-Type-Options nosniff
 		Referrer-Policy no-referrer-when-downgrade
 	}
-}
-
-(logging) {
-    log {
-        output stdout
-    }
 }
 
 (forward-auth) {

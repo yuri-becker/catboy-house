@@ -2,12 +2,11 @@
 # tasks for docker
 - name: 📦 Installs docker and components
   ansible.builtin.apt:
-    name: "{{ item }}"
+    package:
+      - docker-ce
+      - docker-ce-cli
+      - docker-compose-plugin
     state: present
-  loop:
-    - docker-ce
-    - docker-ce-cli
-    - docker-compose-plugin
   become: true
 
 - name: 🚀 Starts docker service

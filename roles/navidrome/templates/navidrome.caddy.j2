@@ -1,5 +1,5 @@
 {{ navidrome_domain }} {
-    import common-headers
-    import logging
-    reverse_proxy {{ docker_gateway }}:{{ navidrome_port }}
+  log
+  import common-headers
+  reverse_proxy {{ docker_gateway }}:{{ navidrome_port }}
 }

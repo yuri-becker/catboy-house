@@ -1,3 +1,4 @@
+---
 - name: 🚀 Restarts Valkey
   listen: restart valkey
   ansible.builtin.systemd_service:

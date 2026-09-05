@@ -1,5 +1,4 @@
 ---
-# vars for yamtrack
 yamtrack_url: "https://{{ yamtrack_domain }}"
 yamtrack_socialaccount_providers: >
   {

@@ -1,3 +1,4 @@
+---
 - name: 📁 Makes Icinga2 Folders
   ansible.builtin.file:
     state: directory

@@ -1,5 +1,4 @@
 ---
-
 - name: 🚀 Reloads Icinga
   listen: reload icinga
   ansible.builtin.systemd:

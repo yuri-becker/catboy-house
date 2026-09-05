@@ -2,7 +2,7 @@
 - name: ⚙️ Adds Caddy key
   ansible.builtin.copy:
     src: files/caddy-stable-archive-keyring.gpg
-    dest: /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+    dest: /usr/share/keyrings/caddy.gpg
     mode: "0644"
     owner: "root"
     group: "root"
@@ -10,8 +10,13 @@
 
 - name: ⚙️ Adds Caddy repo
   ansible.builtin.deb822_repository:
-    repo: deb [signed-by=/usr/share/keyrings/caddy-stable-archive-keyring.gpg] https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main
-    state: present
+    name: caddy
+    types: deb
+    uris: https://dl.cloudsmith.io/public/caddy/stable/deb/debian
+    suites: any-version
+    components:
+      - main
+    signed_by: /usr/share/keyrings/caddy.gpg
   become: true
 
 - name: 👤 Creates user
@@ -43,7 +48,6 @@
     name: caddy
     state: present
   become: true
-
 
 - name: ⬆️ Pushes Caddyfile
   ansible.builtin.template:

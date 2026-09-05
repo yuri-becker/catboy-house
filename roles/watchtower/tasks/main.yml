@@ -2,7 +2,7 @@
 - name: 🚀 Starts container
   community.docker.docker_container:
     name: watchtower
-    image: containrrr/watchtower
+    image: nickfedor/watchtower
     state: started
     restart_policy: unless-stopped
     volumes:
